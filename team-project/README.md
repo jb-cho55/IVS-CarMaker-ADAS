@@ -4,8 +4,11 @@
 
 make issues first,
 make branch by issue. be sure to make branch name by
+
 issue no. #xx-solving_prob-name.
+
 so for example, branch name need to be like #01-adding_assets-Hyun
+
 if you finished solving issues, make pull requests. -beware not to commit into main branch directly
 
 
