@@ -4,7 +4,7 @@ function cmenv (varargin)		% -*- Mode: Fundamental -*-
     addpath(genpath(pwd));    
 % CarMaker installation directory.
     if isempty(which('cmlocaldir'))
-	cminstdir = 'D:\Program\IPG\carmaker\win64-14.1.2';
+	cminstdir = 'D:\carmaker\carmaker\win64-14.1.2';
     else
 	cminstdir = cmlocaldir	% for mat: CM-14.0
     end
