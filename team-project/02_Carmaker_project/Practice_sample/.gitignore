@@ -1,0 +1,24 @@
+# Simulink 캐시/빌드
+slprj/
+**/slprj/
+*.slxc
+*.autosave
+*.asv
+*.mexw64
+
+# CarMaker output
+SimOutput/
+Log/
+tmp/
+
+# 백업
+*_backup_*
+*.bak
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store

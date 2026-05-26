@@ -1,0 +1,14 @@
+# Simulink 모델 (binary, Git LFS 권장)
+*.slx           binary diff merge=binary
+*.mdl           binary diff merge=binary
+*.mat           binary diff merge=binary
+*.slxc          binary
+
+# MATLAB 텍스트 파일 — 정상 diff/merge
+*.m             text eol=lf diff
+*.md            text eol=lf diff
+
+# CarMaker generated
+src_cm4sl/slprj/  -merge
+SimOutput/        -merge
+.slxc             -merge

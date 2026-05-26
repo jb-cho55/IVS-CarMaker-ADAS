@@ -1,0 +1,97 @@
+# ═══════════════════════════════════════════════════════════════
+#  CarMaker + MATLAB + Simulink 자율주행 프로젝트 .gitignore
+# ═══════════════════════════════════════════════════════════════
+
+# ───── MATLAB 자동 생성 파일 ─────
+*.asv              # MATLAB Editor autosave
+*.m~               # MATLAB temp backup
+*.mex*             # Compiled MEX files (platform-specific)
+*.mexw64
+*.mexw32
+*.mexa64
+*.mexmaci64
+octave-workspace   # Octave compatibility
+
+# ───── Simulink 자동 생성 ─────
+slprj/             # Simulink project build cache
+sccprj/            # Simulink Coder cache
+codegen/           # Generated C/C++ code
+*.slxc             # Simulink cache file
+*.mldatx           # MATLAB project data
+*.autosave         # Simulink autosave
+*_slx_log/         # Simulink log
+
+# Simulink 모델 백업 (.r20XXa, .r20XXb 형태)
+*.r2020*
+*.r2021*
+*.r2022*
+*.r2023*
+*.r2024*
+*.r2025*
+*.r2026*
+
+# Simulink 모델 lock 파일
+*.slx.r*
+*.mdl.r*
+
+# ───── CarMaker 시뮬레이션 출력 ─────
+SimOutput/         # 시뮬레이션 결과 (보통 매우 큼)
+Log/               # CarMaker 로그
+tmp/               # 임시 파일
+core               # 코어 덤프
+core.*
+
+# CarMaker 자동 생성 cfg (사용자 환경 의존)
+SimMan.cfg.*
+*.dat              # 시뮬레이션 데이터 (필요 시 LFS 사용)
+
+# ───── 프로젝트 특화 (이 프로젝트만) ─────
+## CarMaker 환경 설정 (PC마다 경로 다름 — 템플릿은 cmenv.template.m)
+cmenv.m
+
+ 작업 중 생성된 백업 (안전망이지만 git에는 불필요)
+functions_backup_*/
+
+# 대시보드 HTML 백업
+index_backup*.html
+index.html.bak*
+
+# 임시 .mat 파일
+_*.mat             # _devScn.mat, _wrapper_info.mat 등
+
+# Wrapper 정보 캐시
+_wrapper_info.mat
+
+# ───── 대용량 데이터 (필요 시 Git LFS 사용 권장) ─────
+# *.mat            # MATLAB 데이터 파일 (주의: 활성화하면 모든 .mat 제외)
+# *.csv            # CSV 데이터
+# *.h5             # HDF5
+
+# ───── OS / IDE ─────
+.DS_Store          # macOS
+Thumbs.db          # Windows
+desktop.ini
+.vscode/
+.idea/
+*.swp              # vim swap
+*~
+
+# ───── 환경 / 빌드 ─────
+.env
+*.log
+build/
+dist/
+
+# ═══════════════════════════════════════════════════════════════
+#  명시적으로 commit해야 하는 것들 (참고)
+# ═══════════════════════════════════════════════════════════════
+#
+#  ✅ generic_IVS.mdl           — 메인 Simulink 모델 (텍스트 형식)
+#  ✅ functions/*.m              — 모든 .m 파일 (5+1 Dev 파일)
+#  ✅ setup_paths.m              — path 설정 스크립트
+#  ✅ waypoints.mat              — 경로 데이터 (작으면 commit, 크면 LFS)
+#  ✅ Data/*.tcl                 — CarMaker 시나리오 (.tcl)
+#  ✅ functions/README*.md       — 문서
+#  ✅ .gitattributes             — Git LFS / merge driver 설정
+#  ✅ index.html                 — 대시보드 (한 파일이라 OK)
+

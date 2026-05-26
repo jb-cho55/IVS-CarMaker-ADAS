@@ -1,10 +1,23 @@
+% ═══════════════════════════════════════════════════════════════
+%  cmenv.template.m — CarMaker 환경 설정 템플릿
+% ═══════════════════════════════════════════════════════════════
+%
+%  사용 방법:
+%    1. 이 파일을 cmenv.m으로 복사:
+%       copy cmenv.template.m cmenv.m   (Windows)
+%       cp   cmenv.template.m cmenv.m   (macOS/Linux)
+%    2. cmenv.m을 열어서 cminstdir을 본인 CarMaker 설치 경로로 수정
+%    3. cmenv.m은 .gitignore되어 있어 commit 안 됨 (PC마다 경로 다름)
+%
+% ═══════════════════════════════════════════════════════════════
+
 function cmenv (varargin)		% -*- Mode: Fundamental -*-
 % CMENV - Add CarMaker directories to the MATLAB search path.
 %
     addpath(genpath(pwd));    
 % CarMaker installation directory.
     if isempty(which('cmlocaldir'))
-	cminstdir = 'D:\Program\IPG\carmaker\win64-14.1.2';
+	cminstdir = '<CHANGE_ME: e.g. D:\Program\IPG\carmaker\win64-14.1.2>';
     else
 	cminstdir = cmlocaldir	% for mat: CM-14.0
     end
