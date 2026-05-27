@@ -74,8 +74,8 @@
 <div class="nav-section"> 주차 시나리오 (1)</div>
 <div class="nav-item" data-page="scn-parking">️ 2-1. 주차 (Parking)</div>
 
-<div class="nav-section"> 팀원 (주행 3 / 주차 2 / Supervisor 1)</div>
-<div class="nav-item" data-page="dev-a"> Dev-A |  기본주행 Owner</div><div class="nav-item" data-page="dev-b">️ Dev-B |  추월 Owner</div><div class="nav-item" data-page="dev-c"> Dev-C |  톨게이트 Owner</div><div class="nav-item" data-page="dev-d">️ Dev-D | ️ 주차 Owner</div><div class="nav-item" data-page="dev-e"> Dev-E |  ️ 주차 (횡 제어)</div><div class="nav-item" data-page="dev-f">️ Dev-F | Supervisor</div>
+<div class="nav-section">팀원별 작업 (5 + 1)</div>
+<div class="nav-item" data-page="dev-a"> Dev-A |  기본주행 Owner</div><div class="nav-item" data-page="dev-b">️ Dev-B |  추월 Owner</div><div class="nav-item" data-page="dev-c"> Dev-C |  톨게이트 Owner</div><div class="nav-item" data-page="dev-d">️ Dev-D | ️ 주차 Owner</div><div class="nav-item" data-page="dev-e"> Dev-E |  횡 제어 (모든 시나리오)</div><div class="nav-item" data-page="dev-f">️ Dev-F | Supervisor</div>
 
 <div class="nav-section">참조 자료</div>
 <div class="nav-item" data-page="dictionary"> 신호 Dictionary</div>
@@ -108,11 +108,11 @@
     <div class="text-sm text-gray-600">팀원 (Dev-A~E)</div>
   </div>
   <div class="card text-center">
-    <div class="text-3xl font-bold text-green-600">6</div>
-    <div class="text-sm text-gray-600">Lib 컨테이너 (+Supervisor)</div>
+    <div class="text-3xl font-bold text-green-600">5</div>
+    <div class="text-sm text-gray-600">Lib 컨테이너</div>
   </div>
   <div class="card text-center">
-    <div class="text-3xl font-bold text-purple-600">12</div>
+    <div class="text-3xl font-bold text-purple-600">11</div>
     <div class="text-sm text-gray-600">Goto 태그 (active)</div>
   </div>
   <div class="card text-center">
@@ -127,27 +127,27 @@
     <div class="dev-card dev-a" onclick="navigate('dev-a')">
       <div class="font-bold text-amber-700"> Dev-A</div>
       <div class="text-sm text-gray-700 mt-1"> OWNER:  기본 주행 (LK + ACC)</div>
-      <code class="text-xs mt-2 inline-block">dev_a_basic_driving.m</code>
+      <code class="text-xs mt-2 inline-block">longitudinal_controller_fcn.m</code>
     </div>
     <div class="dev-card dev-b" onclick="navigate('dev-b')">
       <div class="font-bold text-red-700">️ Dev-B</div>
       <div class="text-sm text-gray-700 mt-1"> OWNER:  추월</div>
-      <code class="text-xs mt-2 inline-block">dev_b_overtaking.m</code>
+      <code class="text-xs mt-2 inline-block">mode_manager_fcn.m</code>
     </div>
     <div class="dev-card dev-c" onclick="navigate('dev-c')">
       <div class="font-bold text-purple-700"> Dev-C</div>
       <div class="text-sm text-gray-700 mt-1"> OWNER:  톨게이트</div>
-      <code class="text-xs mt-2 inline-block">dev_c_tollgate.m</code>
+      <code class="text-xs mt-2 inline-block">trajectory_planning_fcn.m</code>
     </div>
     <div class="dev-card dev-d" onclick="navigate('dev-d')">
       <div class="font-bold text-green-700">️ Dev-D</div>
       <div class="text-sm text-gray-700 mt-1"> OWNER: ️ 주차</div>
-      <code class="text-xs mt-2 inline-block">dev_d_parking.m</code>
+      <code class="text-xs mt-2 inline-block">path_planning_fcn.m</code>
     </div>
     <div class="dev-card dev-e" onclick="navigate('dev-e')">
       <div class="font-bold text-blue-700"> Dev-E</div>
       <div class="text-sm text-gray-700 mt-1"> 4 시나리오 cross-cutting (횡 제어)</div>
-      <code class="text-xs mt-2 inline-block">dev_e_lateral.m</code>
+      <code class="text-xs mt-2 inline-block">lateral_controller_fcn.m</code>
     </div>
     <div class="dev-card dev-f" onclick="navigate('dev-f')">
       <div class="font-bold text-gray-700">️ Dev-F</div>
@@ -185,12 +185,12 @@
 <div class="grid grid-cols-3 gap-3">
 <div class="dev-card dev-d cursor-pointer" onclick="navigate('scn-parking')">
 <div class="font-bold text-green-700">️ 2-1. 주차</div>
-<div class="text-xs text-green-700 font-semibold mt-1"> 👑 Owner: Dev-D + Dev-E (2명)</div>
-<div class="text-sm text-gray-700 mt-2">Start → Goal 경로 (Dev-D) + 정밀 제어 (Dev-E).</div>
+<div class="text-xs text-green-700 font-semibold mt-1"> Owner: Dev-D</div>
+<div class="text-sm text-gray-700 mt-2">Start → Goal 경로 → 정지.</div>
 <div class="text-xs mt-2"><span class="badge badge-green">mode=1→7→0</span></div>
 </div>
 <div class="p-3 bg-gray-50 rounded text-sm text-gray-600 col-span-2 flex items-center">
-<div> <strong>Dev-E</strong> = 주차 그룹 (Dev-D와 함께 주차 owner 2명)<br> <strong>Dev-F</strong> = Supervisor (인프라/통합/PR 리뷰)</div>
+<div> <strong>Dev-E</strong> = cross-cutting (4 시나리오 모두 횡 제어 contributor)<br> <strong>Dev-F</strong> = Supervisor (인프라/통합/PR 리뷰)</div>
 </div>
 </div>
 </div>
@@ -279,31 +279,31 @@ open generic_IVS.mdl
   <rect x="0" y="0" width="160" height="90" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
   <text x="80" y="20" font-size="12" font-weight="bold" fill="#065f46" text-anchor="middle">Lib_PathPlanning</text>
   <text x="80" y="38" font-size="10" fill="#047857" text-anchor="middle">Dev-D · 100ms</text>
-  <text x="80" y="58" font-size="9" fill="#065f46" text-anchor="middle" font-family="monospace">dev_d_parking.m</text>
+  <text x="80" y="58" font-size="9" fill="#065f46" text-anchor="middle" font-family="monospace">path_planning_fcn.m</text>
   <text x="80" y="78" font-size="9" fill="#047857" text-anchor="middle">→ Target_Lane, Lane_Cost</text>
   <!-- Lib_ModeManager -->
   <rect x="180" y="0" width="160" height="90" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
   <text x="260" y="20" font-size="12" font-weight="bold" fill="#7f1d1d" text-anchor="middle">Lib_ModeManager</text>
   <text x="260" y="38" font-size="10" fill="#991b1b" text-anchor="middle">Dev-B · 10ms</text>
-  <text x="260" y="58" font-size="9" fill="#7f1d1d" text-anchor="middle" font-family="monospace">dev_b_overtaking.m</text>
+  <text x="260" y="58" font-size="9" fill="#7f1d1d" text-anchor="middle" font-family="monospace">mode_manager_fcn.m</text>
   <text x="260" y="78" font-size="9" fill="#991b1b" text-anchor="middle">→ Mission_Mode</text>
   <!-- Lib_TrajectoryPlanning -->
   <rect x="360" y="0" width="160" height="90" rx="8" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2"/>
   <text x="440" y="20" font-size="12" font-weight="bold" fill="#4c1d95" text-anchor="middle">Lib_TrajectoryPlanning</text>
   <text x="440" y="38" font-size="10" fill="#6d28d9" text-anchor="middle">Dev-C · 100ms</text>
-  <text x="440" y="58" font-size="9" fill="#4c1d95" text-anchor="middle" font-family="monospace">dev_c_tollgate.m</text>
+  <text x="440" y="58" font-size="9" fill="#4c1d95" text-anchor="middle" font-family="monospace">trajectory_planning_fcn.m</text>
   <text x="440" y="78" font-size="9" fill="#6d28d9" text-anchor="middle">→ Trajectory_CTE</text>
   <!-- Lib_LongitudinalController -->
   <rect x="540" y="0" width="160" height="90" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
   <text x="620" y="20" font-size="12" font-weight="bold" fill="#78350f" text-anchor="middle">Lib_LongController</text>
   <text x="620" y="38" font-size="10" fill="#92400e" text-anchor="middle">Dev-A · 10ms</text>
-  <text x="620" y="58" font-size="9" fill="#78350f" text-anchor="middle" font-family="monospace">dev_a_basic_driving.m</text>
+  <text x="620" y="58" font-size="9" fill="#78350f" text-anchor="middle" font-family="monospace">longitudinal_controller_fcn.m</text>
   <text x="620" y="78" font-size="9" fill="#92400e" text-anchor="middle">→ Accel_Cmd</text>
   <!-- Lib_LateralController -->
   <rect x="720" y="0" width="160" height="90" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
   <text x="800" y="20" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Lib_LateralController</text>
   <text x="800" y="38" font-size="10" fill="#1d4ed8" text-anchor="middle">Dev-E · 10ms</text>
-  <text x="800" y="58" font-size="9" fill="#1e3a8a" text-anchor="middle" font-family="monospace">dev_e_lateral.m</text>
+  <text x="800" y="58" font-size="9" fill="#1e3a8a" text-anchor="middle" font-family="monospace">lateral_controller_fcn.m</text>
   <text x="800" y="78" font-size="9" fill="#1d4ed8" text-anchor="middle">→ Steer_Cmd</text>
 </g>
 
@@ -530,7 +530,7 @@ open generic_IVS.mdl
 <!-- Dev-A Owner -->
 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-yellow"> OWNER</span><h3 class="text-lg font-bold text-amber-900"> Dev-A: ACC + 안전거리 제어 (핵심)</h3></div>
-<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_a_basic_driving.m</code>에서 목표 속도 추종 + 선행차 거리 유지 + 비상 제동.</div>
+<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>longitudinal_controller_fcn.m</code>에서 목표 속도 추종 + 선행차 거리 유지 + 비상 제동.</div>
 <div class="text-sm text-amber-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-amber-900 ml-6 list-decimal space-y-1 mb-3">
 <li>안전거리 모델: <code>safe_dist = 10 + 2·v_ego</code> (2초 룰)</li>
@@ -540,14 +540,14 @@ open generic_IVS.mdl
 <li>비상 제동: <code>front_gap &lt; 5 → -5</code></li>
 <li>한계: clip [-5, +3]</li>
 </ol>
-<pre><code>%% dev_a_basic_driving.m (LK case 핵심)<br>persistent v_int<br>if isempty(v_int), v_int = 0; end<br><br>safe_dist = 10 + 2*v_ego;<br>e_d = front_gap - safe_dist;<br>e_v = v_target - v_ego;<br>e_eff = min(e_d, e_v);<br><br>Kp = 0.5; Ki = 0.1;<br>v_int = max(min(v_int + e_eff*0.001, 2.0), -2.0);<br>acc_cmd = Kp*e_eff + Ki*v_int;<br><br>if front_gap &lt; 5, acc_cmd = -5; end<br>acc_cmd = max(min(acc_cmd, 3.0), -5.0);</code></pre>
+<pre><code>%% longitudinal_controller_fcn.m (LK case 핵심)<br>persistent v_int<br>if isempty(v_int), v_int = 0; end<br><br>safe_dist = 10 + 2*v_ego;<br>e_d = front_gap - safe_dist;<br>e_v = v_target - v_ego;<br>e_eff = min(e_d, e_v);<br><br>Kp = 0.5; Ki = 0.1;<br>v_int = max(min(v_int + e_eff*0.001, 2.0), -2.0);<br>acc_cmd = Kp*e_eff + Ki*v_int;<br><br>if front_gap &lt; 5, acc_cmd = -5; end<br>acc_cmd = max(min(acc_cmd, 3.0), -5.0);</code></pre>
 <div class="text-xs text-amber-800 mt-2"><strong>출력</strong>: acc_cmd → Goto[Accel_Cmd] → CarMaker</div>
 </div>
 
 <!-- Dev-E contributor -->
 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-blue">contributor</span><h3 class="text-lg font-bold text-blue-900"> Dev-E: 차선 중앙 유지 (Lane Keep PID)</h3></div>
-<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_e_lateral.m</code>의 LK 케이스. cte (Cross-Track Error)를 받아 조향각 산출.</div>
+<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>lateral_controller_fcn.m</code>의 LK 케이스. cte (Cross-Track Error)를 받아 조향각 산출.</div>
 <div class="text-sm text-blue-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-blue-900 ml-6 list-decimal space-y-1 mb-3">
 <li>부호 처리: <code>e = -cte</code> (DevDist 컨벤션)</li>
@@ -555,28 +555,28 @@ open generic_IVS.mdl
 <li>PID + anti-windup (±3.0)</li>
 <li>조향 한계: ±π/6 rad</li>
 </ol>
-<pre><code>%% dev_e_lateral.m (LK case)<br>case int32(1)  %% LK<br>    Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>e = -cte;<br>de = e - e_prev;<br>e_int = max(min(e_int + e*0.001, 3.0), -3.0);<br>e_prev = e;<br>steer_cmd = Kp*e + Ki*e_int + Kd*de;<br>steer_cmd = max(min(steer_cmd, pi/6), -pi/6);</code></pre>
+<pre><code>%% lateral_controller_fcn.m (LK case)<br>case int32(1)  %% LK<br>    Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>e = -cte;<br>de = e - e_prev;<br>e_int = max(min(e_int + e*0.001, 3.0), -3.0);<br>e_prev = e;<br>steer_cmd = Kp*e + Ki*e_int + Kd*de;<br>steer_cmd = max(min(steer_cmd, pi/6), -pi/6);</code></pre>
 </div>
 
 <!-- Dev-B contributor -->
 <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-red">contributor</span><h3 class="text-lg font-bold text-red-900">️ Dev-B: LK 모드 default (state machine)</h3></div>
-<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_b_overtaking.m</code>에서 초기/평시 LK 모드 유지. 다른 모드로 빠지지 않게.</div>
-<pre><code>%% dev_b_overtaking.m (LK base)<br>persistent state t_in_state<br>if isempty(state), state = int32(1); t_in_state = 0; end<br>%% LK는 default. 다른 시나리오 trigger 없으면 LK 유지<br>mode = state;</code></pre>
+<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>mode_manager_fcn.m</code>에서 초기/평시 LK 모드 유지. 다른 모드로 빠지지 않게.</div>
+<pre><code>%% mode_manager_fcn.m (LK base)<br>persistent state t_in_state<br>if isempty(state), state = int32(1); t_in_state = 0; end<br>%% LK는 default. 다른 시나리오 trigger 없으면 LK 유지<br>mode = state;</code></pre>
 </div>
 
 <!-- Dev-D contributor -->
 <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-green">contributor</span><h3 class="text-lg font-bold text-green-900">️ Dev-D: 현재 차선 유지 (lane_cost base)</h3></div>
-<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_d_parking.m</code>에서 평시엔 현재 차선이 가장 좋다고 출력.</div>
-<pre><code>%% dev_d_parking.m (LK base)<br>lane_cost = zeros(4, 1);<br>for i = 1:4<br>    lane_cost(i) = abs(double(i) - double(current_lane)) * 5.0;<br>end<br>%% 다른 시나리오 (overtaking 등)에서 추가 비용 적용<br>[~, idx] = min(lane_cost);<br>target_lane = int32(idx);  %% 평시 = current_lane</code></pre>
+<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>path_planning_fcn.m</code>에서 평시엔 현재 차선이 가장 좋다고 출력.</div>
+<pre><code>%% path_planning_fcn.m (LK base)<br>lane_cost = zeros(4, 1);<br>for i = 1:4<br>    lane_cost(i) = abs(double(i) - double(current_lane)) * 5.0;<br>end<br>%% 다른 시나리오 (overtaking 등)에서 추가 비용 적용<br>[~, idx] = min(lane_cost);<br>target_lane = int32(idx);  %% 평시 = current_lane</code></pre>
 </div>
 
 <!-- Dev-C contributor -->
 <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-purple">contributor</span><h3 class="text-lg font-bold text-purple-900"> Dev-C: 보정 없음 (cte_offset = cte_in)</h3></div>
 <div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: LK 모드일 땐 trajectory 보정 안 함. cte_in을 그대로 통과.</div>
-<pre><code>%% dev_c_tollgate.m (LK case)<br>else  %% LK<br>    target_offset = 0;<br>    t_in_state = 0;<br>end<br>cte_offset = cte_in - target_offset;  %% LK: = cte_in</code></pre>
+<pre><code>%% trajectory_planning_fcn.m (LK case)<br>else  %% LK<br>    target_offset = 0;<br>    t_in_state = 0;<br>end<br>cte_offset = cte_in - target_offset;  %% LK: = cte_in</code></pre>
 </div>
 </div>
 
@@ -734,7 +734,7 @@ open generic_IVS.mdl
 <!-- Dev-D 작업 -->
 <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-green">1</span><h3 class="text-lg font-bold text-green-900">️ Dev-D: 옆 차선 안전 + 차선 비용 계산</h3></div>
-<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_d_parking.m</code>에서 각 차선의 비용을 계산. 옆 차선이 비어있으면 target_lane을 옆 차선으로 출력.</div>
+<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>path_planning_fcn.m</code>에서 각 차선의 비용을 계산. 옆 차선이 비어있으면 target_lane을 옆 차선으로 출력.</div>
 <div class="text-sm text-green-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-green-900 ml-6 list-decimal space-y-1 mb-3">
 <li>각 차선의 long_dist (트래픽 종방향 거리) 계산</li>
@@ -742,14 +742,14 @@ open generic_IVS.mdl
 <li>옆 차선: 앞차 없음 → 비용 낮음 (lat_bias만)</li>
 <li><code>[~, idx] = min(lane_cost)</code> → target_lane 출력</li>
 </ol>
-<pre><code>%% dev_d_parking.m 안에 추가<br>for i = 1:4<br>    lane_cost(i) = abs(double(i) - double(current_lane)) * 5.0;  %% 차선 거리<br>end<br>%% 현재 차선의 앞차 패널티<br>if long_dist &gt; 0.5 &amp;&amp; long_dist &lt; 50 &amp;&amp; abs(lat_dist) &lt; 1.8<br>    lane_cost(current_lane) = lane_cost(current_lane) + 100;<br>end<br>%% 인접 차선만 후보 (current ± 1)<br>cl = double(current_lane);<br>for i = 1:4<br>    if abs(double(i) - cl) &gt; 1, lane_cost(i) = 9999; end<br>end<br>[~, idx] = min(lane_cost);<br>target_lane = int32(idx);</code></pre>
+<pre><code>%% path_planning_fcn.m 안에 추가<br>for i = 1:4<br>    lane_cost(i) = abs(double(i) - double(current_lane)) * 5.0;  %% 차선 거리<br>end<br>%% 현재 차선의 앞차 패널티<br>if long_dist &gt; 0.5 &amp;&amp; long_dist &lt; 50 &amp;&amp; abs(lat_dist) &lt; 1.8<br>    lane_cost(current_lane) = lane_cost(current_lane) + 100;<br>end<br>%% 인접 차선만 후보 (current ± 1)<br>cl = double(current_lane);<br>for i = 1:4<br>    if abs(double(i) - cl) &gt; 1, lane_cost(i) = 9999; end<br>end<br>[~, idx] = min(lane_cost);<br>target_lane = int32(idx);</code></pre>
 <div class="text-xs text-green-800 mt-2"><strong>출력</strong>: <code>target_lane</code> (int32) → Goto[Target_Lane] → Dev-B로</div>
 </div>
 
 <!-- Dev-B 작업 -->
 <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-red">2</span><h3 class="text-lg font-bold text-red-900">️ Dev-B: 모드 전이 결정 (state machine)</h3></div>
-<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_b_overtaking.m</code>에서 Dev-D의 target_lane을 받아서 state machine 전이.</div>
+<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>mode_manager_fcn.m</code>에서 Dev-D의 target_lane을 받아서 state machine 전이.</div>
 <div class="text-sm text-red-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-red-900 ml-6 list-decimal space-y-1 mb-3">
 <li><strong>LK (1)</strong>: target_lane ≠ current_lane 감지 + 옆 차선 안전 → LC_OUT (3) 전이</li>
@@ -757,14 +757,14 @@ open generic_IVS.mdl
 <li><strong>LC_PASS (4)</strong>: long_dist &lt; −15 (앞차 추월) → <strong>current_lane 업데이트 + LK (1)</strong></li>
 <li><strong>주의</strong>: LC_BACK 없음 (옆 차선 그대로 유지)</li>
 </ol>
-<pre><code>%% dev_b_overtaking.m 안에 추가<br>switch state<br>    case int32(1)  %% LK<br>        if target_lane ~= current_lane &amp;&amp; ego_v &gt; 5<br>            state = int32(3); t_in_state = 0;  %% LC_OUT<br>        end<br>    case int32(3)  %% LC_OUT<br>        if t_in_state &gt;= 4.0<br>            state = int32(4); t_in_state = 0;  %% LC_PASS<br>        end<br>    case int32(4)  %% LC_PASS<br>        if long_dist &lt; -15  %% 추월 완료<br>            state = int32(1); t_in_state = 0;<br>            %% TODO: current_lane = target_lane으로 업데이트 (외부 신호로)<br>        end<br>end<br>mode = state;</code></pre>
+<pre><code>%% mode_manager_fcn.m 안에 추가<br>switch state<br>    case int32(1)  %% LK<br>        if target_lane ~= current_lane &amp;&amp; ego_v &gt; 5<br>            state = int32(3); t_in_state = 0;  %% LC_OUT<br>        end<br>    case int32(3)  %% LC_OUT<br>        if t_in_state &gt;= 4.0<br>            state = int32(4); t_in_state = 0;  %% LC_PASS<br>        end<br>    case int32(4)  %% LC_PASS<br>        if long_dist &lt; -15  %% 추월 완료<br>            state = int32(1); t_in_state = 0;<br>            %% TODO: current_lane = target_lane으로 업데이트 (외부 신호로)<br>        end<br>end<br>mode = state;</code></pre>
 <div class="text-xs text-red-800 mt-2"><strong>입력</strong>: target_lane (Dev-D), traffic_x/y → <strong>출력</strong>: mode (int32) → Goto[Mission_Mode]</div>
 </div>
 
 <!-- Dev-C 작업 -->
 <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-purple">3</span><h3 class="text-lg font-bold text-purple-900"> Dev-C: LC 궤적 (cte_offset) 생성</h3></div>
-<div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_c_tollgate.m</code>에서 mode에 따라 차선 변경 offset 생성.</div>
+<div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: <code>trajectory_planning_fcn.m</code>에서 mode에 따라 차선 변경 offset 생성.</div>
 <div class="text-sm text-purple-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-purple-900 ml-6 list-decimal space-y-1 mb-3">
 <li><strong>LC_OUT</strong>: target_offset을 0 → −LANE_WIDTH (−3m)으로 4초간 quintic ramp</li>
@@ -772,35 +772,35 @@ open generic_IVS.mdl
 <li><strong>LK (옆 차선)</strong>: current_lane이 업데이트되면 target_offset = 0 (옆 차선 중앙)</li>
 <li><code>cte_offset = cte_in − target_offset</code> 출력</li>
 </ol>
-<pre><code>%% dev_c_tollgate.m 안<br>TS = 0.1;  %% 100ms 주기<br>if mode == int32(3)  %% LC_OUT<br>    t_in_state = t_in_state + TS;<br>    s = min(1, t_in_state / 4.0);<br>    target_offset = -LANE_WIDTH * (10*s^3 - 15*s^4 + 6*s^5);  %% quintic<br>elseif mode == int32(4)  %% LC_PASS<br>    target_offset = -LANE_WIDTH;<br>    t_in_state = 0;<br>else  %% LK (옆 차선이 새 default)<br>    target_offset = 0;<br>    t_in_state = 0;<br>end<br>cte_offset = cte_in - target_offset;</code></pre>
+<pre><code>%% trajectory_planning_fcn.m 안<br>TS = 0.1;  %% 100ms 주기<br>if mode == int32(3)  %% LC_OUT<br>    t_in_state = t_in_state + TS;<br>    s = min(1, t_in_state / 4.0);<br>    target_offset = -LANE_WIDTH * (10*s^3 - 15*s^4 + 6*s^5);  %% quintic<br>elseif mode == int32(4)  %% LC_PASS<br>    target_offset = -LANE_WIDTH;<br>    t_in_state = 0;<br>else  %% LK (옆 차선이 새 default)<br>    target_offset = 0;<br>    t_in_state = 0;<br>end<br>cte_offset = cte_in - target_offset;</code></pre>
 <div class="text-xs text-purple-800 mt-2"><strong>입력</strong>: mode (Dev-B), cte_in → <strong>출력</strong>: cte_offset → Goto[Trajectory_CTE] → Dev-E로</div>
 </div>
 
 <!-- Dev-E 작업 -->
 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-blue">4</span><h3 class="text-lg font-bold text-blue-900"> Dev-E: 조향 제어 (모드별 게인)</h3></div>
-<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_e_lateral.m</code>에서 Dev-C의 cte_offset 추종. LC 모드일 때 게인 ↑.</div>
+<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>lateral_controller_fcn.m</code>에서 Dev-C의 cte_offset 추종. LC 모드일 때 게인 ↑.</div>
 <div class="text-sm text-blue-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-blue-900 ml-6 list-decimal space-y-1 mb-3">
 <li>mode에 따라 PID 게인 분기 (LK는 부드럽게, LC는 빠르게)</li>
 <li>cte 입력으로 PID 계산</li>
 <li>±π/6 한계 적용</li>
 </ol>
-<pre><code>%% dev_e_lateral.m 안<br>switch mode<br>    case int32(1)  %% LK<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>    case {int32(3), int32(4)}  %% LC_OUT, LC_PASS<br>        Kp = 2.0; Ki = 0.5; Kd = 0.3;  %% 빠른 차선 변경<br>    otherwise<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>end<br>e = -cte;<br>de = e - e_prev;<br>e_int = max(min(e_int + e*0.001, 3.0), -3.0);<br>e_prev = e;<br>steer_cmd = Kp*e + Ki*e_int + Kd*de;<br>steer_cmd = max(min(steer_cmd, pi/6), -pi/6);</code></pre>
+<pre><code>%% lateral_controller_fcn.m 안<br>switch mode<br>    case int32(1)  %% LK<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>    case {int32(3), int32(4)}  %% LC_OUT, LC_PASS<br>        Kp = 2.0; Ki = 0.5; Kd = 0.3;  %% 빠른 차선 변경<br>    otherwise<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>end<br>e = -cte;<br>de = e - e_prev;<br>e_int = max(min(e_int + e*0.001, 3.0), -3.0);<br>e_prev = e;<br>steer_cmd = Kp*e + Ki*e_int + Kd*de;<br>steer_cmd = max(min(steer_cmd, pi/6), -pi/6);</code></pre>
 <div class="text-xs text-blue-800 mt-2"><strong>입력</strong>: cte (Dev-C), mode (Dev-B) → <strong>출력</strong>: steer_cmd → Goto[Steer_Cmd] → 차량</div>
 </div>
 
 <!-- Dev-A 작업 -->
 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-yellow">5</span><h3 class="text-lg font-bold text-amber-900"> Dev-A: 추월 가속 (LC_PASS에서)</h3></div>
-<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_a_basic_driving.m</code>에서 LC_PASS 모드일 때 빠른 가속.</div>
+<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>longitudinal_controller_fcn.m</code>에서 LC_PASS 모드일 때 빠른 가속.</div>
 <div class="text-sm text-amber-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-amber-900 ml-6 list-decimal space-y-1 mb-3">
 <li>평시: 기본 v_target (20 m/s) + ACC</li>
 <li>LC_PASS 모드: v_target += 5 (빠른 가속), Kp ↑</li>
 <li>추월 완료 후 LK: 평시 v_target 복귀</li>
 </ol>
-<pre><code>%% dev_a_basic_driving.m 안<br>switch mode<br>    case int32(4)  %% LC_PASS — 추월 중!<br>        v_target_adj = v_target + 5;  %% 빠르게<br>        Kp = 0.8; Ki = 0.1;<br>    case int32(9)  %% EMERGENCY<br>        acc_cmd = -5; return;<br>    otherwise<br>        v_target_adj = v_target;<br>        Kp = 0.5; Ki = 0.1;<br>end<br>e_v = v_target_adj - v_ego;<br>e_d = front_gap - safe_dist;<br>e_eff = min(e_d, e_v);<br>v_int = max(min(v_int + e_eff*0.001, 2.0), -2.0);<br>acc_cmd = Kp*e_eff + Ki*v_int;<br>if front_gap &lt; 5, acc_cmd = -5; end<br>acc_cmd = max(min(acc_cmd, 3.0), -5.0);</code></pre>
+<pre><code>%% longitudinal_controller_fcn.m 안<br>switch mode<br>    case int32(4)  %% LC_PASS — 추월 중!<br>        v_target_adj = v_target + 5;  %% 빠르게<br>        Kp = 0.8; Ki = 0.1;<br>    case int32(9)  %% EMERGENCY<br>        acc_cmd = -5; return;<br>    otherwise<br>        v_target_adj = v_target;<br>        Kp = 0.5; Ki = 0.1;<br>end<br>e_v = v_target_adj - v_ego;<br>e_d = front_gap - safe_dist;<br>e_eff = min(e_d, e_v);<br>v_int = max(min(v_int + e_eff*0.001, 2.0), -2.0);<br>acc_cmd = Kp*e_eff + Ki*v_int;<br>if front_gap &lt; 5, acc_cmd = -5; end<br>acc_cmd = max(min(acc_cmd, 3.0), -5.0);</code></pre>
 <div class="text-xs text-amber-800 mt-2"><strong>입력</strong>: v_ego, front_gap, mode (Dev-B) → <strong>출력</strong>: acc_cmd → Goto[Accel_Cmd] → 차량</div>
 </div>
 
@@ -876,7 +876,7 @@ open generic_IVS.mdl
 <!-- Dev-B -->
 <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-red">1</span><h3 class="text-lg font-bold text-red-900">️ Dev-B: TOLLGATE 모드 진입/탈출</h3></div>
-<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_b_overtaking.m</code>에서 자차의 글로벌 X 위치를 보고 톨게이트 구역 진입/탈출 결정.</div>
+<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>mode_manager_fcn.m</code>에서 자차의 글로벌 X 위치를 보고 톨게이트 구역 진입/탈출 결정.</div>
 <div class="text-sm text-red-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-red-900 ml-6 list-decimal space-y-1 mb-3">
 <li>맵에서 톨게이트 구역의 시작/끝 글로벌 X 좌표를 미리 측정 (Dev-F가 제공)</li>
@@ -884,14 +884,14 @@ open generic_IVS.mdl
 <li>TG 상태에서 ego_x &gt; TG_END_X → state = 1 (LK 복귀)</li>
 <li>TG 안에서 target_lane ≠ current_lane → state = 3 (LC_OUT) 일시 전이 (TG 안에서 LC)</li>
 </ol>
-<pre><code>%% dev_b_overtaking.m 안에 추가<br>TG_START_X = 500.0;  %% 맵에서 측정<br>TG_END_X   = 580.0;<br><br>%% 최우선: TG 구역 체크<br>if ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X<br>    if state == int32(1)<br>        state = int32(6);  %% TOLLGATE 진입<br>    elseif state == int32(6) &amp;&amp; target_lane ~= current_lane<br>        state = int32(3); t_in_state = 0;  %% TG 안에서 LC<br>    elseif state == int32(3) &amp;&amp; t_in_state &gt;= 4.0<br>        state = int32(6);  %% LC 완료, TG 복귀<br>    end<br>elseif ego_x &gt; TG_END_X &amp;&amp; state == int32(6)<br>    state = int32(1);  %% LK 복귀<br>end<br>mode = state;</code></pre>
+<pre><code>%% mode_manager_fcn.m 안에 추가<br>TG_START_X = 500.0;  %% 맵에서 측정<br>TG_END_X   = 580.0;<br><br>%% 최우선: TG 구역 체크<br>if ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X<br>    if state == int32(1)<br>        state = int32(6);  %% TOLLGATE 진입<br>    elseif state == int32(6) &amp;&amp; target_lane ~= current_lane<br>        state = int32(3); t_in_state = 0;  %% TG 안에서 LC<br>    elseif state == int32(3) &amp;&amp; t_in_state &gt;= 4.0<br>        state = int32(6);  %% LC 완료, TG 복귀<br>    end<br>elseif ego_x &gt; TG_END_X &amp;&amp; state == int32(6)<br>    state = int32(1);  %% LK 복귀<br>end<br>mode = state;</code></pre>
 <div class="text-xs text-red-800 mt-2"><strong>입력</strong>: ego_x, target_lane → <strong>출력</strong>: mode (TG=6 또는 LC=3)</div>
 </div>
 
 <!-- Dev-D -->
 <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-green">2</span><h3 class="text-lg font-bold text-green-900">️ Dev-D: 목표 게이트 차선 결정</h3></div>
-<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_d_parking.m</code>에서 TG 모드면 정해진 게이트로 target_lane 출력.</div>
+<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>path_planning_fcn.m</code>에서 TG 모드면 정해진 게이트로 target_lane 출력.</div>
 <div class="text-sm text-green-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-green-900 ml-6 list-decimal space-y-1 mb-3">
 <li>mode 입력 받기 (시그니처 변경 PR 필요, 또는 ego_x로 추정)</li>
@@ -899,14 +899,14 @@ open generic_IVS.mdl
 <li>또는 lane_cost로 가장 빈 게이트 선택 (advanced)</li>
 <li>TG 밖에서 → 기존 로직 (앞차 추월)</li>
 </ol>
-<pre><code>%% dev_d_parking.m 안<br>%% mode 입력이 없으면 ego_x로 추정<br>TG_START_X = 500.0;<br>TG_END_X = 580.0;<br>in_tg = (ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X);<br><br>if in_tg<br>    target_lane = int32(2);  %% G2 게이트 고정<br>    %% 또는: 각 게이트 lane의 대기시간/혼잡도로 동적 선택<br>else<br>    %% 평시 lane_cost 계산 (Overtaking 로직)<br>    %% ...<br>end</code></pre>
+<pre><code>%% path_planning_fcn.m 안<br>%% mode 입력이 없으면 ego_x로 추정<br>TG_START_X = 500.0;<br>TG_END_X = 580.0;<br>in_tg = (ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X);<br><br>if in_tg<br>    target_lane = int32(2);  %% G2 게이트 고정<br>    %% 또는: 각 게이트 lane의 대기시간/혼잡도로 동적 선택<br>else<br>    %% 평시 lane_cost 계산 (Overtaking 로직)<br>    %% ...<br>end</code></pre>
 <div class="text-xs text-green-800 mt-2"><strong>입력</strong>: ego_x (또는 mode) → <strong>출력</strong>: target_lane = G2 lane</div>
 </div>
 
 <!-- Dev-A -->
 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-yellow">3</span><h3 class="text-lg font-bold text-amber-900"> Dev-A: TG 진입 시 감속</h3></div>
-<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_a_basic_driving.m</code>에서 TG 모드면 v_target을 강제로 낮춤.</div>
+<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>longitudinal_controller_fcn.m</code>에서 TG 모드면 v_target을 강제로 낮춤.</div>
 <div class="text-sm text-amber-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-amber-900 ml-6 list-decimal space-y-1 mb-3">
 <li>mode 입력 체크: int32(6) = TOLLGATE</li>
@@ -914,35 +914,35 @@ open generic_IVS.mdl
 <li>Kp 작게 (부드러운 감속, 급제동 방지)</li>
 <li>TG 모드 끝나면 평시 복귀</li>
 </ol>
-<pre><code>%% dev_a_basic_driving.m 안<br>switch mode<br>    case int32(6)  %% TOLLGATE<br>        v_target_adj = 8;     %% 강제 감속<br>        Kp = 0.4; Ki = 0.05;  %% 부드럽게<br>    case int32(4)  %% LC_PASS (Overtaking과 충돌 X)<br>        v_target_adj = v_target + 5;<br>        Kp = 0.8;<br>    case int32(9)  %% EMERGENCY<br>        acc_cmd = -5; return;<br>    otherwise<br>        v_target_adj = v_target;<br>        Kp = 0.5;<br>end<br>%% 나머지 PI 로직 동일</code></pre>
+<pre><code>%% longitudinal_controller_fcn.m 안<br>switch mode<br>    case int32(6)  %% TOLLGATE<br>        v_target_adj = 8;     %% 강제 감속<br>        Kp = 0.4; Ki = 0.05;  %% 부드럽게<br>    case int32(4)  %% LC_PASS (Overtaking과 충돌 X)<br>        v_target_adj = v_target + 5;<br>        Kp = 0.8;<br>    case int32(9)  %% EMERGENCY<br>        acc_cmd = -5; return;<br>    otherwise<br>        v_target_adj = v_target;<br>        Kp = 0.5;<br>end<br>%% 나머지 PI 로직 동일</code></pre>
 <div class="text-xs text-amber-800 mt-2"><strong>입력</strong>: mode → <strong>출력</strong>: acc_cmd (음수 = 감속)</div>
 </div>
 
 <!-- Dev-C -->
 <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-purple">4</span><h3 class="text-lg font-bold text-purple-900"> Dev-C: TG 안에서 LC 궤적 (부드럽게)</h3></div>
-<div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_c_tollgate.m</code>에서 TG 모드일 때 저속 LC trajectory (시간 늘림).</div>
+<div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: <code>trajectory_planning_fcn.m</code>에서 TG 모드일 때 저속 LC trajectory (시간 늘림).</div>
 <div class="text-sm text-purple-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-purple-900 ml-6 list-decimal space-y-1 mb-3">
 <li>TG 모드면 LC_TIME 늘림 (저속이라 시간 여유) — 4초 → 6초</li>
 <li>target_lane − current_lane 차이만큼 quintic ramp</li>
 <li>여러 lane 거쳐 가야 하면 단계별 처리 (current → +1 → +1 …)</li>
 </ol>
-<pre><code>%% dev_c_tollgate.m 안<br>if mode == int32(6)  %% TG<br>    LC_TIME_USED = 6.0;  %% 저속이라 길게<br>else<br>    LC_TIME_USED = 4.0;<br>end<br><br>if mode == int32(3) || (mode == int32(6) &amp;&amp; t_in_state &lt; LC_TIME_USED)<br>    t_in_state = t_in_state + TS;<br>    s = min(1, t_in_state / LC_TIME_USED);<br>    lc_dir = sign(double(target_lane) - double(current_lane));<br>    target_offset = -lc_dir * LANE_WIDTH * (10*s^3 - 15*s^4 + 6*s^5);<br>else<br>    target_offset = 0;<br>    t_in_state = 0;<br>end<br>cte_offset = cte_in - target_offset;</code></pre>
+<pre><code>%% trajectory_planning_fcn.m 안<br>if mode == int32(6)  %% TG<br>    LC_TIME_USED = 6.0;  %% 저속이라 길게<br>else<br>    LC_TIME_USED = 4.0;<br>end<br><br>if mode == int32(3) || (mode == int32(6) &amp;&amp; t_in_state &lt; LC_TIME_USED)<br>    t_in_state = t_in_state + TS;<br>    s = min(1, t_in_state / LC_TIME_USED);<br>    lc_dir = sign(double(target_lane) - double(current_lane));<br>    target_offset = -lc_dir * LANE_WIDTH * (10*s^3 - 15*s^4 + 6*s^5);<br>else<br>    target_offset = 0;<br>    t_in_state = 0;<br>end<br>cte_offset = cte_in - target_offset;</code></pre>
 <div class="text-xs text-purple-800 mt-2"><strong>입력</strong>: mode, target_lane, current_lane → <strong>출력</strong>: cte_offset</div>
 </div>
 
 <!-- Dev-E -->
 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-blue">5</span><h3 class="text-lg font-bold text-blue-900"> Dev-E: TG 정밀 조향 (게이트 정렬)</h3></div>
-<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_e_lateral.m</code>에서 TG 모드는 부드럽고 정밀한 게인 사용.</div>
+<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>lateral_controller_fcn.m</code>에서 TG 모드는 부드럽고 정밀한 게인 사용.</div>
 <div class="text-sm text-blue-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-blue-900 ml-6 list-decimal space-y-1 mb-3">
 <li>TG 모드 → Kp 작게 (1.0), Kd 크게 (0.8) — 게이트 진입 시 진동 최소화</li>
 <li>저속이므로 진동/오버슈트 더 위험</li>
 <li>±π/6 한계 그대로</li>
 </ol>
-<pre><code>%% dev_e_lateral.m 안<br>switch mode<br>    case int32(1)  %% LK<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>    case {int32(3), int32(4)}  %% LC<br>        Kp = 2.0; Ki = 0.5; Kd = 0.3;<br>    case int32(6)  %% TOLLGATE — 정밀<br>        Kp = 1.0; Ki = 0.2; Kd = 0.8;<br>    case int32(7)  %% PARKING (다른 시나리오)<br>        Kp = 0.8; Ki = 0.2; Kd = 0.9;<br>    otherwise<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>end<br>%% 나머지 PID 로직 동일</code></pre>
+<pre><code>%% lateral_controller_fcn.m 안<br>switch mode<br>    case int32(1)  %% LK<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>    case {int32(3), int32(4)}  %% LC<br>        Kp = 2.0; Ki = 0.5; Kd = 0.3;<br>    case int32(6)  %% TOLLGATE — 정밀<br>        Kp = 1.0; Ki = 0.2; Kd = 0.8;<br>    case int32(7)  %% PARKING (다른 시나리오)<br>        Kp = 0.8; Ki = 0.2; Kd = 0.9;<br>    otherwise<br>        Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>end<br>%% 나머지 PID 로직 동일</code></pre>
 <div class="text-xs text-blue-800 mt-2"><strong>입력</strong>: cte, mode → <strong>출력</strong>: steer_cmd (정밀)</div>
 </div>
 </div>
@@ -951,7 +951,7 @@ open generic_IVS.mdl
 <h2 class="text-xl font-semibold mb-3 text-amber-900">⚠️ 의존성 & 미구현</h2>
 <ul class="text-sm space-y-1 text-amber-900">
 <li> <strong>Dev-F TODO</strong>: TG_START_X, TG_END_X 글로벌 좌표 측정 (맵에서)</li>
-<li> <strong>Dev-D 시그니처 변경</strong>: dev_d_parking에 mode 입력 추가 필요 (또는 ego_x로 추정)</li>
+<li> <strong>Dev-D 시그니처 변경</strong>: path_planning_fcn에 mode 입력 추가 필요 (또는 ego_x로 추정)</li>
 <li> <strong>Dev-B 추가</strong>: TG 내부에서 LC 완료 후 다시 TG 모드로 복귀 (LC 끝, 게이트로 직진)</li>
 <li> <strong>고급</strong>: 동적 게이트 선택 (대기시간 / 트래픽 기반)</li>
 </ul>
@@ -960,13 +960,8 @@ open generic_IVS.mdl
 
 <!-- ============ SCN: PARKING ============ -->
 <div class="page" id="page-scn-parking">
-<h1 class="text-3xl font-bold mb-2">️ 시나리오 2-1: 주차 (Parking)</h1>
-<div class="flex gap-2 mb-3 flex-wrap">
-<span class="badge badge-green"> Owner: Dev-D (경로)</span>
-<span class="badge badge-green"> Owner: Dev-E (제어)</span>
-<span class="badge badge-blue">Mode: LK→PARKING→IDLE</span>
-<span class="badge badge-yellow">주차 그룹 (2명)</span>
-</div><p class="text-gray-600 mb-6">본선 주행 → 주차장 진입 → Parking_Start_Point → Parking_Goal_Point 경로 → 후진 주차</p>
+<h1 class="text-3xl font-bold mb-2">️ 시나리오 3: 주차 (Parking)</h1>
+<p class="text-gray-600 mb-6">본선 주행 → 주차장 진입 → Parking_Start_Point → Parking_Goal_Point 경로 → 후진 주차</p>
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시나리오 시각화</h2>
@@ -1020,7 +1015,7 @@ open generic_IVS.mdl
 <!-- Dev-B -->
 <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-red">1</span><h3 class="text-lg font-bold text-red-900">️ Dev-B: PARKING 모드 진입</h3></div>
-<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_b_overtaking.m</code>에서 자차가 Parking_Start_Point에 가까워지면 mode = 7 (PARKING).</div>
+<div class="text-sm text-red-900 mb-2"><strong>무엇을 만드는가</strong>: <code>mode_manager_fcn.m</code>에서 자차가 Parking_Start_Point에 가까워지면 mode = 7 (PARKING).</div>
 <div class="text-sm text-red-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-red-900 ml-6 list-decimal space-y-1 mb-3">
 <li>맵에서 Parking_Start_Point_XY 글로벌 좌표 측정 (Dev-F가 신호로 제공)</li>
@@ -1028,14 +1023,14 @@ open generic_IVS.mdl
 <li>거리 &lt; 30m + LK 상태 → state = 7 (PARKING)</li>
 <li>Goal_Point 도달 + ego_v ≈ 0 → state = 0 (IDLE)</li>
 </ol>
-<pre><code>%% dev_b_overtaking.m 안에 추가<br>%% Parking_Start_Point 신호가 입력으로 추가되면 사용 (현재 placeholder)<br>parking_start_x = 600.0;  %% 맵에서 측정<br>parking_start_y = 50.0;<br>parking_goal_x = 580.0;<br>parking_goal_y = 100.0;<br><br>dist_to_pk_start = sqrt((ego_x - parking_start_x)^2 + (ego_y - parking_start_y)^2);<br>dist_to_pk_goal  = sqrt((ego_x - parking_goal_x)^2  + (ego_y - parking_goal_y)^2);<br><br>if state == int32(1) &amp;&amp; dist_to_pk_start &lt; 30<br>    state = int32(7); t_in_state = 0;  %% PARKING 진입<br>elseif state == int32(7) &amp;&amp; dist_to_pk_goal &lt; 1.5 &amp;&amp; ego_v &lt; 0.5<br>    state = int32(0);  %% IDLE (주차 완료)<br>end<br>mode = state;</code></pre>
+<pre><code>%% mode_manager_fcn.m 안에 추가<br>%% Parking_Start_Point 신호가 입력으로 추가되면 사용 (현재 placeholder)<br>parking_start_x = 600.0;  %% 맵에서 측정<br>parking_start_y = 50.0;<br>parking_goal_x = 580.0;<br>parking_goal_y = 100.0;<br><br>dist_to_pk_start = sqrt((ego_x - parking_start_x)^2 + (ego_y - parking_start_y)^2);<br>dist_to_pk_goal  = sqrt((ego_x - parking_goal_x)^2  + (ego_y - parking_goal_y)^2);<br><br>if state == int32(1) &amp;&amp; dist_to_pk_start &lt; 30<br>    state = int32(7); t_in_state = 0;  %% PARKING 진입<br>elseif state == int32(7) &amp;&amp; dist_to_pk_goal &lt; 1.5 &amp;&amp; ego_v &lt; 0.5<br>    state = int32(0);  %% IDLE (주차 완료)<br>end<br>mode = state;</code></pre>
 <div class="text-xs text-red-800 mt-2"><strong>입력</strong>: ego_x, ego_y, ego_v → <strong>출력</strong>: mode = 7 또는 0</div>
 </div>
 
 <!-- Dev-D -->
 <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-green">2</span><h3 class="text-lg font-bold text-green-900">️ Dev-D: 주차 경로 생성 (핵심 모듈)</h3></div>
-<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_d_parking.m</code>에서 PK 모드면 Start → Goal까지 경로 생성. 가장 어려운 부분.</div>
+<div class="text-sm text-green-900 mb-2"><strong>무엇을 만드는가</strong>: <code>path_planning_fcn.m</code>에서 PK 모드면 Start → Goal까지 경로 생성. 가장 어려운 부분.</div>
 <div class="text-sm text-green-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-green-900 ml-6 list-decimal space-y-1 mb-3">
 <li>Parking_Start_Point_XY, Parking_Goal_Point 신호 받기 (Dev-F가 connectt)</li>
@@ -1045,14 +1040,14 @@ open generic_IVS.mdl
 <li>출력 형식 변경 필요: target_lane 대신 (target_x, target_y, target_yaw) 또는 path waypoint array</li>
 <li>매 100ms 호출 시 현재 위치 기준 next waypoint 갱신</li>
 </ol>
-<pre><code>%% dev_d_parking.m 안 — 시그니처 확장 필요 (PR)<br>%% [target_lane, lane_cost, pk_target_x, pk_target_y] = dev_d_parking(...)<br>persistent pk_path_x pk_path_y pk_idx<br>if isempty(pk_path_x), pk_path_x = zeros(50,1); pk_path_y = zeros(50,1); pk_idx = int32(1); end<br><br>%% 일단 단순 직선 경로 (placeholder)<br>if mode == int32(7)<br>    if pk_idx == int32(1)  %% 첫 호출: 경로 생성<br>        for i = 1:50<br>            r = (i-1) / 49.0;<br>            pk_path_x(i) = pk_start_x * (1-r) + pk_goal_x * r;<br>            pk_path_y(i) = pk_start_y * (1-r) + pk_goal_y * r;<br>        end<br>    end<br>    %% 현재 ego → 가장 가까운 path point 찾기<br>    %% next_target = pk_path_x(idx+lookahead), pk_path_y(idx+lookahead)<br>end</code></pre>
+<pre><code>%% path_planning_fcn.m 안 — 시그니처 확장 필요 (PR)<br>%% [target_lane, lane_cost, pk_target_x, pk_target_y] = path_planning_fcn(...)<br>persistent pk_path_x pk_path_y pk_idx<br>if isempty(pk_path_x), pk_path_x = zeros(50,1); pk_path_y = zeros(50,1); pk_idx = int32(1); end<br><br>%% 일단 단순 직선 경로 (placeholder)<br>if mode == int32(7)<br>    if pk_idx == int32(1)  %% 첫 호출: 경로 생성<br>        for i = 1:50<br>            r = (i-1) / 49.0;<br>            pk_path_x(i) = pk_start_x * (1-r) + pk_goal_x * r;<br>            pk_path_y(i) = pk_start_y * (1-r) + pk_goal_y * r;<br>        end<br>    end<br>    %% 현재 ego → 가장 가까운 path point 찾기<br>    %% next_target = pk_path_x(idx+lookahead), pk_path_y(idx+lookahead)<br>end</code></pre>
 <div class="text-xs text-green-800 mt-2"><strong>입력</strong>: ego_x/y/yaw, mode, Parking_Start_Point, Parking_Goal_Point → <strong>출력</strong>: next target waypoint</div>
 </div>
 
 <!-- Dev-A -->
 <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-yellow">3</span><h3 class="text-lg font-bold text-amber-900"> Dev-A: 매우 저속 + 후진 지원</h3></div>
-<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_a_basic_driving.m</code>에서 PK 모드면 1~2 m/s 저속, Direction 신호로 후진 가능.</div>
+<div class="text-sm text-amber-900 mb-2"><strong>무엇을 만드는가</strong>: <code>longitudinal_controller_fcn.m</code>에서 PK 모드면 1~2 m/s 저속, Direction 신호로 후진 가능.</div>
 <div class="text-sm text-amber-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-amber-900 ml-6 list-decimal space-y-1 mb-3">
 <li>PK 모드 → v_target = 2 m/s (매우 느림)</li>
@@ -1060,35 +1055,35 @@ open generic_IVS.mdl
 <li>후진: acc_cmd 음수 = 후진 가속</li>
 <li>Goal 근접 → 감속 → 정지</li>
 </ol>
-<pre><code>%% dev_a_basic_driving.m 안<br>switch mode<br>    case int32(7)  %% PARKING<br>        v_target_adj = 2.0 * double(direction);  %% direction = +1 전진, -1 후진<br>        Kp = 0.3; Ki = 0.05;<br>        %% Goal 근접 시 강제 감속<br>        if dist_to_goal &lt; 1.0<br>            v_target_adj = 0.5;<br>        end<br>    %% ... 다른 mode들<br>end<br>%% PID 계산</code></pre>
+<pre><code>%% longitudinal_controller_fcn.m 안<br>switch mode<br>    case int32(7)  %% PARKING<br>        v_target_adj = 2.0 * double(direction);  %% direction = +1 전진, -1 후진<br>        Kp = 0.3; Ki = 0.05;<br>        %% Goal 근접 시 강제 감속<br>        if dist_to_goal &lt; 1.0<br>            v_target_adj = 0.5;<br>        end<br>    %% ... 다른 mode들<br>end<br>%% PID 계산</code></pre>
 <div class="text-xs text-amber-800 mt-2"><strong>입력</strong>: mode, direction (+1/-1) → <strong>출력</strong>: acc_cmd (저속)</div>
 </div>
 
 <!-- Dev-C -->
 <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-purple">4</span><h3 class="text-lg font-bold text-purple-900"> Dev-C: 주차 경로 → CTE 변환</h3></div>
-<div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_c_tollgate.m</code>에서 Dev-D의 경로를 cte_offset으로 변환.</div>
+<div class="text-sm text-purple-900 mb-2"><strong>무엇을 만드는가</strong>: <code>trajectory_planning_fcn.m</code>에서 Dev-D의 경로를 cte_offset으로 변환.</div>
 <div class="text-sm text-purple-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-purple-900 ml-6 list-decimal space-y-1 mb-3">
 <li>Dev-D가 발행하는 next target waypoint (pk_target_x, pk_target_y) 받기</li>
 <li>자차 기준으로 next target의 횡방향 거리 계산</li>
 <li>이게 cte_offset이 됨 (Lateral 컨트롤러가 추종)</li>
 </ol>
-<pre><code>%% dev_c_tollgate.m 안 (시그니처 확장)<br>if mode == int32(7)<br>    %% Dev-D의 next target waypoint 받기 (From[PK_Target_X], From[PK_Target_Y])<br>    dx = pk_target_x - ego_x;<br>    dy = pk_target_y - ego_y;<br>    %% Frenet 횡방향 거리<br>    lat_dist = -sin(ego_yaw)*dx + cos(ego_yaw)*dy;<br>    cte_offset = -lat_dist;  %% Lateral PID 입력<br>else<br>    %% 기존 LC 로직<br>end</code></pre>
+<pre><code>%% trajectory_planning_fcn.m 안 (시그니처 확장)<br>if mode == int32(7)<br>    %% Dev-D의 next target waypoint 받기 (From[PK_Target_X], From[PK_Target_Y])<br>    dx = pk_target_x - ego_x;<br>    dy = pk_target_y - ego_y;<br>    %% Frenet 횡방향 거리<br>    lat_dist = -sin(ego_yaw)*dx + cos(ego_yaw)*dy;<br>    cte_offset = -lat_dist;  %% Lateral PID 입력<br>else<br>    %% 기존 LC 로직<br>end</code></pre>
 <div class="text-xs text-purple-800 mt-2"><strong>입력</strong>: pk_target_x, pk_target_y → <strong>출력</strong>: cte_offset</div>
 </div>
 
 <!-- Dev-E -->
 <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-4">
 <div class="flex items-center gap-2 mb-2"><span class="badge badge-blue">5</span><h3 class="text-lg font-bold text-blue-900"> Dev-E: 큰 조향각 사용 (저속 정밀)</h3></div>
-<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>dev_e_lateral.m</code>에서 PK 모드는 저속이라 큰 조향각도 안전.</div>
+<div class="text-sm text-blue-900 mb-2"><strong>무엇을 만드는가</strong>: <code>lateral_controller_fcn.m</code>에서 PK 모드는 저속이라 큰 조향각도 안전.</div>
 <div class="text-sm text-blue-900 mb-2"><strong>구체적 단계</strong>:</div>
 <ol class="text-sm text-blue-900 ml-6 list-decimal space-y-1 mb-3">
 <li>PK 모드 → Kp 작게 (0.8), Kd 크게 (0.9) — 부드럽고 정밀</li>
 <li>±π/6 한계 그대로 (저속이라 풀 조향각 사용 가능)</li>
 <li>큰 조향 시 진동 방지 위해 anti-windup 더 작게</li>
 </ol>
-<pre><code>%% dev_e_lateral.m 안<br>switch mode<br>    case int32(1), Kp = 1.5; Ki = 0.3; Kd = 0.4;  %% LK<br>    case {int32(3), int32(4)}, Kp = 2.0; Ki = 0.5; Kd = 0.3;  %% LC<br>    case int32(6), Kp = 1.0; Ki = 0.2; Kd = 0.8;  %% TG<br>    case int32(7)  %% PARKING — 큰 조향 + 부드럽게<br>        Kp = 0.8; Ki = 0.2; Kd = 0.9;<br>    otherwise, Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>end<br>%% 나머지 PID 동일</code></pre>
+<pre><code>%% lateral_controller_fcn.m 안<br>switch mode<br>    case int32(1), Kp = 1.5; Ki = 0.3; Kd = 0.4;  %% LK<br>    case {int32(3), int32(4)}, Kp = 2.0; Ki = 0.5; Kd = 0.3;  %% LC<br>    case int32(6), Kp = 1.0; Ki = 0.2; Kd = 0.8;  %% TG<br>    case int32(7)  %% PARKING — 큰 조향 + 부드럽게<br>        Kp = 0.8; Ki = 0.2; Kd = 0.9;<br>    otherwise, Kp = 1.5; Ki = 0.3; Kd = 0.4;<br>end<br>%% 나머지 PID 동일</code></pre>
 <div class="text-xs text-blue-800 mt-2"><strong>입력</strong>: cte (Dev-C), mode → <strong>출력</strong>: steer_cmd (큰 조향 OK)</div>
 </div>
 </div>
@@ -1120,14 +1115,14 @@ open generic_IVS.mdl
 <p class="text-sm text-amber-900 mb-3"><strong>모든 시나리오의 base.</strong> 차선 중앙 유지 + 선행차 따라가기.</p>
 <div class="text-sm font-semibold text-amber-900 mb-2"> 내가 만들어야 할 핵심 작업:</div>
 <ul class="list-disc ml-6 text-sm text-amber-900 space-y-1 mb-3">
-<li>안전거리 모델 + ACC PI 제어 (dev_a_basic_driving.m)</li>
+<li>안전거리 모델 + ACC PI 제어 (longitudinal_controller_fcn.m)</li>
 <li>비상 제동 로직 (front_gap < 5m → -5 m/s²)</li>
 <li>가속/감속 한계 [-5, +3] m/s²</li>
 <li>차선 변경 시 OWNER 협업 (Dev-B/C/E와)</li>
 </ul>
 <div class="flex gap-2 flex-wrap mt-3">
 <span class="badge badge-blue"> Lib_LongitudinalController</span>
-<span class="badge badge-yellow"> dev_a_basic_driving.m</span>
+<span class="badge badge-yellow"> longitudinal_controller_fcn.m</span>
 <a class="badge badge-amber cursor-pointer hover:opacity-80" onclick="navigate('scn-driving')">→ 시나리오 상세 보기</a>
 </div>
 </div>
@@ -1141,7 +1136,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시그니처 (절대 변경 금지)</h2>
-<pre><code>function acc_cmd = dev_a_basic_driving(v_ego, v_target, front_gap, mode)</code></pre>
+<pre><code>function acc_cmd = longitudinal_controller_fcn(v_ego, v_target, front_gap, mode)</code></pre>
 <table class="mt-3">
 <thead><tr><th>변수</th><th>의미</th><th>단위</th><th>현재 source</th></tr></thead>
 <tbody>
@@ -1185,7 +1180,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 단위 테스트 (commit 전 실행)</h2>
-<pre><code>%% Test 1: 정상 가속<br>acc1 = dev_a_basic_driving(10, 20, 50, int32(1));<br>assert(acc1 &gt; 0 &amp;&amp; acc1 &lt; 3, '정상 가속 범위 위반');<br><br>%% Test 2: 비상 제동<br>acc2 = dev_a_basic_driving(20, 20, 3, int32(1));<br>assert(acc2 == -5, '비상 제동 트리거 안 됨');<br><br>%% Test 3: 등속 도달<br>acc3 = dev_a_basic_driving(20, 20, 999, int32(1));<br>assert(abs(acc3) &lt; 0.5, '등속에서 가속 발생');<br><br>%% Test 4: 한계 confine<br>acc4 = dev_a_basic_driving(0, 100, 999, int32(1));<br>assert(acc4 &lt;= 3.0, '상한 초과');</code></pre>
+<pre><code>%% Test 1: 정상 가속<br>acc1 = longitudinal_controller_fcn(10, 20, 50, int32(1));<br>assert(acc1 &gt; 0 &amp;&amp; acc1 &lt; 3, '정상 가속 범위 위반');<br><br>%% Test 2: 비상 제동<br>acc2 = longitudinal_controller_fcn(20, 20, 3, int32(1));<br>assert(acc2 == -5, '비상 제동 트리거 안 됨');<br><br>%% Test 3: 등속 도달<br>acc3 = longitudinal_controller_fcn(20, 20, 999, int32(1));<br>assert(abs(acc3) &lt; 0.5, '등속에서 가속 발생');<br><br>%% Test 4: 한계 confine<br>acc4 = longitudinal_controller_fcn(0, 100, 999, int32(1));<br>assert(acc4 &lt;= 3.0, '상한 초과');</code></pre>
 </div>
 
 <div class="card bg-amber-50 border-amber-300">
@@ -1272,7 +1267,7 @@ open generic_IVS.mdl
 </ul>
 <div class="flex gap-2 flex-wrap mt-3">
 <span class="badge badge-blue"> Lib_ModeManager</span>
-<span class="badge badge-yellow"> dev_b_overtaking.m</span>
+<span class="badge badge-yellow"> mode_manager_fcn.m</span>
 <a class="badge badge-red cursor-pointer hover:opacity-80" onclick="navigate('scn-overtaking')">→ 시나리오 상세 보기</a>
 </div>
 </div>
@@ -1286,7 +1281,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시그니처</h2>
-<pre><code>function mode = dev_b_overtaking(ego_v, ego_x, ego_y, ego_yaw, traffic_x, traffic_y, target_lane, current_lane)</code></pre>
+<pre><code>function mode = mode_manager_fcn(ego_v, ego_x, ego_y, ego_yaw, traffic_x, traffic_y, target_lane, current_lane)</code></pre>
 </div>
 
 <div class="card">
@@ -1337,7 +1332,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 단위 테스트</h2>
-<pre><code>%% Test 1: 초기 → LK<br>m1 = dev_b_overtaking(20, 0, 0, 0, 999, 0, int32(1), int32(1));<br>assert(m1 == int32(1));<br><br>%% Test 2: 선행차 가까움 → LC_OUT 트리거<br>clear dev_b_overtaking  %% persistent 초기화<br>for i = 1:10<br>    m2 = dev_b_overtaking(20, 0, 0, 0, 30, 0, int32(2), int32(1));<br>end<br>assert(m2 == int32(3) || m2 == int32(4), 'LC 트리거 안 됨');<br><br>%% Test 3: 비상 (TODO 구현 후)<br>%% m3 = dev_b_overtaking(20, 0, 0, 0, 3, 0, int32(1), int32(1));<br>%% assert(m3 == int32(9));</code></pre>
+<pre><code>%% Test 1: 초기 → LK<br>m1 = mode_manager_fcn(20, 0, 0, 0, 999, 0, int32(1), int32(1));<br>assert(m1 == int32(1));<br><br>%% Test 2: 선행차 가까움 → LC_OUT 트리거<br>clear mode_manager_fcn  %% persistent 초기화<br>for i = 1:10<br>    m2 = mode_manager_fcn(20, 0, 0, 0, 30, 0, int32(2), int32(1));<br>end<br>assert(m2 == int32(3) || m2 == int32(4), 'LC 트리거 안 됨');<br><br>%% Test 3: 비상 (TODO 구현 후)<br>%% m3 = mode_manager_fcn(20, 0, 0, 0, 3, 0, int32(1), int32(1));<br>%% assert(m3 == int32(9));</code></pre>
 </div>
 
 <div class="card bg-red-50 border-red-300">
@@ -1425,7 +1420,7 @@ open generic_IVS.mdl
 </ul>
 <div class="flex gap-2 flex-wrap mt-3">
 <span class="badge badge-blue"> Lib_TrajectoryPlanning</span>
-<span class="badge badge-yellow"> dev_c_tollgate.m</span>
+<span class="badge badge-yellow"> trajectory_planning_fcn.m</span>
 <a class="badge badge-purple cursor-pointer hover:opacity-80" onclick="navigate('scn-tollgate')">→ 시나리오 상세 보기</a>
 </div>
 </div>
@@ -1439,7 +1434,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시그니처</h2>
-<pre><code>function cte_offset = dev_c_tollgate(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v)</code></pre>
+<pre><code>function cte_offset = trajectory_planning_fcn(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v)</code></pre>
 <p class="text-sm text-gray-600 mt-2"><strong>핵심</strong>: <code>cte_offset = cte_in − target_offset</code><br>target_offset만큼 차로 중심에서 벗어난 경로를 따라간 효과.</p>
 </div>
 
@@ -1564,7 +1559,7 @@ open generic_IVS.mdl
 </ul>
 <div class="flex gap-2 flex-wrap mt-3">
 <span class="badge badge-blue"> Lib_PathPlanning</span>
-<span class="badge badge-yellow"> dev_d_parking.m</span>
+<span class="badge badge-yellow"> path_planning_fcn.m</span>
 <a class="badge badge-green cursor-pointer hover:opacity-80" onclick="navigate('scn-parking')">→ 시나리오 상세 보기</a>
 </div>
 </div>
@@ -1578,7 +1573,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시그니처 (출력 2개)</h2>
-<pre><code>function [target_lane, lane_cost] = dev_d_parking(
+<pre><code>function [target_lane, lane_cost] = path_planning_fcn(
     ego_x, ego_y, ego_yaw, traffic_x, traffic_y, current_lane)</code></pre>
 <table class="mt-3">
 <thead><tr><th>출력</th><th>타입</th><th>의미</th></tr></thead>
@@ -1690,18 +1685,19 @@ open generic_IVS.mdl
 
 <!-- ============ Dev-E ============ -->
 <div class="page" id="page-dev-e">
-<h1 class="text-3xl font-bold mb-2"> Dev-E — 주차 시나리오 (횡 제어)</h1>
+<h1 class="text-3xl font-bold mb-2"> Dev-E — 횡 제어 (Cross-cutting)</h1>
 <!-- Owner 시나리오 카드 -->
-<div class="card bg-green-50 border-l-4 border-green-500 mb-4">
+<div class="card bg-blue-50 border-l-4 border-blue-500 mb-4">
 <div class="flex items-center gap-3 mb-3">
 <span class="text-2xl"></span>
 <div>
-<div class="text-xs uppercase tracking-wide text-green-700 font-semibold">OWNER 시나리오</div>
-<div class="text-xl font-bold text-blue-900">️ 2-1. 주차 (횡 제어 owner)</div></div>
+<div class="text-xs uppercase tracking-wide text-blue-700 font-semibold">OWNER 시나리오</div>
+<div class="text-xl font-bold text-blue-900"> Cross-cutting: 4 시나리오 모두</div>
 </div>
-<p class="text-sm text-green-900 mb-3"><strong>주차 시나리오 owner</strong> (Dev-D와 함께). Lateral 모듈 단일 owner로 모든 시나리오 횡 제어 제공.</p>
+</div>
+<p class="text-sm text-blue-900 mb-3"><strong>횡 제어 단일 owner.</strong> 4 시나리오 모두에서 mode별 PID 게인 분기 책임.</p>
 <div class="text-sm font-semibold text-blue-900 mb-2"> 내가 만들어야 할 핵심 작업:</div>
-<ul class="list-disc ml-6 text-sm text-green-900 space-y-1 mb-3">
+<ul class="list-disc ml-6 text-sm text-blue-900 space-y-1 mb-3">
 <li>LK: Kp=1.5, Ki=0.3, Kd=0.4 (차선 중앙 유지)</li>
 <li>LC (모드 3,4): Kp=2.0, Ki=0.5 (빠른 차선 변경)</li>
 <li>TG (모드 6): Kp=1.0, Kd=0.8 (정밀 게이트 정렬)</li>
@@ -1709,8 +1705,8 @@ open generic_IVS.mdl
 </ul>
 <div class="flex gap-2 flex-wrap mt-3">
 <span class="badge badge-blue"> Lib_LateralController</span>
-<span class="badge badge-yellow"> dev_e_lateral.m</span>
-<a class="badge badge-green cursor-pointer hover:opacity-80" onclick="navigate('scn-parking')">→ 주차 시나리오 상세</a>
+<span class="badge badge-yellow"> lateral_controller_fcn.m</span>
+<a class="badge badge-blue cursor-pointer hover:opacity-80" onclick="navigate('scn-driving')">→ 시나리오 상세 보기</a>
 </div>
 </div>
 
@@ -1723,7 +1719,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시그니처</h2>
-<pre><code>function steer_cmd = dev_e_lateral(cte, mode)</code></pre>
+<pre><code>function steer_cmd = lateral_controller_fcn(cte, mode)</code></pre>
 <p class="text-sm text-gray-600 mt-2"><strong>입력 단순화</strong> — cte 하나로 모든 정보 통합 (Dev-C trajectory planner가 cte를 LC 시 보정).</p>
 </div>
 
@@ -1761,7 +1757,7 @@ open generic_IVS.mdl
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 단위 테스트</h2>
-<pre><code>%% Test 1: 직진 (cte=0) → 거의 0 조향<br>clear dev_e_lateral<br>s1 = dev_e_lateral(0, int32(1));<br>assert(abs(s1) &lt; 0.01);<br><br>%% Test 2: cte 양수 (오른쪽 벗어남) → 좌조향 (+)<br>s2 = dev_e_lateral(0.5, int32(1));<br>assert(s2 &gt; 0, '부호 잘못');<br><br>%% Test 3: cte 음수 → 우조향 (−)<br>s3 = dev_e_lateral(-0.5, int32(1));<br>assert(s3 &lt; 0);<br><br>%% Test 4: 상한<br>s4 = dev_e_lateral(10, int32(1));<br>assert(s4 &lt;= pi/6);</code></pre>
+<pre><code>%% Test 1: 직진 (cte=0) → 거의 0 조향<br>clear lateral_controller_fcn<br>s1 = lateral_controller_fcn(0, int32(1));<br>assert(abs(s1) &lt; 0.01);<br><br>%% Test 2: cte 양수 (오른쪽 벗어남) → 좌조향 (+)<br>s2 = lateral_controller_fcn(0.5, int32(1));<br>assert(s2 &gt; 0, '부호 잘못');<br><br>%% Test 3: cte 음수 → 우조향 (−)<br>s3 = lateral_controller_fcn(-0.5, int32(1));<br>assert(s3 &lt; 0);<br><br>%% Test 4: 상한<br>s4 = lateral_controller_fcn(10, int32(1));<br>assert(s4 &lt;= pi/6);</code></pre>
 </div>
 
 <div class="card bg-blue-50 border-blue-300">
@@ -1827,20 +1823,20 @@ open generic_IVS.mdl
 </div>
 </div>
 
-<<!-- ============ Dev-F ============ -->
+<!-- ============ Dev-F ============ -->
 <div class="page" id="page-dev-f">
-<h1 class="text-3xl font-bold mb-2">️ Dev-F — Supervisor (통합/인프라)</h1>
+<h1 class="text-3xl font-bold mb-2">🛠️ Dev-F — Supervisor (통합/인프라)</h1>
 <!-- Owner 시나리오 카드 (Supervisor) -->
 <div class="card bg-gray-50 border-l-4 border-gray-500 mb-4">
 <div class="flex items-center gap-3 mb-3">
-<span class="text-2xl">️</span>
+<span class="text-2xl">🛠️</span>
 <div>
 <div class="text-xs uppercase tracking-wide text-gray-700 font-semibold">OWNER 역할 (Cross-scenario)</div>
 <div class="text-xl font-bold text-gray-900">통합 / 인프라 / PR 리뷰</div>
 </div>
 </div>
 <p class="text-sm text-gray-900 mb-3"><strong>4 시나리오 모두를 지원하는 인프라 책임.</strong> Simulink 모델 wiring + CarMaker 연결 + 통합 테스트.</p>
-<div class="text-sm font-semibold text-gray-900 mb-2"> 내가 만들어야 할 핵심 작업:</div>
+<div class="text-sm font-semibold text-gray-900 mb-2">📋 내가 만들어야 할 핵심 작업:</div>
 <ul class="list-disc ml-6 text-sm text-gray-900 space-y-1 mb-3">
 <li>5 Lib 컨테이너 wiring (Goto/From, Inport/Outport, Function-Call Split)</li>
 <li>CarMaker Read/Write Dict 추가 (Ego_Velocity, Steer_L, Accel_Cmd 등)</li>
@@ -1851,8 +1847,8 @@ open generic_IVS.mdl
 <li>setup_paths.m / .gitattributes / .gitignore 유지보수</li>
 </ul>
 <div class="flex gap-2 flex-wrap mt-3">
-<span class="badge badge-blue"> generic_IVS.mdl</span>
-<span class="badge badge-yellow"> setup_paths.m</span>
+<span class="badge badge-blue">📁 generic_IVS.mdl</span>
+<span class="badge badge-yellow">📄 setup_paths.m</span>
 <a class="badge badge-purple cursor-pointer hover:opacity-80" onclick="navigate('architecture')">→ 아키텍처</a>
 <a class="badge badge-purple cursor-pointer hover:opacity-80" onclick="navigate('dictionary')">→ 신호 사전</a>
 </div>
@@ -1915,13 +1911,6 @@ open generic_IVS.mdl
 <div class="card" id="dict-table">
 <div class="signal-row header">
 <div>이름</div><div>생성 (Producer)</div><div>소비 (Consumer)</div><div>타입</div><div>분류</div>
-</div>
-<div class="signal-row" data-cat="goto" data-name="CTRL_BUS">
-<div><code>CTRL_BUS</code> <span class="badge badge-green">NEW</span></div>
-<div>Lib_Supervisor (Goto)</div>
-<div>5 Lib (From) — Long, Mode, Traj, Path, Lat</div>
-<div>Bus (struct)</div>
-<div><span class="badge badge-purple">Bus</span></div>
 </div>
 <div class="signal-row" data-cat="read" data-name="time" data-desc="시뮬레이션 시간">
 <div><code>Time</code><div class="text-xs text-gray-500 mt-1">시뮬레이션 시간</div></div>
@@ -2187,749 +2176,315 @@ end</code></pre>
 </div>
 <!-- ============ ALGORITHMS ============ -->
 <div class="page" id="page-algorithms">
-<h1 class="text-3xl font-bold mb-2">⚙️ 알고리즘 상세 (R&R + 플로우차트)</h1>
-<p class="text-gray-600 mb-6">6 Dev × 4 시나리오 R&R 매트릭스 + 각 .m 파일의 정식 플로우차트 (표준 기호).</p>
+<h1 class="text-3xl font-bold mb-2">⚙️ 알고리즘 상세 (Simulink + 외부 .m 코드)</h1>
+<p class="text-gray-600 mb-6">각 Lib의 Simulink 내부 구조 + 호출하는 외부 .m 코드 + 알고리즘 설명을 한눈에.</p>
 
-<!-- ▶ 플로우차트 범례 -->
-<div class="card bg-gray-50">
-<h2 class="text-lg font-semibold mb-2"> 플로우차트 표준 기호</h2>
-<svg viewBox="0 0 720 60" class="w-full">
-<rect x="10" y="20" width="100" height="30" rx="15" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
-<text x="60" y="40" text-anchor="middle" font-size="11" fill="#92400e">시작/종료</text>
-
-<rect x="150" y="20" width="100" height="30" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
-<text x="200" y="40" text-anchor="middle" font-size="11" fill="#3730a3">처리</text>
-
-<polygon points="340,35 290,20 240,35 290,50" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5"/>
-<text x="290" y="40" text-anchor="middle" font-size="11" fill="#9a3412">조건</text>
-
-<polygon points="380,20 480,20 470,50 370,50" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
-<text x="425" y="40" text-anchor="middle" font-size="11" fill="#15803d">입력/출력</text>
-
-<line x1="510" y1="35" x2="580" y2="35" stroke="#374151" stroke-width="2" marker-end="url(#arrowLegend)"/>
-<defs><marker id="arrowLegend" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-<text x="545" y="25" text-anchor="middle" font-size="11" fill="#374151">흐름</text>
-
-<rect x="600" y="20" width="100" height="30" fill="#fce7f3" stroke="#db2777" stroke-width="1.5" stroke-dasharray="4,2"/>
-<text x="650" y="40" text-anchor="middle" font-size="11" fill="#9d174d">루프/반복</text>
+<div class="card bg-indigo-50 border-indigo-200">
+<h2 class="text-xl font-semibold mb-3 text-indigo-900"> Simulink Lib 내부 표준 구조</h2>
+<svg viewBox="0 0 700 240" class="w-full">
+<defs><marker id="amark" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#4f46e5"/></marker></defs>
+<!-- Trigger 입력 (위에서) -->
+<rect x="280" y="10" width="140" height="36" rx="6" fill="#fce7f3" stroke="#db2777"/>
+<text x="350" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#9d174d">⚡ Trigger (function-call)</text>
+<path d="M 350 46 L 350 70" stroke="#db2777" stroke-width="2" marker-end="url(#amark)"/>
+<!-- 6개 Inport -->
+<g font-size="10" font-family="monospace">
+<rect x="20" y="80" width="80" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="60" y="96" text-anchor="middle">In_1</text>
+<rect x="20" y="110" width="80" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="60" y="126" text-anchor="middle">In_2</text>
+<rect x="20" y="140" width="80" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="60" y="156" text-anchor="middle">In_3</text>
+<rect x="20" y="170" width="80" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="60" y="186" text-anchor="middle">In_n...</text>
+</g>
+<!-- Wrapper -->
+<rect x="200" y="80" width="300" height="120" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+<text x="350" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">Wrapper (MATLAB Function)</text>
+<text x="350" y="130" text-anchor="middle" font-size="10" font-family="monospace" fill="#78350f">function out = wrapper(in1, in2, ...)</text>
+<text x="350" y="148" text-anchor="middle" font-size="10" font-family="monospace" fill="#78350f">  %#codegen</text>
+<text x="350" y="166" text-anchor="middle" font-size="10" font-family="monospace" fill="#dc2626" font-weight="bold">  out = external_fcn(in1, in2, ...);</text>
+<text x="350" y="184" text-anchor="middle" font-size="10" font-family="monospace" fill="#78350f">end</text>
+<!-- 연결선 -->
+<g stroke="#6366f1" stroke-width="1.5" fill="none">
+<path d="M 100 92 L 200 110" marker-end="url(#amark)"/>
+<path d="M 100 122 L 200 130" marker-end="url(#amark)"/>
+<path d="M 100 152 L 200 150" marker-end="url(#amark)"/>
+<path d="M 100 182 L 200 170" marker-end="url(#amark)"/>
+</g>
+<!-- Outport -->
+<rect x="600" y="125" width="80" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="640" y="143" text-anchor="middle" font-size="11" font-family="monospace">Out</text>
+<path d="M 500 140 L 600 140" stroke="#6366f1" stroke-width="2" marker-end="url(#amark)"/>
+<!-- 외부 .m 파일 -->
+<rect x="200" y="215" width="300" height="20" rx="3" fill="#fef2f2" stroke="#dc2626" stroke-dasharray="4,2"/>
+<text x="350" y="229" text-anchor="middle" font-size="10" fill="#991b1b">↳ functions/external_fcn.m (Dev가 수정하는 파일)</text>
 </svg>
+<p class="text-sm text-indigo-900 mt-3">모든 5개 Lib가 같은 구조. Wrapper는 한 줄 forwarder이고, 실제 알고리즘은 외부 <code>.m</code>에 작성.</p>
 </div>
 
-<!-- ▶ R&R 매트릭스 -->
-<div class="card">
-<h2 class="text-2xl font-bold mb-3"> R&amp;R 매트릭스 (역할과 책임)</h2>
-<p class="text-sm text-gray-600 mb-4">각 Dev × 4 시나리오.  = Owner (단독 책임),  = Contributor (해당 모듈에서 기여), ◯ = 영향 없음.</p>
+<div class="card border-l-4 border-amber-500">
+<h2 class="text-2xl font-bold mb-2 text-amber-800"> 1. Lib_LongitudinalController (Dev-A)</h2>
+<div class="flex gap-2 mb-4"><span class="badge badge-yellow">10ms</span> <span class="badge badge-blue">4 in / 1 out</span></div>
 
-<table class="text-sm">
-<thead>
-<tr>
-<th rowspan="2">Dev</th>
-<th rowspan="2">담당 Lib (.m 파일)</th>
-<th colspan="4" class="text-center bg-blue-50">4 시나리오에서 역할</th>
-<th rowspan="2">단독 권한 (Right)</th>
-</tr>
-<tr class="bg-gray-50">
-<th class="text-xs"> 1-1<br>기본주행</th>
-<th class="text-xs"> 1-2<br>추월</th>
-<th class="text-xs"> 1-3<br>톨게이트</th>
-<th class="text-xs">️ 2-1<br>주차</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong class="text-amber-700"> Dev-A</strong></td>
-<td><code>dev_a_basic_driving.m</code><br><span class="text-xs text-gray-500">(Lib_LongitudinalController)</span></td>
-<td class="text-center bg-yellow-50"><strong> OWNER</strong><br><span class="text-xs">ACC + 안전거리</span></td>
-<td class="text-center"><span class="text-xs"> v_target+5</span></td>
-<td class="text-center"><span class="text-xs"> v_target=8</span></td>
-<td class="text-center"><span class="text-xs"> v_target=2</span></td>
-<td class="text-xs">acc_cmd 명령 + 비상 제동</td>
-</tr>
-<tr>
-<td><strong class="text-red-700">️ Dev-B</strong></td>
-<td><code>dev_b_overtaking.m</code><br><span class="text-xs text-gray-500">(Lib_ModeManager)</span></td>
-<td class="text-center"><span class="text-xs"> LK default</span></td>
-<td class="text-center bg-yellow-50"><strong> OWNER</strong><br><span class="text-xs">State Machine</span></td>
-<td class="text-center"><span class="text-xs"> TG 진입</span></td>
-<td class="text-center"><span class="text-xs"> PK 진입</span></td>
-<td class="text-xs">mode 결정 + EMERGENCY</td>
-</tr>
-<tr>
-<td><strong class="text-purple-700"> Dev-C</strong></td>
-<td><code>dev_c_tollgate.m</code><br><span class="text-xs text-gray-500">(Lib_TrajectoryPlanning)</span></td>
-<td class="text-center"><span class="text-xs"> cte_offset=0</span></td>
-<td class="text-center"><span class="text-xs"> 4초 ramp</span></td>
-<td class="text-center bg-yellow-50"><strong> OWNER</strong><br><span class="text-xs">6초 ramp + LC</span></td>
-<td class="text-center"><span class="text-xs"> 경로 변환</span></td>
-<td class="text-xs">cte_offset 보정 (LC 궤적)</td>
-</tr>
-<tr>
-<td><strong class="text-green-700">️ Dev-D</strong></td>
-<td><code>dev_d_parking.m</code><br><span class="text-xs text-gray-500">(Lib_PathPlanning)</span></td>
-<td class="text-center"><span class="text-xs"> 현재 차선</span></td>
-<td class="text-center"><span class="text-xs"> lane_cost</span></td>
-<td class="text-center"><span class="text-xs"> G2 강제</span></td>
-<td class="text-center bg-yellow-50"><strong> OWNER</strong><br><span class="text-xs">주차 경로</span></td>
-<td class="text-xs">target_lane 추천</td>
-</tr>
-<tr>
-<td><strong class="text-blue-700"> Dev-E</strong></td>
-<td><code>dev_e_lateral.m</code><br><span class="text-xs text-gray-500">(Lib_LateralController)</span></td>
-<td class="text-center"><span class="text-xs"> LK 게인</span></td>
-<td class="text-center"><span class="text-xs"> LC 게인</span></td>
-<td class="text-center"><span class="text-xs"> TG 게인</span></td>
-<td class="text-center bg-yellow-50"><strong> OWNER</strong><br><span class="text-xs">주차 PID</span></td>
-<td class="text-xs">steer_cmd 단독 + Lateral 모듈 (모든 시나리오 게인 제공)</td>
-</tr><tr>
-<td><strong class="text-gray-700">️ Dev-F</strong></td>
-<td><code>dev_f_supervisor.m</code><br><span class="text-xs text-gray-500">(Lib_Supervisor)</span></td>
-<td colspan="4" class="text-center bg-yellow-50"><strong> 모든 시나리오 인프라</strong><br><span class="text-xs">ctrl_bus 생성 + 통합/리뷰</span></td>
-<td class="text-xs">PR 리뷰 + 머지 권한</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<!-- ▶ Supervisor (Dev-F) -->
-<div class="card border-l-4 border-blue-500">
-<h2 class="text-2xl font-bold mb-2 text-blue-800">️ 0. Lib_Supervisor — dev_f_supervisor.m</h2>
-<div class="flex gap-2 mb-4">
-<span class="badge badge-blue">Dev-F</span>
-<span class="badge badge-yellow">10ms</span>
-<span class="badge badge-green">신규</span>
-<span class="badge badge-purple">ctrl_bus 발행자</span>
-</div>
-
-<!-- R&R 미니 카드 -->
-<div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-<div class="p-3 bg-blue-50 rounded">
-<div class="font-bold text-blue-900 mb-1"> 책임 (Responsibility)</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>raw CarMaker 신호 → 정리된 ctrl_bus struct</li>
-<li>Frenet 좌표 변환 (트래픽 자차 기준)</li>
-<li>current_lane 자동 계산 (ego_y → lane)</li>
-<li>front_gap 계산 (같은 차선만)</li>
-</ul>
-</div>
-<div class="p-3 bg-blue-50 rounded">
-<div class="font-bold text-blue-900 mb-1">⚡ 권한 (Right)</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>ctrl_bus 구조 변경 (Bus Object 정의)</li>
-<li>모든 PR 리뷰 + 머지</li>
-<li>Lib 인터페이스 표준 결정</li>
-</ul>
-</div>
-</div>
-
-<h3 class="text-lg font-semibold mb-2"> 플로우차트</h3>
-<svg viewBox="0 0 720 720" class="w-full bg-white rounded border">
-<defs><marker id="ar0" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-
-<!-- 시작 -->
-<rect x="280" y="20" width="160" height="40" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="360" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">시작 (10ms 호출)</text>
-<line x1="360" y1="60" x2="360" y2="80" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 입력 (평행사변형) -->
-<polygon points="160,90 580,90 560,140 140,140" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="110" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">입력 (CarMaker Read Dict)</text>
-<text x="360" y="128" text-anchor="middle" font-size="10" font-family="monospace" fill="#15803d">ego_v, ego_x, ego_y, ego_yaw, cte_raw, traffic_x/y/v, v_target_user</text>
-<line x1="360" y1="140" x2="360" y2="160" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 처리: Frenet 좌표 변환 -->
-<rect x="220" y="170" width="280" height="60" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#3730a3">Frenet 좌표 변환</text>
-<text x="360" y="207" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">long_dist = cos(yaw)·dx + sin(yaw)·dy</text>
-<text x="360" y="222" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">lat_dist  = -sin(yaw)·dx + cos(yaw)·dy</text>
-<line x1="360" y1="230" x2="360" y2="250" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 조건: traffic == (0,0)? -->
-<polygon points="360,255 480,310 360,365 240,310" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="305" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">traffic_x==0 &amp;&amp;</text>
-<text x="360" y="320" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">traffic_y==0 ?</text>
-<text x="380" y="345" text-anchor="middle" font-size="10" fill="#dc2626">(placeholder?)</text>
-
-<!-- Yes: placeholder 처리 (오른쪽) -->
-<text x="495" y="300" font-size="11" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="480" y1="310" x2="540" y2="310" stroke="#374151" stroke-width="2"/>
-<rect x="540" y="290" width="160" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="620" y="307" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">long_dist = 999</text>
-<text x="620" y="321" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">lat_dist = 0</text>
-
-<!-- No: 다음 조건 (아래) -->
-<text x="370" y="385" font-size="11" font-weight="bold" fill="#dc2626">No</text>
-<line x1="360" y1="365" x2="360" y2="395" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 합류 (placeholder + No 가) -->
-<line x1="620" y1="330" x2="620" y2="420" stroke="#374151" stroke-width="2"/>
-<line x1="620" y1="420" x2="475" y2="420" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 조건: long_dist>0.5 && abs(lat_dist)<1.8? (같은 차선?) -->
-<polygon points="360,400 475,440 360,480 245,440" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="435" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">long_dist&gt;0.5 &amp;&amp;</text>
-<text x="360" y="450" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">|lat_dist|&lt;1.8 ?</text>
-<text x="360" y="465" text-anchor="middle" font-size="9" fill="#9a3412">(같은 차선 앞차?)</text>
-
-<!-- Yes: front_gap = long_dist -->
-<text x="490" y="430" font-size="11" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="475" y1="440" x2="540" y2="440" stroke="#374151" stroke-width="2"/>
-<rect x="540" y="420" width="160" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="620" y="445" text-anchor="middle" font-size="11" font-family="monospace" fill="#3730a3">front_gap = long_dist</text>
-
-<!-- No: front_gap = 999 -->
-<text x="220" y="430" font-size="11" font-weight="bold" fill="#dc2626">No</text>
-<line x1="245" y1="440" x2="180" y2="440" stroke="#374151" stroke-width="2"/>
-<rect x="20" y="420" width="160" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="100" y="445" text-anchor="middle" font-size="11" font-family="monospace" fill="#3730a3">front_gap = 999</text>
-
-<!-- 합류 → current_lane 계산 -->
-<line x1="100" y1="460" x2="100" y2="500" stroke="#374151" stroke-width="2"/>
-<line x1="620" y1="460" x2="620" y2="500" stroke="#374151" stroke-width="2"/>
-<line x1="100" y1="500" x2="620" y2="500" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="500" x2="360" y2="520" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 처리: current_lane 계산 -->
-<rect x="200" y="525" width="320" height="60" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="545" text-anchor="middle" font-size="12" font-weight="bold" fill="#3730a3">current_lane 자동 계산</text>
-<text x="360" y="562" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">lane_dists = |LANE_CENTER_Y - ego_y|</text>
-<text x="360" y="577" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">current_lane = argmin(lane_dists) [1~4 클램프]</text>
-<line x1="360" y1="585" x2="360" y2="605" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 처리: ctrl_bus struct 생성 -->
-<rect x="220" y="610" width="280" height="40" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
-<text x="360" y="628" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b21b6">ctrl_bus = struct(ego_v, ego_x, ..., </text>
-<text x="360" y="642" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b21b6">front_gap, current_lane, v_target, lane_width)</text>
-<line x1="360" y1="650" x2="360" y2="668" stroke="#374151" stroke-width="2" marker-end="url(#ar0)"/>
-
-<!-- 출력 -->
-<polygon points="220,670 500,670 480,710 240,710" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="695" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">출력: ctrl_bus → Goto[CTRL_BUS]</text>
+<h3 class="text-lg font-semibold mb-2 text-gray-800"> Simulink 내부 구조</h3>
+<svg viewBox="0 0 760 240" class="w-full mb-4">
+<defs><marker id="al1" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#475569"/></marker></defs>
+<!-- Trigger -->
+<rect x="320" y="10" width="180" height="30" rx="4" fill="#fce7f3" stroke="#db2777"/>
+<text x="410" y="30" text-anchor="middle" font-size="10" font-family="monospace" fill="#9d174d">From[do_Logic_10ms_1] → FCS</text>
+<path d="M 410 40 L 410 65" stroke="#db2777" stroke-width="1.5" marker-end="url(#al1)"/>
+<!-- 4 Inports -->
+<g font-size="9" font-family="monospace">
+<rect x="20" y="60" width="120" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="80" y="76" text-anchor="middle">v_ego (Ego_Vel)</text>
+<rect x="20" y="92" width="120" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="80" y="108" text-anchor="middle">v_target = 20</text>
+<rect x="20" y="124" width="120" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="80" y="140" text-anchor="middle">front_gap = 999</text>
+<rect x="20" y="156" width="120" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="80" y="172" text-anchor="middle">mode (Mission)</text>
+</g>
+<!-- Wrapper -->
+<rect x="240" y="65" width="280" height="120" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+<text x="380" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400e">Wrapper</text>
+<text x="380" y="110" text-anchor="middle" font-size="10" font-family="monospace" fill="#78350f">acc_cmd = longitudinal_controller_fcn(</text>
+<text x="380" y="128" text-anchor="middle" font-size="10" font-family="monospace" fill="#78350f">  v_ego, v_target, front_gap, mode)</text>
+<text x="380" y="155" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="bold">↓ 외부 호출</text>
+<text x="380" y="175" text-anchor="middle" font-size="9" font-family="monospace" fill="#991b1b">functions/longitudinal_controller_fcn.m</text>
+<!-- 연결 -->
+<g stroke="#6366f1" stroke-width="1.5" fill="none">
+<path d="M 140 72 L 240 90" marker-end="url(#al1)"/>
+<path d="M 140 104 L 240 110" marker-end="url(#al1)"/>
+<path d="M 140 136 L 240 130" marker-end="url(#al1)"/>
+<path d="M 140 168 L 240 150" marker-end="url(#al1)"/>
+</g>
+<!-- Outport -->
+<rect x="600" y="110" width="140" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="670" y="129" text-anchor="middle" font-size="10" font-family="monospace">Out → Goto[Accel_Cmd]</text>
+<path d="M 520 125 L 600 125" stroke="#6366f1" stroke-width="2" marker-end="url(#al1)"/>
+<!-- Saturation 외부 -->
+<rect x="600" y="170" width="140" height="40" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="3,2"/>
+<text x="670" y="187" text-anchor="middle" font-size="10" fill="#92400e">↓ Sat[-5, +3]</text>
+<text x="670" y="203" text-anchor="middle" font-size="9" fill="#78350f">→ AccelCtrl.DesiredAx</text>
+<path d="M 670 140 L 670 170" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,2"/>
 </svg>
 
-<h3 class="text-lg font-semibold mt-4 mb-2"> 외부 .m 코드</h3>
-<pre><code>function ctrl_bus = dev_f_supervisor(ego_v, ego_x, ego_y, ego_yaw, ...
-                                    cte_raw, traffic_x, traffic_y, traffic_v, ...
-                                    v_target_user)
+<h3 class="text-lg font-semibold mb-2 text-gray-800"> 외부 .m 코드 (현재 placeholder)</h3>
+<pre><code>function acc_cmd = longitudinal_controller_fcn(v_ego, v_target, front_gap, mode)
 %#codegen
-% SUPERVISOR_FCN — 모든 raw 신호 정리 → Bus(struct) 생성
-% Owner: Dev-F (Supervisor / 인프라)
+% LONGITUDINAL_CONTROLLER_FCN — 종방향 제어 (ACC + LK)
+% Owner: Dev-A
 %
-% 역할:
-%   1) CarMaker raw 신호 → 정리된 struct (ctrl_bus)로 묶음
-%   2) Frenet 좌표 변환 (트래픽 → 자차 기준 종/횡 거리)
-%   3) Placeholder 처리 (트래픽 없음 → 999)
-%   4) current_lane 추정 (자차 글로벌 위치 → lane 인덱스)
-%   5) front_gap 계산 (같은 차선 트래픽만)
-%
-% Inputs (CarMaker Read Dict + 사용자 설정):
-%   ego_v, ego_x, ego_y, ego_yaw : 자차 상태
-%   cte_raw                       : Road.DevDist (차로 중앙 오차)
-%   traffic_x, traffic_y          : 가장 위협적인 트래픽 위치
-%   traffic_v                     : 트래픽 속도
-%   v_target_user                 : 사용자 설정 목표 속도 (기본 20)
-%
+% Inputs:
+%   v_ego     : 자차 속도 [m/s]
+%   v_target  : 목표 속도 [m/s]
+%   front_gap : 선행차 거리 [m] (없으면 999)
+%   mode      : int32, mission mode
 % Output:
-%   ctrl_bus : struct (Bus 호환). 모든 functions가 이 struct를 입력으로 받음.
+%   acc_cmd   : 목표 가속도 [m/s²], 범위 [-5, +3]
 
-% ===== 상수 =====
-LANE_WIDTH = 3.0;
-MAX_LANE = 4;
-LANE_CENTER_Y = [-4.5, -1.5, 1.5, 4.5];  % 각 차선 중앙의 글로벌 Y (예시)
+persistent v_int
+if isempty(v_int), v_int = 0; end
 
-% ===== 1) Frenet 좌표 변환 (트래픽 → 자차 기준) =====
+% --- Dev-A: 여기에 PID + ACC 로직 ---
+safe_dist = 10 + 2*v_ego;
+e_d = front_gap - safe_dist;
+e_v = v_target - v_ego;
+e_eff = min(e_d, e_v);
+
+Kp = 0.5; Ki = 0.1;
+v_int = max(min(v_int + e_eff*0.001, 2.0), -2.0);
+acc_cmd = Kp*e_eff + Ki*v_int;
+
+% 비상 제동
+if front_gap &lt; 5, acc_cmd = -5; end
+
+% 한계
+acc_cmd = max(min(acc_cmd, 3.0), -5.0);
+end
+</code></pre>
+
+<h3 class="text-lg font-semibold mb-2 mt-4 text-gray-800"> 알고리즘 설명</h3>
+<div class="bg-amber-50 p-4 rounded text-sm">
+<p><strong>1) 안전 거리 모델</strong>: <code>safe_dist = 10 + 2·v_ego</code> — 2초 룰 (속도 비례).</p>
+<p class="mt-2"><strong>2) 두 오차 계산</strong>:</p>
+<ul class="ml-6 mt-1 list-disc">
+<li><code>e_d = front_gap − safe_dist</code> (ACC 추종 오차)</li>
+<li><code>e_v = v_target − v_ego</code> (속도 추종 오차)</li>
+<li><code>e_eff = min(e_d, e_v)</code> ← <strong>더 보수적</strong>인 쪽 선택</li>
+</ul>
+<p class="mt-2"><strong>3) PI 제어 + Anti-windup</strong>:</p>
+<ul class="ml-6 mt-1 list-disc">
+<li>적분기 saturation ±2.0 (windup 방지)</li>
+<li><code>acc_cmd = Kp·e_eff + Ki·v_int</code> (Kp=0.5, Ki=0.1)</li>
+</ul>
+<p class="mt-2"><strong>4) 안전 한계</strong>: <code>front_gap &lt; 5m</code> → 비상 제동 <code>-5 m/s²</code>, 최종 출력 clip [-5, +3]</p>
+</div>
+</div>
+
+<div class="card border-l-4 border-blue-500">
+<h2 class="text-2xl font-bold mb-2 text-blue-800"> 2. Lib_LateralController (Dev-E)</h2>
+<div class="flex gap-2 mb-4"><span class="badge badge-yellow">10ms</span> <span class="badge badge-blue">2 in / 1 out</span></div>
+
+<h3 class="text-lg font-semibold mb-2"> Simulink 내부 구조</h3>
+<svg viewBox="0 0 760 200" class="w-full mb-4">
+<defs><marker id="al2" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#475569"/></marker></defs>
+<rect x="320" y="10" width="180" height="30" rx="4" fill="#fce7f3" stroke="#db2777"/>
+<text x="410" y="30" text-anchor="middle" font-size="10" font-family="monospace" fill="#9d174d">From[do_Logic_10ms_1] → FCS</text>
+<path d="M 410 40 L 410 60" stroke="#db2777" stroke-width="1.5" marker-end="url(#al2)"/>
+<g font-size="9" font-family="monospace">
+<rect x="20" y="70" width="140" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="90" y="86" text-anchor="middle">cte (Trajectory_CTE)</text>
+<rect x="20" y="102" width="140" height="24" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="90" y="118" text-anchor="middle">mode (Mission_Mode)</text>
+</g>
+<rect x="260" y="55" width="260" height="100" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+<text x="390" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e3a8a">Wrapper</text>
+<text x="390" y="100" text-anchor="middle" font-size="10" font-family="monospace" fill="#1e3a8a">steer_cmd = lateral_controller_fcn(</text>
+<text x="390" y="118" text-anchor="middle" font-size="10" font-family="monospace" fill="#1e3a8a">  cte, mode)</text>
+<text x="390" y="145" text-anchor="middle" font-size="9" font-family="monospace" fill="#991b1b">functions/lateral_controller_fcn.m</text>
+<g stroke="#6366f1" stroke-width="1.5" fill="none">
+<path d="M 160 82 L 260 95" marker-end="url(#al2)"/>
+<path d="M 160 114 L 260 120" marker-end="url(#al2)"/>
+</g>
+<rect x="600" y="95" width="140" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="670" y="114" text-anchor="middle" font-size="10" font-family="monospace">Out → Goto[Steer_Cmd]</text>
+<path d="M 520 110 L 600 110" stroke="#6366f1" stroke-width="2" marker-end="url(#al2)"/>
+<rect x="600" y="155" width="140" height="40" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="3,2"/>
+<text x="670" y="172" text-anchor="middle" font-size="10" fill="#92400e">↓ Sat[±π/6]</text>
+<text x="670" y="188" text-anchor="middle" font-size="9" fill="#78350f">→ Car.CFL/CFR.rz_ext</text>
+<path d="M 670 125 L 670 155" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,2"/>
+</svg>
+
+<h3 class="text-lg font-semibold mb-2"> 외부 .m 코드</h3>
+<pre><code>function steer_cmd = lateral_controller_fcn(cte, mode)
+%#codegen
+% LATERAL_CONTROLLER_FCN — 횡방향 제어 (PID 등)
+% Owner: Dev-E
+%
+% Inputs:
+%   cte  : Cross-Track Error [m] (DevDist or modified by trajectory)
+%   mode : int32, 1=LK, 3=LC, 5=Parking, etc.
+% Output:
+%   steer_cmd : 앞바퀴 조향각 [rad], 범위 ±pi/6
+
+persistent e_prev e_int
+if isempty(e_prev), e_prev = 0; e_int = 0; end
+
+% --- Dev-E: 여기에 PID/Stanley/Pure Pursuit 구현 ---
+Kp = 1.5; Ki = 0.3; Kd = 0.4;
+e  = -cte;
+de = e - e_prev;
+e_int = max(min(e_int + e*0.001, 3.0), -3.0);
+e_prev = e;
+steer_cmd = Kp*e + Ki*e_int + Kd*de;
+
+% 조향각 한계
+steer_cmd = max(min(steer_cmd, pi/6), -pi/6);
+end
+</code></pre>
+
+<h3 class="text-lg font-semibold mb-2 mt-4"> 알고리즘 설명</h3>
+<div class="bg-blue-50 p-4 rounded text-sm">
+<p><strong>1) 오차 부호 규칙</strong>: <code>e = −cte</code></p>
+<ul class="ml-6 mt-1 list-disc">
+<li><code>DevDist &gt; 0</code> (차로 오른쪽으로 벗어남) → <code>e &lt; 0</code> → 좌조향 (+)</li>
+<li>CarMaker 컨벤션과 일치하도록 부호 반전 처리</li>
+</ul>
+<p class="mt-2"><strong>2) PID 게인 (Day6 검증)</strong></p>
+<ul class="ml-6 mt-1 list-disc">
+<li>Kp=1.5, Ki=0.3, Kd=0.4</li>
+<li>적분기 saturation ±3.0 (anti-windup)</li>
+</ul>
+<p class="mt-2"><strong>3) 조향각 한계</strong>: ±π/6 rad (±30°) — 차량 물리 한계</p>
+<p class="mt-2"><strong>4) Persistent state</strong>: 이전 오차 (Kd용), 적분 누적 (Ki용)</p>
+</div>
+</div>
+
+<div class="card border-l-4 border-red-500">
+<h2 class="text-2xl font-bold mb-2 text-red-800">️ 3. Lib_ModeManager (Dev-B)</h2>
+<div class="flex gap-2 mb-4"><span class="badge badge-yellow">10ms</span> <span class="badge badge-blue">8 in / 1 out</span></div>
+
+<h3 class="text-lg font-semibold mb-2"> Simulink 내부 구조 (8 입력)</h3>
+<svg viewBox="0 0 760 360" class="w-full mb-4">
+<defs><marker id="al3" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#475569"/></marker></defs>
+<rect x="320" y="10" width="180" height="30" rx="4" fill="#fce7f3" stroke="#db2777"/>
+<text x="410" y="30" text-anchor="middle" font-size="10" font-family="monospace" fill="#9d174d">From[do_Logic_10ms_2]</text>
+<path d="M 410 40 L 410 60" stroke="#db2777" stroke-width="1.5" marker-end="url(#al3)"/>
+<g font-size="9" font-family="monospace">
+<rect x="20" y="60" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="75" text-anchor="middle">v_ego (Ego_Velocity)</text>
+<rect x="20" y="88" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="103" text-anchor="middle">ego_x (Ego_Global_X)</text>
+<rect x="20" y="116" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="131" text-anchor="middle">ego_y (Ego_Global_Y)</text>
+<rect x="20" y="144" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="159" text-anchor="middle">ego_yaw (Ego_Yaw)</text>
+<rect x="20" y="172" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="187" text-anchor="middle">traffic_x = 999 ⚠️</text>
+<rect x="20" y="200" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="215" text-anchor="middle">traffic_y = 0 ⚠️</text>
+<rect x="20" y="228" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="243" text-anchor="middle">target_lane (Dev-D)</text>
+<rect x="20" y="256" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="271" text-anchor="middle">current_lane = 1 ⚠️</text>
+</g>
+<rect x="280" y="80" width="260" height="200" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+<text x="410" y="105" text-anchor="middle" font-size="12" font-weight="bold" fill="#7f1d1d">Wrapper (8 inputs)</text>
+<text x="410" y="125" text-anchor="middle" font-size="10" font-family="monospace" fill="#7f1d1d">mode = mode_manager_fcn(</text>
+<text x="410" y="143" text-anchor="middle" font-size="10" font-family="monospace" fill="#7f1d1d">  ego_v, ego_x, ego_y, ego_yaw,</text>
+<text x="410" y="161" text-anchor="middle" font-size="10" font-family="monospace" fill="#7f1d1d">  traffic_x, traffic_y,</text>
+<text x="410" y="179" text-anchor="middle" font-size="10" font-family="monospace" fill="#7f1d1d">  target_lane, current_lane)</text>
+<text x="410" y="220" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">State Machine (persistent state)</text>
+<text x="410" y="240" text-anchor="middle" font-size="10" fill="#7f1d1d">LK → LC_OUT → LC_PASS → LC_BACK → LK</text>
+<text x="410" y="265" text-anchor="middle" font-size="9" font-family="monospace" fill="#991b1b">functions/mode_manager_fcn.m</text>
+<g stroke="#6366f1" stroke-width="1" fill="none">
+<path d="M 180 71 L 280 130" marker-end="url(#al3)"/>
+<path d="M 180 99 L 280 145" marker-end="url(#al3)"/>
+<path d="M 180 127 L 280 160" marker-end="url(#al3)"/>
+<path d="M 180 155 L 280 175" marker-end="url(#al3)"/>
+<path d="M 180 183 L 280 190" marker-end="url(#al3)"/>
+<path d="M 180 211 L 280 205" marker-end="url(#al3)"/>
+<path d="M 180 239 L 280 220" marker-end="url(#al3)"/>
+<path d="M 180 267 L 280 235" marker-end="url(#al3)"/>
+</g>
+<rect x="610" y="170" width="130" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="675" y="189" text-anchor="middle" font-size="10" font-family="monospace">Out → Mission_Mode</text>
+<path d="M 540 185 L 610 185" stroke="#6366f1" stroke-width="2" marker-end="url(#al3)"/>
+</svg>
+
+<h3 class="text-lg font-semibold mb-2"> 외부 .m 코드</h3>
+<pre><code>function mode = mode_manager_fcn(ego_v, ego_x, ego_y, ego_yaw, traffic_x, traffic_y, target_lane, current_lane)
+%#codegen
+% MODE_MANAGER_FCN — 미션 모드 결정 (LK/OT/LC/TG/Parking 등)
+% Owner: Dev-B
+%
+% Outputs:
+%   mode : int32
+%       0 = IDLE
+%       1 = LANE_KEEP (default)
+%       2 = OVERTAKE (decision in progress)
+%       3 = LC_OUT  (lane change out)
+%       4 = LC_PASS (passing in adjacent lane)
+%       5 = LC_BACK (returning to original lane)
+%       6 = TOLLGATE
+%       7 = PARKING
+%       9 = EMERGENCY
+
+persistent state t_in_state
+if isempty(state), state = int32(1); t_in_state = 0; end
+
+TS = 0.001;
+TRIGGER_DIST = max(40.0, ego_v * 3.0);
+PASS_DIST = -15.0;
+
+% 트래픽 종/횡 거리
 dx = traffic_x - ego_x;
 dy = traffic_y - ego_y;
 long_dist = cos(ego_yaw)*dx + sin(ego_yaw)*dy;
 lat_dist  = -sin(ego_yaw)*dx + cos(ego_yaw)*dy;
 
-% ===== 2) Placeholder 처리 (트래픽 없음 = (0,0) 가정) =====
-if traffic_x == 0 &amp;&amp; traffic_y == 0
-    long_dist = 999.0;
-    lat_dist  = 0.0;
-end
-
-% ===== 3) front_gap 계산 (같은 차선 + 앞쪽 트래픽만) =====
-if long_dist &gt; 0.5 &amp;&amp; abs(lat_dist) &lt; 1.8
-    front_gap = long_dist;
-else
-    front_gap = 999.0;  % 같은 차선에 앞차 없음
-end
-
-% ===== 4) current_lane 추정 (글로벌 Y → lane 인덱스) =====
-lane_dists = abs(LANE_CENTER_Y - ego_y);
-[~, lane_idx] = min(lane_dists);
-current_lane = int32(lane_idx);
-if current_lane &gt; int32(MAX_LANE), current_lane = int32(MAX_LANE); end
-if current_lane &lt; int32(1),         current_lane = int32(1);        end
-
-% ===== 5) ctrl_bus 구조체 생성 (Bus Object 호환) =====
-ctrl_bus = struct( ...
-    'ego_v',         double(ego_v), ...
-    'ego_x',         double(ego_x), ...
-    'ego_y',         double(ego_y), ...
-    'ego_yaw',       double(ego_yaw), ...
-    'cte_in',        double(cte_raw), ...
-    'traffic_x',     double(traffic_x), ...
-    'traffic_y',     double(traffic_y), ...
-    'traffic_v',     double(traffic_v), ...
-    'long_dist',     double(long_dist), ...
-    'lat_dist',      double(lat_dist), ...
-    'front_gap',     double(front_gap), ...
-    'current_lane',  current_lane, ...
-    'v_target',      double(v_target_user), ...
-    'lane_width',    double(LANE_WIDTH));
-end
-</code></pre>
-</div>
-
-<!-- ▶ Dev-A 기본 주행 -->
-<div class="card border-l-4 border-amber-500">
-<h2 class="text-2xl font-bold mb-2 text-amber-800"> 1. Lib_LongitudinalController — dev_a_basic_driving.m</h2>
-<div class="flex gap-2 mb-4">
-<span class="badge badge-yellow">Dev-A</span>
-<span class="badge badge-yellow">10ms</span>
-<span class="badge badge-red">시나리오 1-1 Owner</span>
-</div>
-
-<div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-<div class="p-3 bg-amber-50 rounded">
-<div class="font-bold text-amber-900 mb-1"> 책임</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>ACC + 안전거리 모델 (2초 룰)</li>
-<li>모든 모드 v_target/Kp 분기</li>
-<li>v_target_smooth ramp (급변 방지)</li>
-<li>비상 제동 (front_gap&lt;5)</li>
-</ul>
-</div>
-<div class="p-3 bg-amber-50 rounded">
-<div class="font-bold text-amber-900 mb-1">⚡ 권한</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>acc_cmd 단독 발행 (Write_AccelCmd)</li>
-<li>가속/감속 한계 [-5, +3] 결정</li>
-<li>v_target_smooth 알고리즘</li>
-</ul>
-</div>
-</div>
-
-<h3 class="text-lg font-semibold mb-2"> 플로우차트</h3>
-<svg viewBox="0 0 720 920" class="w-full bg-white rounded border">
-<defs><marker id="arA" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-
-<!-- 시작 -->
-<rect x="280" y="20" width="160" height="40" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="360" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">시작 (10ms)</text>
-<line x1="360" y1="60" x2="360" y2="80" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- 입력 -->
-<polygon points="200,90 520,90 510,130 210,130" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="113" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">입력: ctrl_bus, mode (int32)</text>
-<line x1="360" y1="130" x2="360" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- 분기: mode? -->
-<polygon points="360,155 480,210 360,265 240,210" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="215" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a3412">mode == ?</text>
-
-<!-- mode=9 EMG (왼쪽으로) -->
-<text x="190" y="200" font-size="10" font-weight="bold" fill="#dc2626">mode=9</text>
-<line x1="240" y1="210" x2="150" y2="210" stroke="#374151" stroke-width="2"/>
-<rect x="20" y="190" width="130" height="40" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
-<text x="85" y="208" text-anchor="middle" font-size="10" font-weight="bold" fill="#991b1b">EMG: acc_cmd=-5</text>
-<text x="85" y="222" text-anchor="middle" font-size="9" fill="#991b1b">→ return</text>
-<line x1="85" y1="230" x2="85" y2="880" stroke="#374151" stroke-width="2" stroke-dasharray="4,2"/>
-
-<!-- mode=0 IDLE (오른쪽으로) -->
-<text x="500" y="200" font-size="10" font-weight="bold" fill="#dc2626">mode=0</text>
-<line x1="480" y1="210" x2="555" y2="210" stroke="#374151" stroke-width="2"/>
-<rect x="555" y="190" width="140" height="40" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/>
-<text x="625" y="208" text-anchor="middle" font-size="10" font-weight="bold" fill="#1f2937">IDLE: acc_cmd=-1</text>
-<text x="625" y="222" text-anchor="middle" font-size="9" fill="#1f2937">→ return</text>
-<line x1="625" y1="230" x2="625" y2="880" stroke="#374151" stroke-width="2" stroke-dasharray="4,2"/>
-
-<!-- 아래로: 다른 모드 -->
-<text x="375" y="290" font-size="10" font-weight="bold" fill="#16a34a">기타</text>
-<line x1="360" y1="265" x2="360" y2="285" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- 모드별 v_target/Kp 분기 (테이블 형태) -->
-<rect x="160" y="290" width="400" height="100" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="4"/>
-<text x="360" y="310" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400e">모드별 v_target_raw + 게인 선택</text>
-<line x1="200" y1="318" x2="520" y2="318" stroke="#f59e0b" stroke-width="1"/>
-<text x="220" y="332" font-size="10" font-family="monospace" fill="#92400e">LC_PASS(4) → v_target+5,  Kp=0.8</text>
-<text x="220" y="348" font-size="10" font-family="monospace" fill="#92400e">TG(6)      → v_target=8,   Kp=0.4</text>
-<text x="220" y="364" font-size="10" font-family="monospace" fill="#92400e">PK(7)      → v_target=2,   Kp=0.3</text>
-<text x="220" y="380" font-size="10" font-family="monospace" fill="#92400e">기타(LK 등) → v_target=user, Kp=0.5</text>
-<line x1="360" y1="390" x2="360" y2="410" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- v_target_smooth ramp -->
-<rect x="180" y="415" width="360" height="60" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="435" text-anchor="middle" font-size="12" font-weight="bold" fill="#3730a3">v_target_smooth ramp (급변 방지)</text>
-<text x="360" y="452" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">if mode!=prev: v_smooth = v_ego (reset)</text>
-<text x="360" y="467" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">v_smooth += clip(v_raw - v_smooth, ±0.02)</text>
-<line x1="360" y1="475" x2="360" y2="495" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- 안전거리 모델 -->
-<rect x="180" y="500" width="360" height="55" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="520" text-anchor="middle" font-size="12" font-weight="bold" fill="#3730a3">안전거리 + 오차 (보수적)</text>
-<text x="360" y="537" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">safe_dist = 10 + 2·v_ego (2초 룰)</text>
-<text x="360" y="550" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">e_eff = min(front_gap-safe_dist, v_smooth-v_ego)</text>
-<line x1="360" y1="555" x2="360" y2="575" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- PID + anti-windup -->
-<rect x="180" y="580" width="360" height="55" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="600" text-anchor="middle" font-size="12" font-weight="bold" fill="#3730a3">PID 계산 + Anti-windup</text>
-<text x="360" y="617" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">v_int = clip(v_int + e_eff·0.01, ±2.0)</text>
-<text x="360" y="630" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">acc_cmd = Kp·e_eff + Ki·v_int + Kd·de</text>
-<line x1="360" y1="635" x2="360" y2="655" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- 조건: front_gap < 5? -->
-<polygon points="360,660 480,710 360,760 240,710" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="708" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a3412">front_gap &lt; 5 ?</text>
-<text x="360" y="725" text-anchor="middle" font-size="10" fill="#9a3412">(비상 임박)</text>
-
-<!-- Yes: acc_cmd = -5 -->
-<text x="510" y="700" font-size="10" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="480" y1="710" x2="555" y2="710" stroke="#374151" stroke-width="2"/>
-<rect x="555" y="690" width="130" height="40" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
-<text x="620" y="715" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">acc_cmd = -5</text>
-<line x1="620" y1="730" x2="620" y2="780" stroke="#374151" stroke-width="2"/>
-
-<!-- No: 다음 -->
-<text x="370" y="780" font-size="10" font-weight="bold" fill="#dc2626">No</text>
-<line x1="360" y1="760" x2="360" y2="785" stroke="#374151" stroke-width="2"/>
-
-<!-- 합류 + clip -->
-<line x1="620" y1="780" x2="360" y2="780" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="780" x2="360" y2="800" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-<rect x="240" y="805" width="240" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="830" text-anchor="middle" font-size="11" font-family="monospace" fill="#3730a3">acc_cmd = clip(acc_cmd, -5, +3)</text>
-<line x1="360" y1="845" x2="360" y2="865" stroke="#374151" stroke-width="2" marker-end="url(#arA)"/>
-
-<!-- 출력 -->
-<polygon points="240,870 480,870 470,910 250,910" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="895" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">출력: acc_cmd → Goto[Accel_Cmd]</text>
-</svg>
-
-<h3 class="text-lg font-semibold mt-4 mb-2"> 외부 .m 코드</h3>
-<pre><code>function acc_cmd = dev_a_basic_driving(ctrl_bus, mode)
-%#codegen
-% LONGITUDINAL_CONTROLLER_FCN — 종방향 제어 (ACC + 모드별 분기)
-% Owner: Dev-A (시나리오 1-1 기본 주행)
-%
-% 4 시나리오 게인:
-%   LK   : v_target=user, Kp=0.5 (평시)
-%   LC_PASS : v_target+=5, Kp=0.8 (추월 가속)
-%   TG   : v_target ramp→8, Kp=0.4 (점진 감속)
-%   PK   : v_target ramp→2, Kp=0.3 (저속)
-%   EMG  : -5 (즉시)
-%   IDLE : -1 (정지 유지)
-
-persistent v_int e_prev v_target_smooth prev_mode
-if isempty(v_int)
-    v_int = 0; e_prev = 0; v_target_smooth = 20; prev_mode = int32(1);
-end
-
-% ===== ctrl_bus 추출 =====
-v_ego     = ctrl_bus.ego_v;
-v_target  = ctrl_bus.v_target;
-front_gap = ctrl_bus.front_gap;
-
-% ===== 모드별 v_target_raw + 게인 =====
-switch mode
-    case int32(9)  % EMERGENCY
-        acc_cmd = -5.0; v_int = 0; e_prev = 0;
-        v_target_smooth = v_ego; prev_mode = mode; return;
-
-    case int32(4)  % LC_PASS
-        v_target_raw = v_target + 5.0;
-        Kp = 0.8; Ki = 0.1; Kd = 0.05;
-
-    case int32(6)  % TOLLGATE
-        v_target_raw = 8.0;
-        Kp = 0.4; Ki = 0.05; Kd = 0.1;
-
-    case int32(7)  % PARKING
-        v_target_raw = 2.0;
-        Kp = 0.3; Ki = 0.05; Kd = 0.15;
-
-    case int32(0)  % IDLE
-        acc_cmd = -1.0; v_int = 0;
-        v_target_smooth = 0; prev_mode = mode; return;
-
-    otherwise  % LK (1), LC_OUT (3), 기타
-        v_target_raw = v_target;
-        Kp = 0.5; Ki = 0.1; Kd = 0.05;
-end
-
-% ===== 점진적 v_target 변화 (급가/급감속 방지) =====
-% TS=10ms, max rate 2 m/s² → max delta = 0.02 m/s per cycle
-MAX_VT_RATE = 0.02;
-if mode ~= prev_mode
-    v_target_smooth = v_ego;  % 모드 전환 시 현재 속도부터 시작
-end
-delta = v_target_raw - v_target_smooth;
-if delta &gt; MAX_VT_RATE
-    v_target_smooth = v_target_smooth + MAX_VT_RATE;
-elseif delta &lt; -MAX_VT_RATE
-    v_target_smooth = v_target_smooth - MAX_VT_RATE;
-else
-    v_target_smooth = v_target_raw;
-end
-prev_mode = mode;
-
-% ===== 안전거리 모델 + 오차 =====
-safe_dist = 10.0 + 2.0 * v_ego;
-e_d = front_gap - safe_dist;
-e_v = v_target_smooth - v_ego;
-e_eff = min(e_d, e_v);
-
-% ===== PID + Anti-windup =====
-de = e_eff - e_prev;
-e_prev = e_eff;
-v_int = max(min(v_int + e_eff*0.01, 2.0), -2.0);
-acc_cmd = Kp*e_eff + Ki*v_int + Kd*de;
-
-% ===== 비상 제동 =====
-if front_gap &lt; 5.0
-    acc_cmd = -5.0;
-end
-
-% ===== 한계 =====
-acc_cmd = max(min(acc_cmd, 3.0), -5.0);
-end
-</code></pre>
-</div>
-
-<!-- ▶ Dev-B 추월 -->
-<div class="card border-l-4 border-red-500">
-<h2 class="text-2xl font-bold mb-2 text-red-800">️ 2. Lib_ModeManager — dev_b_overtaking.m</h2>
-<div class="flex gap-2 mb-4">
-<span class="badge badge-red">Dev-B</span>
-<span class="badge badge-yellow">10ms</span>
-<span class="badge badge-red">시나리오 1-2 Owner</span>
-</div>
-
-<div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-<div class="p-3 bg-red-50 rounded">
-<div class="font-bold text-red-900 mb-1"> 책임</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>state machine 7가지 모드 결정</li>
-<li>EMERGENCY 최우선 처리</li>
-<li>TG/PK 위치 기반 진입</li>
-<li>추월 LC_PASS → LK (옆차선 유지)</li>
-</ul>
-</div>
-<div class="p-3 bg-red-50 rounded">
-<div class="font-bold text-red-900 mb-1">⚡ 권한</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>mode 단독 발행 (Mission_Mode)</li>
-<li>state 전이 조건 결정</li>
-<li>모드 enum 정의 (0,1,3,4,6,7,9)</li>
-</ul>
-</div>
-</div>
-
-<h3 class="text-lg font-semibold mb-2"> 플로우차트 (State Machine)</h3>
-<svg viewBox="0 0 720 1000" class="w-full bg-white rounded border">
-<defs><marker id="arB" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-
-<!-- 시작 -->
-<rect x="280" y="20" width="160" height="40" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="360" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">시작 (10ms)</text>
-<line x1="360" y1="60" x2="360" y2="80" stroke="#374151" stroke-width="2" marker-end="url(#arB)"/>
-
-<!-- 입력 -->
-<polygon points="200,90 520,90 510,130 210,130" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="113" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">입력: ctrl_bus, target_lane</text>
-<line x1="360" y1="130" x2="360" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#arB)"/>
-
-<!-- EMERGENCY 체크 (최우선) -->
-<polygon points="360,155 540,210 360,265 180,210" fill="#fecaca" stroke="#dc2626" stroke-width="2.5"/>
-<text x="360" y="205" text-anchor="middle" font-size="12" font-weight="bold" fill="#7f1d1d">⚠️ EMERGENCY 체크</text>
-<text x="360" y="222" text-anchor="middle" font-size="10" font-family="monospace" fill="#991b1b">long_dist&lt;5 &amp;&amp; |lat|&lt;1.5</text>
-<text x="360" y="238" text-anchor="middle" font-size="10" font-family="monospace" fill="#991b1b">&amp;&amp; ego_v&gt;5 ?</text>
-
-<!-- Yes: state=9 즉시 return -->
-<text x="555" y="200" font-size="11" font-weight="bold" fill="#dc2626">Yes</text>
-<line x1="540" y1="210" x2="600" y2="210" stroke="#dc2626" stroke-width="2.5"/>
-<rect x="600" y="190" width="100" height="40" fill="#7f1d1d" stroke="#991b1b" stroke-width="2"/>
-<text x="650" y="208" text-anchor="middle" font-size="11" font-weight="bold" fill="white">state=9</text>
-<text x="650" y="222" text-anchor="middle" font-size="10" fill="white">→ return</text>
-<line x1="650" y1="230" x2="650" y2="960" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
-
-<!-- No: state machine -->
-<text x="370" y="290" font-size="11" font-weight="bold" fill="#16a34a">No</text>
-<line x1="360" y1="265" x2="360" y2="295" stroke="#374151" stroke-width="2" marker-end="url(#arB)"/>
-
-<!-- t_in_state 증가 -->
-<rect x="220" y="300" width="280" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="325" text-anchor="middle" font-size="11" font-family="monospace" fill="#3730a3">t_in_state = t_in_state + TS</text>
-<line x1="360" y1="340" x2="360" y2="360" stroke="#374151" stroke-width="2" marker-end="url(#arB)"/>
-
-<!-- switch(state): 큰 박스 -->
-<rect x="40" y="365" width="640" height="540" fill="#fff7ed" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,3" rx="6"/>
-<text x="360" y="385" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a3412">switch (state)</text>
-
-<!-- case LK(1) -->
-<rect x="60" y="400" width="290" height="120" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="205" y="420" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400e">case LK (1) — 우선순위 순:</text>
-<text x="75" y="437" font-size="10" font-family="monospace" fill="#78350f">if dist_pk_start &lt; 30:</text>
-<text x="90" y="450" font-size="10" font-family="monospace" fill="#7c2d12">  state=7 (PARKING)</text>
-<text x="75" y="468" font-size="10" font-family="monospace" fill="#78350f">elif TG_START&lt;ego_x&lt;TG_END:</text>
-<text x="90" y="481" font-size="10" font-family="monospace" fill="#7c2d12">  state=6 (TOLLGATE)</text>
-<text x="75" y="499" font-size="10" font-family="monospace" fill="#78350f">elif target≠current &amp; 앞차:</text>
-<text x="90" y="512" font-size="10" font-family="monospace" fill="#7c2d12">  state=3 (LC_OUT)</text>
-
-<!-- case LC_OUT(3) -->
-<rect x="370" y="400" width="290" height="120" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
-<text x="515" y="420" text-anchor="middle" font-size="11" font-weight="bold" fill="#7f1d1d">case LC_OUT (3) — 4초 후 분기:</text>
-<text x="385" y="438" font-size="10" font-family="monospace" fill="#991b1b">if t_in_state &gt;= 4.0:</text>
-<text x="400" y="455" font-size="10" font-family="monospace" fill="#7f1d1d">  if TG 구역 안:</text>
-<text x="415" y="468" font-size="10" font-family="monospace" fill="#991b1b">    state=6 (TG 복귀)</text>
-<text x="400" y="485" font-size="10" font-family="monospace" fill="#7f1d1d">  else:</text>
-<text x="415" y="498" font-size="10" font-family="monospace" fill="#991b1b">    state=4 (LC_PASS)</text>
-
-<!-- case LC_PASS(4) -->
-<rect x="60" y="540" width="290" height="100" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
-<text x="205" y="560" text-anchor="middle" font-size="11" font-weight="bold" fill="#831843">case LC_PASS (4):</text>
-<text x="75" y="578" font-size="10" font-family="monospace" fill="#9d174d">if long_dist&lt;-15 or &gt;150:</text>
-<text x="90" y="591" font-size="10" font-family="monospace" fill="#831843">  state=1 (LK)</text>
-<text x="75" y="611" font-size="10" fill="#9d174d">※ LC_BACK 없음:</text>
-<text x="75" y="624" font-size="10" fill="#9d174d">   옆 차선 그대로 유지</text>
-
-<!-- case TG(6) -->
-<rect x="370" y="540" width="290" height="100" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2"/>
-<text x="515" y="560" text-anchor="middle" font-size="11" font-weight="bold" fill="#4c1d95">case TG (6):</text>
-<text x="385" y="578" font-size="10" font-family="monospace" fill="#5b21b6">if target≠current:</text>
-<text x="400" y="591" font-size="10" font-family="monospace" fill="#4c1d95">  state=3 (G2 LC)</text>
-<text x="385" y="611" font-size="10" font-family="monospace" fill="#5b21b6">elif ego_x &gt; TG_END:</text>
-<text x="400" y="624" font-size="10" font-family="monospace" fill="#4c1d95">  state=1 (TG 탈출)</text>
-
-<!-- case PK(7) -->
-<rect x="60" y="660" width="290" height="100" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-<text x="205" y="680" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">case PARKING (7):</text>
-<text x="75" y="698" font-size="10" font-family="monospace" fill="#047857">if dist_pk_goal&lt;1.5</text>
-<text x="75" y="711" font-size="10" font-family="monospace" fill="#047857">  &amp;&amp; ego_v&lt;0.5:</text>
-<text x="90" y="728" font-size="10" font-family="monospace" fill="#065f46">  state=0 (IDLE)</text>
-
-<!-- case EMG(9) — recovery -->
-<rect x="370" y="660" width="290" height="100" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
-<text x="515" y="680" text-anchor="middle" font-size="11" font-weight="bold" fill="#7f1d1d">case EMG (9) — 회복:</text>
-<text x="385" y="698" font-size="10" font-family="monospace" fill="#991b1b">if long_dist&gt;15 or &lt;0:</text>
-<text x="400" y="715" font-size="10" font-family="monospace" fill="#7f1d1d">  state=1 (LK 복귀)</text>
-
-<!-- case IDLE(0) -->
-<rect x="60" y="780" width="600" height="80" fill="#f3f4f6" stroke="#6b7280" stroke-width="2"/>
-<text x="360" y="800" text-anchor="middle" font-size="11" font-weight="bold" fill="#1f2937">case IDLE (0) — 정지 상태:</text>
-<text x="360" y="820" text-anchor="middle" font-size="10" font-family="monospace" fill="#374151">if ego_v &gt; 1.0:  state=1 (LK)  % 외부 reset</text>
-<text x="360" y="838" text-anchor="middle" font-size="10" fill="#4b5563">→ 주차 완료 후 정지 유지</text>
-
-<!-- switch 끝 -->
-<line x1="360" y1="905" x2="360" y2="925" stroke="#374151" stroke-width="2" marker-end="url(#arB)"/>
-
-<!-- 출력 -->
-<polygon points="240,930 480,930 470,970 250,970" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="955" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">출력: mode = state → Goto[Mission_Mode]</text>
-</svg>
-
-<h3 class="text-lg font-semibold mt-4 mb-2"> 외부 .m 코드</h3>
-<pre><code>function mode = dev_b_overtaking(ctrl_bus, target_lane)
-%#codegen
-% MODE_MANAGER_FCN — 미션 모드 결정 (State Machine)
-% Owner: Dev-B (시나리오 1-2 추월)
-%
-% 4 시나리오 지원:
-%   1-1. 기본 주행  : LK (1)
-%   1-2. 추월       : LK(1) → LC_OUT(3) → LC_PASS(4) → LK(1) (옆차선 유지)
-%   1-3. 톨게이트   : LK(1) → TG(6) → LC_OUT(3) → TG(6) → LK(1)
-%   2-1. 주차       : LK(1) → PARKING(7) → IDLE(0)
-%
-% Inputs:
-%   ctrl_bus    : Supervisor가 만든 정리된 신호 다발 (struct)
-%   target_lane : path_planning이 추천한 차선 (int32)
-% Output:
-%   mode : int32
-%     0=IDLE 1=LK 3=LC_OUT 4=LC_PASS 6=TG 7=PARKING 9=EMERGENCY
-
-persistent state t_in_state
-if isempty(state), state = int32(1); t_in_state = 0; end
-
-% ===== ctrl_bus 필드 추출 =====
-ego_v        = ctrl_bus.ego_v;
-ego_x        = ctrl_bus.ego_x;
-long_dist    = ctrl_bus.long_dist;
-lat_dist     = ctrl_bus.lat_dist;
-current_lane = ctrl_bus.current_lane;
-
-% ===== 시나리오별 상수 =====
-TS = 0.01;
-TG_START_X      = 500.0;   % Dev-C 시나리오
-TG_END_X        = 580.0;
-PK_START_X      = 600.0;   % Dev-D 시나리오
-PK_START_Y      = 50.0;
-PK_GOAL_X       = 580.0;
-PK_GOAL_Y       = 100.0;
-PK_TRIGGER_DIST = 30.0;
-PK_DONE_DIST    = 1.5;
-LC_DURATION     = 4.0;
-OT_TRIGGER_DIST = max(40.0, ego_v * 3.0);
-OT_PASS_DIST    = -15.0;
-EMG_DIST        = 5.0;
-
-% ===== 주차 거리 =====
-dist_pk_start = sqrt((ego_x - PK_START_X)^2 + (ctrl_bus.ego_y - PK_START_Y)^2);
-dist_pk_goal  = sqrt((ego_x - PK_GOAL_X)^2  + (ctrl_bus.ego_y - PK_GOAL_Y)^2);
-
 t_in_state = t_in_state + TS;
 
-% ===== EMERGENCY (최우선) =====
-if long_dist &gt; 0 &amp;&amp; long_dist &lt; EMG_DIST &amp;&amp; abs(lat_dist) &lt; 1.5 &amp;&amp; ego_v &gt; 5
-    state = int32(9); mode = state; return;
-end
-
-% ===== State Machine =====
+% --- Dev-B: 여기에 추월/모드 결정 로직 ---
 switch state
     case int32(1)  % LK
-        if dist_pk_start &lt; PK_TRIGGER_DIST
-            state = int32(7); t_in_state = 0;             % 주차 진입
-        elseif ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X
-            state = int32(6); t_in_state = 0;             % 톨게이트 진입
-        elseif target_lane ~= current_lane &amp;&amp; ego_v &gt; 5 &amp;&amp; ...
-               long_dist &gt; 0.5 &amp;&amp; long_dist &lt; OT_TRIGGER_DIST &amp;&amp; abs(lat_dist) &lt; 1.8
-            state = int32(3); t_in_state = 0;             % 추월 LC 진입
+        if long_dist &gt; 0.5 &amp;&amp; long_dist &lt; TRIGGER_DIST &amp;&amp; abs(lat_dist) &lt; 1.8 &amp;&amp; ego_v &gt; 5
+            state = int32(3); t_in_state = 0;
         end
-
     case int32(3)  % LC_OUT
-        if t_in_state &gt;= LC_DURATION
-            if ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X
-                state = int32(6); t_in_state = 0;         % TG로 복귀
-            else
-                state = int32(4); t_in_state = 0;         % 추월 가속
-            end
+        if t_in_state &gt;= 4.0
+            state = int32(4); t_in_state = 0;
         end
-
-    case int32(4)  % LC_PASS (추월 가속)
-        if long_dist &lt; OT_PASS_DIST || long_dist &gt; 150
-            state = int32(1); t_in_state = 0;             % 옆차선 유지
+    case int32(4)  % LC_PASS
+        if long_dist &lt; PASS_DIST || long_dist &gt; 150
+            state = int32(5); t_in_state = 0;
         end
-
-    case int32(6)  % TOLLGATE
-        if target_lane ~= current_lane
-            state = int32(3); t_in_state = 0;             % LC for gate
-        elseif ego_x &gt; TG_END_X
-            state = int32(1); t_in_state = 0;             % TG 탈출
-        end
-
-    case int32(7)  % PARKING
-        if dist_pk_goal &lt; PK_DONE_DIST &amp;&amp; ego_v &lt; 0.5
-            state = int32(0); t_in_state = 0;             % 주차 완료
-        end
-
-    case int32(9)  % EMERGENCY
-        if long_dist &gt; EMG_DIST * 3 || long_dist &lt; 0
-            state = int32(1); t_in_state = 0;
-        end
-
-    case int32(0)  % IDLE
-        if ego_v &gt; 1.0
+    case int32(5)  % LC_BACK
+        if t_in_state &gt;= 4.0
             state = int32(1); t_in_state = 0;
         end
 end
@@ -2937,551 +2492,221 @@ end
 mode = state;
 end
 </code></pre>
+
+<h3 class="text-lg font-semibold mb-2 mt-4"> 알고리즘 설명 (State Machine)</h3>
+<div class="bg-red-50 p-4 rounded text-sm">
+<p><strong>1) Frenet 좌표 변환</strong>: 트래픽을 자차 기준 종/횡 거리로</p>
+<pre class="!bg-white !text-gray-800 !p-2 !text-xs">long_dist = cos(yaw)·dx + sin(yaw)·dy<br>lat_dist  = −sin(yaw)·dx + cos(yaw)·dy</pre>
+<p class="mt-2"><strong>2) 동적 트리거 거리</strong>: <code>TRIGGER_DIST = max(40, v_ego·3)</code> (속도 비례, 최소 40m)</p>
+<p class="mt-2"><strong>3) 상태 전이</strong>:</p>
+<ul class="ml-6 mt-1 list-disc">
+<li>LK → LC_OUT: 선행차 가까움 (long_dist &lt; trigger) + 같은 차선 (|lat_dist| &lt; 1.8m) + 속도 &gt; 5</li>
+<li>LC_OUT → LC_PASS: 4초 경과 (차선 변경 완료)</li>
+<li>LC_PASS → LC_BACK: 추월 완료 (long_dist &lt; −15) 또는 신호 사라짐 (&gt; 150)</li>
+<li>LC_BACK → LK: 4초 경과 (원 차선 복귀)</li>
+</ul>
+<p class="mt-2"><strong>4) 시간 누적</strong>: <code>t_in_state</code> persistent — TS = 0.001s씩 증가</p>
+</div>
 </div>
 
-<!-- ▶ Dev-C 톨게이트 -->
 <div class="card border-l-4 border-purple-500">
-<h2 class="text-2xl font-bold mb-2 text-purple-800"> 3. Lib_TrajectoryPlanning — dev_c_tollgate.m</h2>
-<div class="flex gap-2 mb-4">
-<span class="badge badge-purple">Dev-C</span>
-<span class="badge badge-purple">100ms</span>
-<span class="badge badge-red">시나리오 1-3 Owner</span>
-</div>
+<h2 class="text-2xl font-bold mb-2 text-purple-800"> 4. Lib_TrajectoryPlanning (Dev-C)</h2>
+<div class="flex gap-2 mb-4"><span class="badge badge-purple">100ms</span> <span class="badge badge-blue">6 in / 1 out</span></div>
 
-<div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-<div class="p-3 bg-purple-50 rounded">
-<div class="font-bold text-purple-900 mb-1"> 책임</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>LC 궤적 (C² Quintic ramp)</li>
-<li>LC_TIME 모드별 분기 (4초 vs 6초)</li>
-<li>cte_offset 보정 (LK → cte_in)</li>
-<li>모드 진입 시 t_in_state reset</li>
-</ul>
-</div>
-<div class="p-3 bg-purple-50 rounded">
-<div class="font-bold text-purple-900 mb-1">⚡ 권한</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>cte_offset 단독 발행 (Trajectory_CTE)</li>
-<li>LC 궤적 알고리즘 (Quintic/Werling)</li>
-<li>LANE_WIDTH 사용 (Supervisor 정의)</li>
-</ul>
-</div>
-</div>
-
-<h3 class="text-lg font-semibold mb-2"> 플로우차트</h3>
-<svg viewBox="0 0 720 820" class="w-full bg-white rounded border">
-<defs><marker id="arC" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-
-<rect x="280" y="20" width="160" height="40" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="360" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">시작 (100ms)</text>
-<line x1="360" y1="60" x2="360" y2="80" stroke="#374151" stroke-width="2" marker-end="url(#arC)"/>
-
-<polygon points="200,90 520,90 510,130 210,130" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="113" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">입력: ctrl_bus, mode</text>
-<line x1="360" y1="130" x2="360" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#arC)"/>
-
-<!-- 조건: mode != prev_mode? -->
-<polygon points="360,155 510,205 360,255 210,205" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">mode != prev_mode ?</text>
-<text x="360" y="220" text-anchor="middle" font-size="10" fill="#9a3412">(모드 진입 첫 호출)</text>
-
-<text x="525" y="195" font-size="10" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="510" y1="205" x2="570" y2="205" stroke="#374151" stroke-width="2"/>
-<rect x="570" y="185" width="130" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="635" y="203" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">t_in_state = 0</text>
-<text x="635" y="217" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">prev_mode = mode</text>
-<line x1="635" y1="225" x2="635" y2="285" stroke="#374151" stroke-width="2"/>
-
-<text x="370" y="280" font-size="10" font-weight="bold" fill="#dc2626">No</text>
-<line x1="360" y1="255" x2="360" y2="285" stroke="#374151" stroke-width="2"/>
-<line x1="635" y1="285" x2="360" y2="285" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="285" x2="360" y2="305" stroke="#374151" stroke-width="2" marker-end="url(#arC)"/>
-
-<!-- 분기 mode -->
-<polygon points="360,310 480,360 360,410 240,360" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="365" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a3412">mode == ?</text>
-
-<!-- 모드별 target_offset 계산 -->
-<rect x="40" y="430" width="640" height="200" fill="#fff7ed" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,3" rx="6"/>
-<text x="360" y="450" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a3412">모드별 target_offset 계산</text>
-
-<line x1="360" y1="410" x2="360" y2="430" stroke="#374151" stroke-width="2" marker-end="url(#arC)"/>
-
-<!-- LC_OUT (3) — quintic ramp -->
-<rect x="60" y="465" width="290" height="145" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
-<text x="205" y="483" text-anchor="middle" font-size="11" font-weight="bold" fill="#7f1d1d">LC_OUT (3): C² Quintic Ramp</text>
-<text x="75" y="500" font-size="10" font-family="monospace" fill="#991b1b">t_in_state += TS  (0.1s)</text>
-<text x="75" y="514" font-size="10" font-family="monospace" fill="#991b1b">if TG 구역: LC_TIME = 6초</text>
-<text x="75" y="528" font-size="10" font-family="monospace" fill="#991b1b">else:       LC_TIME = 4초</text>
-<text x="75" y="546" font-size="10" font-family="monospace" fill="#7f1d1d">s = min(1, t / LC_TIME)</text>
-<text x="75" y="562" font-size="10" font-family="monospace" fill="#7f1d1d">ramp = 10·s³-15·s⁴+6·s⁵</text>
-<text x="75" y="578" font-size="10" font-family="monospace" fill="#7f1d1d">target_offset = -LANE·ramp</text>
-<text x="75" y="596" font-size="9" fill="#991b1b">(C² 연속, 가속도 jerk 0)</text>
-
-<!-- LC_PASS (4) — hold -->
-<rect x="370" y="465" width="290" height="60" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
-<text x="515" y="485" text-anchor="middle" font-size="11" font-weight="bold" fill="#831843">LC_PASS (4): hold</text>
-<text x="515" y="505" text-anchor="middle" font-size="10" font-family="monospace" fill="#9d174d">target_offset = -LANE_WIDTH</text>
-
-<!-- TG/PK/기타 — offset = 0 -->
-<rect x="370" y="540" width="290" height="70" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="515" y="560" text-anchor="middle" font-size="11" font-weight="bold" fill="#3730a3">TG(6)/PK(7)/LK/기타:</text>
-<text x="515" y="580" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">target_offset = 0</text>
-<text x="515" y="596" text-anchor="middle" font-size="9" fill="#4338ca">(차로 중앙 유지)</text>
-
-<!-- 합류 -->
-<line x1="205" y1="610" x2="205" y2="660" stroke="#374151" stroke-width="2"/>
-<line x1="515" y1="610" x2="515" y2="660" stroke="#374151" stroke-width="2"/>
-<line x1="205" y1="660" x2="515" y2="660" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="660" x2="360" y2="685" stroke="#374151" stroke-width="2" marker-end="url(#arC)"/>
-
-<!-- cte_offset 계산 -->
-<rect x="200" y="690" width="320" height="50" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
-<text x="360" y="708" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b21b6">최종 보정 (Subtract)</text>
-<text x="360" y="728" text-anchor="middle" font-size="11" font-family="monospace" fill="#5b21b6">cte_offset = cte_in - target_offset</text>
-<line x1="360" y1="740" x2="360" y2="760" stroke="#374151" stroke-width="2" marker-end="url(#arC)"/>
-
-<!-- 출력 -->
-<polygon points="240,765 480,765 470,805 250,805" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="790" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">출력: cte_offset → Goto[Trajectory_CTE]</text>
+<h3 class="text-lg font-semibold mb-2"> Simulink 내부 구조</h3>
+<svg viewBox="0 0 760 280" class="w-full mb-4">
+<defs><marker id="al4" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#475569"/></marker></defs>
+<rect x="320" y="10" width="180" height="30" rx="4" fill="#fce7f3" stroke="#db2777"/>
+<text x="410" y="30" text-anchor="middle" font-size="10" font-family="monospace" fill="#9d174d">From[do_Logic_100ms_2]</text>
+<path d="M 410 40 L 410 60" stroke="#db2777" stroke-width="1.5" marker-end="url(#al4)"/>
+<g font-size="9" font-family="monospace">
+<rect x="20" y="60" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="75" text-anchor="middle">cte_in = 0 ⚠️</text>
+<rect x="20" y="88" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="103" text-anchor="middle">mode</text>
+<rect x="20" y="116" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="131" text-anchor="middle">ego_x</text>
+<rect x="20" y="144" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="159" text-anchor="middle">ego_y</text>
+<rect x="20" y="172" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="187" text-anchor="middle">ego_yaw</text>
+<rect x="20" y="200" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="215" text-anchor="middle">ego_v</text>
+</g>
+<rect x="280" y="70" width="280" height="170" rx="8" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2"/>
+<text x="420" y="95" text-anchor="middle" font-size="12" font-weight="bold" fill="#4c1d95">Wrapper</text>
+<text x="420" y="115" text-anchor="middle" font-size="10" font-family="monospace" fill="#4c1d95">cte_offset = trajectory_planning_fcn(</text>
+<text x="420" y="133" text-anchor="middle" font-size="10" font-family="monospace" fill="#4c1d95">  cte_in, mode, x, y, yaw, v)</text>
+<text x="420" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#6d28d9">Quintic offset ramp (현재)</text>
+<text x="420" y="190" text-anchor="middle" font-size="10" fill="#4c1d95">→ Werling Frenet (v2 권장)</text>
+<text x="420" y="220" text-anchor="middle" font-size="9" font-family="monospace" fill="#991b1b">functions/trajectory_planning_fcn.m</text>
+<g stroke="#6366f1" stroke-width="1" fill="none">
+<path d="M 180 71 L 280 105" marker-end="url(#al4)"/>
+<path d="M 180 99 L 280 125" marker-end="url(#al4)"/>
+<path d="M 180 127 L 280 145" marker-end="url(#al4)"/>
+<path d="M 180 155 L 280 165" marker-end="url(#al4)"/>
+<path d="M 180 183 L 280 185" marker-end="url(#al4)"/>
+<path d="M 180 211 L 280 205" marker-end="url(#al4)"/>
+</g>
+<rect x="600" y="140" width="140" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="670" y="159" text-anchor="middle" font-size="10" font-family="monospace">Out → Trajectory_CTE</text>
+<path d="M 560 155 L 600 155" stroke="#6366f1" stroke-width="2" marker-end="url(#al4)"/>
 </svg>
 
-<h3 class="text-lg font-semibold mt-4 mb-2"> 외부 .m 코드</h3>
-<pre><code>function cte_offset = dev_c_tollgate(ctrl_bus, mode)
+<h3 class="text-lg font-semibold mb-2"> 외부 .m 코드</h3>
+<pre><code>function cte_offset = trajectory_planning_fcn(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v)
 %#codegen
-% TRAJECTORY_PLANNING_FCN — LC/주차 궤적 보정 (cte_offset 생성)
-% Owner: Dev-C (시나리오 1-3 톨게이트)
+% TRAJECTORY_PLANNING_FCN — LC/LK 궤적 생성 (Werling Frenet 등)
+% Owner: Dev-C
 %
-% 4 시나리오:
-%   LK   : cte_offset = cte_in (보정 없음)
-%   LC_OUT : 0 → −LANE_WIDTH quintic ramp (4초 또는 6초)
-%   LC_PASS : −LANE_WIDTH hold
-%   TG     : 0 (게이트 차선 중앙)
-%   PK     : 0 (TODO: Dev-D 주차 경로 변환)
+% Inputs:
+%   cte_in : 원본 Cross-Track Error [m] (DevDist)
+%   mode   : int32, 1=LK, 3=LC_OUT, 4=LC_PASS, 5=LC_BACK
+%   ego_*  : 자차 상태 (Werling planner에 사용)
+% Output:
+%   cte_offset : 보정된 CTE (lateral controller 입력)
 
-persistent t_in_state prev_mode
-if isempty(t_in_state), t_in_state = 0; prev_mode = int32(1); end
-
-% ===== ctrl_bus 추출 =====
-cte_in     = ctrl_bus.cte_in;
-ego_x      = ctrl_bus.ego_x;
-LANE_WIDTH = ctrl_bus.lane_width;
-
-% ===== 상수 =====
-TS         = 0.1;     % 100ms 호출
-LC_TIME_OT = 4.0;     % 추월
-LC_TIME_TG = 6.0;     % 톨게이트 (저속)
-TG_START_X = 500.0;
-TG_END_X   = 580.0;
-
-% ===== 모드 진입 시 시간 reset =====
-if mode ~= prev_mode
-    t_in_state = 0;
-    prev_mode = mode;
+persistent state t_in_state target_offset
+if isempty(state)
+    state = int32(0); t_in_state = 0; target_offset = 0;
 end
 
-% ===== 모드별 target_offset =====
-switch mode
-    case int32(3)  % LC_OUT — quintic ramp
-        t_in_state = t_in_state + TS;
-        in_tg = (ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X);
-        if in_tg
-            LC_TIME = LC_TIME_TG;
-        else
-            LC_TIME = LC_TIME_OT;
-        end
-        s = min(1.0, t_in_state / LC_TIME);
-        ramp = 10*s^3 - 15*s^4 + 6*s^5;  % C^2 연속
-        target_offset = -LANE_WIDTH * ramp;
+TS = 0.001;
+LANE_WIDTH = 3.0;
+LC_TIME = 4.0;
 
-    case int32(4)  % LC_PASS — hold
-        target_offset = -LANE_WIDTH;
-        t_in_state = 0;
+% --- Dev-C: 여기에 Werling Frenet 다중 후보 trajectory 구현 ---
+% 현재는 단순 quintic ramp (placeholder)
 
-    case int32(6)  % TOLLGATE — 게이트 중앙
-        target_offset = 0;
-        t_in_state = 0;
-
-    case int32(7)  % PARKING — TODO
-        target_offset = 0;
-        t_in_state = t_in_state + TS;
-
-    case int32(0)  % IDLE
-        target_offset = 0;
-        t_in_state = 0;
-
-    otherwise  % LK, EMERGENCY 등
-        target_offset = 0;
-        t_in_state = 0;
+if mode == int32(3)  % LC_OUT
+    t_in_state = t_in_state + TS;
+    s = min(1, t_in_state / LC_TIME);
+    target_offset = -LANE_WIDTH * (10*s^3 - 15*s^4 + 6*s^5);
+elseif mode == int32(4)  % LC_PASS
+    target_offset = -LANE_WIDTH;
+    t_in_state = 0;
+elseif mode == int32(5)  % LC_BACK
+    t_in_state = t_in_state + TS;
+    s = min(1, t_in_state / LC_TIME);
+    target_offset = -LANE_WIDTH * (1 - (10*s^3 - 15*s^4 + 6*s^5));
+else  % LK
+    target_offset = 0;
+    t_in_state = 0;
 end
 
 cte_offset = cte_in - target_offset;
 end
 </code></pre>
+
+<h3 class="text-lg font-semibold mb-2 mt-4"> 알고리즘 (현재 placeholder → 개선 방향)</h3>
+<div class="bg-purple-50 p-4 rounded text-sm">
+<p><strong>현재: Quintic Offset Ramp</strong></p>
+<pre class="!bg-white !text-gray-800 !p-2 !text-xs">s(t) = 10t³ − 15t⁴ + 6t⁵     %% C² 연속 ramp (0→1)<br>offset(t) = −LANE_WIDTH · s(t/LC_TIME)<br>cte_offset = cte_in − target_offset</pre>
+<p class="mt-2"><strong>v2 권장: Werling Frenet 다중 후보</strong> (DEV_C patch 참고)</p>
+<ul class="ml-6 mt-1 list-disc">
+<li>횡: Quintic polynomial (양끝 위치+속도+가속도 고정)</li>
+<li>종: Quartic polynomial (final position 자유)</li>
+<li>Nd × Nt 후보 (18개) → 비용 최소 선택</li>
+<li>제약: |v|≤30 m/s, |a|≤4 m/s², |κ|≤0.20 1/m</li>
+<li>실시간: ~1.2 ms (100ms 주기 대비 1.2%)</li>
+</ul>
+</div>
 </div>
 
-<!-- ▶ Dev-D 주차 -->
 <div class="card border-l-4 border-green-500">
-<h2 class="text-2xl font-bold mb-2 text-green-800">️ 4. Lib_PathPlanning — dev_d_parking.m</h2>
-<div class="flex gap-2 mb-4">
-<span class="badge badge-green">Dev-D</span>
-<span class="badge badge-purple">100ms</span>
-<span class="badge badge-red">시나리오 2-1 Owner</span>
-</div>
+<h2 class="text-2xl font-bold mb-2 text-green-800">️ 5. Lib_PathPlanning (Dev-D)</h2>
+<div class="flex gap-2 mb-4"><span class="badge badge-purple">100ms</span> <span class="badge badge-blue">6 in / 2 out</span></div>
 
-<div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-<div class="p-3 bg-green-50 rounded">
-<div class="font-bold text-green-900 mb-1"> 책임</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>lane_cost 계산 (5 단계)</li>
-<li>인접 차선만 후보 (jump 금지)</li>
-<li>옆 차선 안전 hard constraint</li>
-<li>TG 구역 G2 게이트 강제</li>
-</ul>
-</div>
-<div class="p-3 bg-green-50 rounded">
-<div class="font-bold text-green-900 mb-1">⚡ 권한</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>target_lane 단독 발행</li>
-<li>lane_cost 가중치 결정 (K_*)</li>
-<li>주차 경로 알고리즘 (향후 spline)</li>
-</ul>
-</div>
-</div>
-
-<h3 class="text-lg font-semibold mb-2"> 플로우차트 (Lane Cost 5단계)</h3>
-<svg viewBox="0 0 720 1000" class="w-full bg-white rounded border">
-<defs><marker id="arD" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-
-<rect x="280" y="20" width="160" height="40" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="360" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">시작 (100ms)</text>
-<line x1="360" y1="60" x2="360" y2="80" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<polygon points="200,90 520,90 510,130 210,130" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="113" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">입력: ctrl_bus (single struct)</text>
-<line x1="360" y1="130" x2="360" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- 초기화 -->
-<rect x="220" y="155" width="280" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="180" text-anchor="middle" font-size="11" font-family="monospace" fill="#3730a3">lane_cost = zeros(4, 1)</text>
-<line x1="360" y1="195" x2="360" y2="215" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- Step 1: 기본 비용 (루프) -->
-<rect x="100" y="220" width="520" height="80" fill="#fce7f3" stroke="#db2777" stroke-width="2" stroke-dasharray="4,2" rx="4"/>
-<text x="360" y="240" text-anchor="middle" font-size="12" font-weight="bold" fill="#831843">Step 1: 기본 비용 (현재 차선 가까울수록 ↓)</text>
-<text x="360" y="260" text-anchor="middle" font-size="11" font-family="monospace" fill="#9d174d">for i = 1:4</text>
-<text x="360" y="278" text-anchor="middle" font-size="11" font-family="monospace" fill="#831843">  lane_cost(i) = |i - current_lane| · K_LATBIAS (5.0)</text>
-<text x="360" y="293" text-anchor="middle" font-size="10" fill="#9d174d">→ 가까운 차선 = 낮은 비용 (선호)</text>
-<line x1="360" y1="300" x2="360" y2="320" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- Step 2: 인접만 후보 -->
-<rect x="100" y="325" width="520" height="80" fill="#fce7f3" stroke="#db2777" stroke-width="2" stroke-dasharray="4,2" rx="4"/>
-<text x="360" y="345" text-anchor="middle" font-size="12" font-weight="bold" fill="#831843">Step 2: 인접 차선만 후보 (점프 금지)</text>
-<text x="360" y="365" text-anchor="middle" font-size="11" font-family="monospace" fill="#9d174d">for i = 1:4</text>
-<text x="360" y="382" text-anchor="middle" font-size="11" font-family="monospace" fill="#831843">  if |i - current_lane| &gt; 1: lane_cost(i) += 9999</text>
-<text x="360" y="397" text-anchor="middle" font-size="10" fill="#9d174d">→ current ± 1만 후보, 그 외는 사실상 차단</text>
-<line x1="360" y1="405" x2="360" y2="425" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- Step 3: 앞차 패널티 (조건) -->
-<polygon points="360,430 530,475 360,520 190,475" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="470" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">Step 3: 앞차 가까움?</text>
-<text x="360" y="487" text-anchor="middle" font-size="10" font-family="monospace" fill="#9a3412">0.5&lt;long_dist&lt;50 &amp;&amp;</text>
-<text x="360" y="500" text-anchor="middle" font-size="10" font-family="monospace" fill="#9a3412">|lat_dist|&lt;1.8 ?</text>
-
-<text x="555" y="470" font-size="10" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="530" y1="475" x2="585" y2="475" stroke="#374151" stroke-width="2"/>
-<rect x="585" y="455" width="125" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="647" y="473" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">lane_cost(current)</text>
-<text x="647" y="487" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">+= K_FRONT (100)</text>
-<line x1="647" y1="495" x2="647" y2="545" stroke="#374151" stroke-width="2"/>
-
-<text x="170" y="470" font-size="10" font-weight="bold" fill="#dc2626">No</text>
-<line x1="190" y1="475" x2="135" y2="475" stroke="#374151" stroke-width="2"/>
-<line x1="135" y1="475" x2="135" y2="545" stroke="#374151" stroke-width="2"/>
-
-<!-- 합류 -->
-<line x1="135" y1="545" x2="647" y2="545" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="545" x2="360" y2="565" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- Step 4: 옆 차선 안전 (루프) -->
-<rect x="60" y="570" width="600" height="100" fill="#fce7f3" stroke="#db2777" stroke-width="2" stroke-dasharray="4,2" rx="4"/>
-<text x="360" y="590" text-anchor="middle" font-size="12" font-weight="bold" fill="#831843">Step 4: 옆 차선 안전 (Hard Constraint)</text>
-<text x="360" y="610" text-anchor="middle" font-size="11" font-family="monospace" fill="#9d174d">for i = 1:4</text>
-<text x="360" y="626" text-anchor="middle" font-size="11" font-family="monospace" fill="#831843">  expected_lat = (i - current) · LANE_WIDTH</text>
-<text x="360" y="641" text-anchor="middle" font-size="11" font-family="monospace" fill="#831843">  if |lat_dist - expected|&lt;1.5 &amp;&amp; |long_dist|&lt;10:</text>
-<text x="360" y="657" text-anchor="middle" font-size="11" font-family="monospace" fill="#831843">    lane_cost(i) += K_BLOCK (1000) — 사실상 차단</text>
-<line x1="360" y1="670" x2="360" y2="690" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- Step 5: TG 게이트 (조건) -->
-<polygon points="360,695 510,740 360,785 210,740" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="735" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">Step 5: TG 구역?</text>
-<text x="360" y="752" text-anchor="middle" font-size="10" font-family="monospace" fill="#9a3412">500&lt;ego_x&lt;580 ?</text>
-
-<text x="525" y="735" font-size="10" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="510" y1="740" x2="570" y2="740" stroke="#374151" stroke-width="2"/>
-<rect x="570" y="720" width="135" height="45" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2"/>
-<text x="637" y="735" text-anchor="middle" font-size="10" font-family="monospace" fill="#5b21b6">lane_cost(G2) = 0</text>
-<text x="637" y="748" text-anchor="middle" font-size="10" font-family="monospace" fill="#5b21b6">others += 500</text>
-<text x="637" y="761" text-anchor="middle" font-size="9" fill="#4c1d95">(G2 강제)</text>
-<line x1="637" y1="765" x2="637" y2="810" stroke="#374151" stroke-width="2"/>
-
-<text x="190" y="735" font-size="10" font-weight="bold" fill="#dc2626">No</text>
-<line x1="210" y1="740" x2="155" y2="740" stroke="#374151" stroke-width="2"/>
-<line x1="155" y1="740" x2="155" y2="810" stroke="#374151" stroke-width="2"/>
-<line x1="155" y1="810" x2="637" y2="810" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="810" x2="360" y2="830" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- target_lane = argmin -->
-<rect x="200" y="835" width="320" height="50" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
-<text x="360" y="855" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b21b6">최저 비용 차선 선택</text>
-<text x="360" y="873" text-anchor="middle" font-size="11" font-family="monospace" fill="#5b21b6">[~, target_lane] = min(lane_cost)</text>
-<line x1="360" y1="885" x2="360" y2="905" stroke="#374151" stroke-width="2" marker-end="url(#arD)"/>
-
-<!-- 출력 -->
-<polygon points="200,910 520,910 510,960 210,960" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="933" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">출력: target_lane → Goto[Target_Lane]</text>
-<text x="360" y="950" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">       lane_cost  → Goto[Lane_Cost]</text>
+<h3 class="text-lg font-semibold mb-2"> Simulink 내부 구조 (출력 2개)</h3>
+<svg viewBox="0 0 760 280" class="w-full mb-4">
+<defs><marker id="al5" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#475569"/></marker></defs>
+<rect x="320" y="10" width="180" height="30" rx="4" fill="#fce7f3" stroke="#db2777"/>
+<text x="410" y="30" text-anchor="middle" font-size="10" font-family="monospace" fill="#9d174d">From[do_Logic_100ms_1]</text>
+<path d="M 410 40 L 410 60" stroke="#db2777" stroke-width="1.5" marker-end="url(#al5)"/>
+<g font-size="9" font-family="monospace">
+<rect x="20" y="60" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="75" text-anchor="middle">ego_x</text>
+<rect x="20" y="88" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="103" text-anchor="middle">ego_y</text>
+<rect x="20" y="116" width="160" height="22" rx="3" fill="#e0e7ff" stroke="#6366f1"/><text x="100" y="131" text-anchor="middle">ego_yaw</text>
+<rect x="20" y="144" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="159" text-anchor="middle">traffic_x = 0 ⚠️</text>
+<rect x="20" y="172" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="187" text-anchor="middle">traffic_y = 0 ⚠️</text>
+<rect x="20" y="200" width="160" height="22" rx="3" fill="#fef9c3" stroke="#ca8a04"/><text x="100" y="215" text-anchor="middle">current_lane = 1 ⚠️</text>
+</g>
+<rect x="280" y="70" width="280" height="170" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+<text x="420" y="95" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">Wrapper (2 outputs)</text>
+<text x="420" y="115" text-anchor="middle" font-size="10" font-family="monospace" fill="#065f46">[target_lane, lane_cost] =</text>
+<text x="420" y="133" text-anchor="middle" font-size="10" font-family="monospace" fill="#065f46">  path_planning_fcn(x, y, yaw, ...)</text>
+<text x="420" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#047857">Lane Cost Calculator</text>
+<text x="420" y="190" text-anchor="middle" font-size="10" fill="#065f46">→ argmin(lane_cost) = target_lane</text>
+<text x="420" y="220" text-anchor="middle" font-size="9" font-family="monospace" fill="#991b1b">functions/path_planning_fcn.m</text>
+<g stroke="#6366f1" stroke-width="1" fill="none">
+<path d="M 180 71 L 280 110" marker-end="url(#al5)"/>
+<path d="M 180 99 L 280 130" marker-end="url(#al5)"/>
+<path d="M 180 127 L 280 150" marker-end="url(#al5)"/>
+<path d="M 180 155 L 280 170" marker-end="url(#al5)"/>
+<path d="M 180 183 L 280 190" marker-end="url(#al5)"/>
+<path d="M 180 211 L 280 210" marker-end="url(#al5)"/>
+</g>
+<rect x="600" y="110" width="140" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="670" y="129" text-anchor="middle" font-size="10" font-family="monospace">Out1 → Target_Lane</text>
+<rect x="600" y="170" width="140" height="30" rx="3" fill="#dcfce7" stroke="#16a34a"/>
+<text x="670" y="189" text-anchor="middle" font-size="10" font-family="monospace">Out2 → Lane_Cost</text>
+<path d="M 560 130 L 600 125" stroke="#6366f1" stroke-width="2" marker-end="url(#al5)"/>
+<path d="M 560 175 L 600 185" stroke="#6366f1" stroke-width="2" marker-end="url(#al5)"/>
 </svg>
 
-<h3 class="text-lg font-semibold mt-4 mb-2"> 외부 .m 코드</h3>
-<pre><code>function [target_lane, lane_cost] = dev_d_parking(ctrl_bus)
+<h3 class="text-lg font-semibold mb-2"> 외부 .m 코드</h3>
+<pre><code>function [target_lane, lane_cost] = path_planning_fcn(ego_x, ego_y, ego_yaw, traffic_x, traffic_y, current_lane)
 %#codegen
-% PATH_PLANNING_FCN — 차선 추천 + 주차 경로
-% Owner: Dev-D (시나리오 2-1 주차)
-%
-% Outputs:
-%   target_lane : int32, 추천 차선 (1~4)
-%   lane_cost   : double [4x1], 각 차선 비용
-
-% ===== ctrl_bus 추출 =====
-ego_x        = ctrl_bus.ego_x;
-long_dist    = ctrl_bus.long_dist;
-lat_dist     = ctrl_bus.lat_dist;
-current_lane = ctrl_bus.current_lane;
-LANE_WIDTH   = ctrl_bus.lane_width;
-
-% ===== 상수 =====
-MAX_LANE  = int32(4);
-K_LATBIAS = 5.0;
-K_BLOCK   = 1000.0;
-K_FRONT   = 100.0;
-BLOCK_DIST_LONG = 10.0;
-BLOCK_DIST_LAT  = 1.5;
-FRONT_DIST_MAX  = 50.0;
-TG_START_X      = 500.0;
-TG_END_X        = 580.0;
-TG_GATE_LANE    = int32(2);
-
-lane_cost = zeros(4, 1);
-cl = double(current_lane);
-
-% ===== Step 1: 기본 비용 (current 차선 근접 선호) =====
-for i = 1:4
-    lane_cost(i) = abs(double(i) - cl) * K_LATBIAS;
-end
-
-% ===== Step 2: 인접 차선만 후보 (current ± 1) =====
-for i = 1:4
-    if abs(double(i) - cl) &gt; 1
-        lane_cost(i) = lane_cost(i) + 9999;
-    end
-end
-
-% ===== Step 3: 앞차 패널티 (현재 차선) =====
-if long_dist &gt; 0.5 &amp;&amp; long_dist &lt; FRONT_DIST_MAX &amp;&amp; abs(lat_dist) &lt; 1.8
-    lane_cost(current_lane) = lane_cost(current_lane) + K_FRONT;
-end
-
-% ===== Step 4: 옆 차선 안전 (트래픽 근접 → block) =====
-for i = 1:4
-    expected_lat = (double(i) - cl) * LANE_WIDTH;
-    if abs(lat_dist - expected_lat) &lt; BLOCK_DIST_LAT &amp;&amp; abs(long_dist) &lt; BLOCK_DIST_LONG
-        lane_cost(i) = lane_cost(i) + K_BLOCK;
-    end
-end
-
-% ===== Step 5: 톨게이트 시나리오 — 게이트 차선 강제 =====
-if ego_x &gt; TG_START_X &amp;&amp; ego_x &lt; TG_END_X
-    lane_cost(TG_GATE_LANE) = 0;
-    for i = 1:4
-        if int32(i) ~= TG_GATE_LANE
-            lane_cost(i) = lane_cost(i) + 500;
-        end
-    end
-end
-
-% ===== 최저 비용 차선 =====
-[~, idx] = min(lane_cost);
-target_lane = int32(idx);
-if target_lane &gt; MAX_LANE, target_lane = MAX_LANE; end
-if target_lane &lt; int32(1), target_lane = int32(1); end
-end
-</code></pre>
-</div>
-
-<!-- ▶ Dev-E 주차 그룹 (횡 제어 모듈 owner) -->
-<div class="card border-l-4 border-blue-500">
-<h2 class="text-2xl font-bold mb-2 text-blue-800"> 5. Lib_LateralController — dev_e_lateral.m</h2>
-<div class="flex gap-2 mb-4">
-<span class="badge badge-blue">Dev-E</span>
-<span class="badge badge-yellow">10ms</span>
-<span class="badge badge-purple">주차 그룹 (2명 중)</span>
-</div>
-
-<div class="grid grid-cols-2 gap-3 mb-4 text-sm">
-<div class="p-3 bg-blue-50 rounded">
-<div class="font-bold text-blue-900 mb-1"> 책임</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>4 시나리오 모두 횡 제어 (Owner)</li>
-<li>모드별 PID 게인 분기</li>
-<li>속도 적응 게인 (고속 안정)</li>
-<li>조향각 한계 (±π/6)</li>
-</ul>
-</div>
-<div class="p-3 bg-blue-50 rounded">
-<div class="font-bold text-blue-900 mb-1">⚡ 권한</div>
-<ul class="list-disc ml-5 text-xs space-y-0.5">
-<li>steer_cmd 단독 발행</li>
-<li>PID 게인 결정 (Kp/Ki/Kd)</li>
-<li>부호 규칙 (cte → steer)</li>
-</ul>
-</div>
-</div>
-
-<h3 class="text-lg font-semibold mb-2"> 플로우차트</h3>
-<svg viewBox="0 0 720 880" class="w-full bg-white rounded border">
-<defs><marker id="arE" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,-5L10,0L0,5" fill="#374151"/></marker></defs>
-
-<rect x="280" y="20" width="160" height="40" rx="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-<text x="360" y="45" text-anchor="middle" font-size="13" font-weight="bold" fill="#92400e">시작 (10ms)</text>
-<line x1="360" y1="60" x2="360" y2="80" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<polygon points="180,90 540,90 530,130 190,130" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="113" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">입력: ctrl_bus, mode, cte (Dev-C 보정)</text>
-<line x1="360" y1="130" x2="360" y2="150" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<!-- mode 분기 -->
-<polygon points="360,155 480,205 360,255 240,205" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="215" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a3412">mode == ?</text>
-
-<!-- IDLE 즉시 0 (왼쪽) -->
-<text x="220" y="195" font-size="10" font-weight="bold" fill="#dc2626">mode=0</text>
-<line x1="240" y1="205" x2="180" y2="205" stroke="#374151" stroke-width="2"/>
-<rect x="40" y="185" width="140" height="40" fill="#e5e7eb" stroke="#6b7280" stroke-width="2"/>
-<text x="110" y="203" text-anchor="middle" font-size="10" font-weight="bold" fill="#1f2937">IDLE: steer=0</text>
-<text x="110" y="217" text-anchor="middle" font-size="9" fill="#1f2937">→ return</text>
-<line x1="110" y1="225" x2="110" y2="850" stroke="#6b7280" stroke-width="2" stroke-dasharray="4,2"/>
-
-<!-- 기타 → 아래 -->
-<text x="375" y="280" font-size="10" font-weight="bold" fill="#16a34a">기타</text>
-<line x1="360" y1="255" x2="360" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<!-- 모드별 PID 게인 -->
-<rect x="120" y="285" width="480" height="120" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="4"/>
-<text x="360" y="305" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e3a8a">모드별 PID 게인 선택 (Kp, Ki, Kd)</text>
-<line x1="160" y1="313" x2="560" y2="313" stroke="#2563eb" stroke-width="1"/>
-<text x="160" y="328" font-size="10" font-family="monospace" fill="#1e3a8a">LK (1)   : Kp=1.5, Ki=0.3, Kd=0.4  (부드러움)</text>
-<text x="160" y="344" font-size="10" font-family="monospace" fill="#1e3a8a">LC (3,4) : Kp=2.0, Ki=0.5, Kd=0.3  (빠른 변경)</text>
-<text x="160" y="360" font-size="10" font-family="monospace" fill="#1e3a8a">TG (6)   : Kp=1.0, Ki=0.2, Kd=0.8  (정밀 정렬)</text>
-<text x="160" y="376" font-size="10" font-family="monospace" fill="#1e3a8a">PK (7)   : Kp=0.8, Ki=0.2, Kd=0.9  (큰 조향)</text>
-<text x="160" y="392" font-size="10" font-family="monospace" fill="#1e3a8a">EMG (9)  : Kp=0.8, Ki=0.1, Kd=0.5  (안정)</text>
-<line x1="360" y1="405" x2="360" y2="425" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<!-- 조건: v_ego > 15? -->
-<polygon points="360,430 510,475 360,520 210,475" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
-<text x="360" y="472" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a3412">v_ego &gt; 15 m/s ?</text>
-<text x="360" y="489" text-anchor="middle" font-size="10" fill="#9a3412">(고속 주행?)</text>
-
-<!-- Yes: Kp 적응 -->
-<text x="525" y="470" font-size="10" font-weight="bold" fill="#16a34a">Yes</text>
-<line x1="510" y1="475" x2="565" y2="475" stroke="#374151" stroke-width="2"/>
-<rect x="565" y="455" width="140" height="40" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="635" y="473" text-anchor="middle" font-size="10" font-family="monospace" fill="#3730a3">Kp = Kp · (15/v_ego)</text>
-<text x="635" y="487" text-anchor="middle" font-size="9" fill="#3730a3">(과조향 방지)</text>
-<line x1="635" y1="495" x2="635" y2="555" stroke="#374151" stroke-width="2"/>
-
-<!-- No -->
-<text x="190" y="470" font-size="10" font-weight="bold" fill="#dc2626">No</text>
-<line x1="210" y1="475" x2="160" y2="475" stroke="#374151" stroke-width="2"/>
-<line x1="160" y1="475" x2="160" y2="555" stroke="#374151" stroke-width="2"/>
-
-<!-- 합류 -->
-<line x1="160" y1="555" x2="635" y2="555" stroke="#374151" stroke-width="2"/>
-<line x1="360" y1="555" x2="360" y2="575" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<!-- PID 계산 -->
-<rect x="160" y="580" width="400" height="90" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="600" text-anchor="middle" font-size="12" font-weight="bold" fill="#3730a3">PID 계산 + Anti-windup</text>
-<text x="360" y="618" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">e = -cte  (부호 규칙: cte&gt;0 → steer&lt;0)</text>
-<text x="360" y="632" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">de = e - e_prev</text>
-<text x="360" y="646" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">e_int = clip(e_int + e·0.01, ±3.0)</text>
-<text x="360" y="660" text-anchor="middle" font-size="10" font-family="monospace" fill="#4338ca">steer_cmd = Kp·e + Ki·e_int + Kd·de</text>
-<line x1="360" y1="670" x2="360" y2="690" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<!-- clip -->
-<rect x="200" y="695" width="320" height="50" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
-<text x="360" y="715" text-anchor="middle" font-size="11" font-weight="bold" fill="#3730a3">조향각 한계</text>
-<text x="360" y="732" text-anchor="middle" font-size="11" font-family="monospace" fill="#3730a3">steer_cmd = clip(steer_cmd, ±π/6)</text>
-<line x1="360" y1="745" x2="360" y2="765" stroke="#374151" stroke-width="2" marker-end="url(#arE)"/>
-
-<!-- 출력 -->
-<polygon points="200,770 520,770 510,810 210,810" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-<text x="360" y="795" text-anchor="middle" font-size="11" font-weight="bold" fill="#15803d">출력: steer_cmd → Write_SteerL/R</text>
-</svg>
-
-<h3 class="text-lg font-semibold mt-4 mb-2"> 외부 .m 코드</h3>
-<pre><code>function steer_cmd = dev_e_lateral(ctrl_bus, mode, cte)
-%#codegen
-% LATERAL_CONTROLLER_FCN — 횡방향 제어 (PID + 모드별 게인)
-% Owner: Dev-E (주차 그룹 — 횡 제어 모듈 owner)
+% PATH_PLANNING_FCN — 경로 계획 + Lane Risk 계산
+% Owner: Dev-D
 %
 % Inputs:
-%   ctrl_bus : Supervisor 정리된 신호 (현재는 ego_v 정도 활용 — 향후 속도 적응 게인 등)
-%   mode     : Mission_Mode (int32)
-%   cte      : Trajectory가 보정한 Cross-Track Error [m]
-% Output:
-%   steer_cmd : 앞바퀴 조향각 [rad], 범위 ±π/6
+%   ego_*       : 자차 상태
+%   traffic_x,y : 가장 위협적인 트래픽 (또는 array)
+%   current_lane: int32 (1~MAX_LANE)
+% Outputs:
+%   target_lane : int32, 목표 차선
+%   lane_cost   : double [4x1], 차선별 비용 (낮을수록 좋음)
 
-persistent e_prev e_int
-if isempty(e_prev), e_prev = 0; e_int = 0; end
+MAX_LANE = int32(4);
 
-% ===== 모드별 게인 =====
-switch mode
-    case int32(1)  % LK
-        Kp = 1.5; Ki = 0.3; Kd = 0.4;
-    case {int32(3), int32(4)}  % LC_OUT, LC_PASS
-        Kp = 2.0; Ki = 0.5; Kd = 0.3;
-    case int32(6)  % TOLLGATE
-        Kp = 1.0; Ki = 0.2; Kd = 0.8;
-    case int32(7)  % PARKING
-        Kp = 0.8; Ki = 0.2; Kd = 0.9;
-    case int32(0)  % IDLE
-        steer_cmd = 0; e_prev = 0; e_int = 0; return;
-    case int32(9)  % EMERGENCY
-        Kp = 0.8; Ki = 0.1; Kd = 0.5;
-    otherwise
-        Kp = 1.5; Ki = 0.3; Kd = 0.4;
+% --- Dev-D: 여기에 LaneRisk + Frenet 경로 계획 ---
+% 현재는 단순 placeholder
+
+lane_cost = zeros(4, 1);
+
+% 트래픽 종/횡 거리 계산
+dx = traffic_x - ego_x;
+dy = traffic_y - ego_y;
+long_dist = cos(ego_yaw)*dx + sin(ego_yaw)*dy;
+lat_dist  = -sin(ego_yaw)*dx + cos(ego_yaw)*dy;
+
+% 단순 비용: 현재 차선에 가까울수록 비용 ↓
+for i = 1:4
+    lane_cost(i) = abs(double(i) - double(current_lane)) * 5.0;
 end
 
-% ===== 속도 적응 게인 (고속에서 게인 ↓ — 과조향 방지) =====
-v_ego = ctrl_bus.ego_v;
-if v_ego &gt; 15
-    speed_factor = 15 / v_ego;  % 고속일수록 게인 작게
-    Kp = Kp * speed_factor;
+% 선행차 가까우면 현재 차선 비용 ↑
+if long_dist &gt; 0.5 &amp;&amp; long_dist &lt; 50 &amp;&amp; abs(lat_dist) &lt; 1.8
+    lane_cost(current_lane) = lane_cost(current_lane) + 100;
 end
 
-% ===== PID =====
-e  = -cte;  % 부호 규칙: DevDist&gt;0 (오른쪽 벗어남) → steer&gt;0 (좌조향)
-de = e - e_prev;
-e_int = max(min(e_int + e*0.01, 3.0), -3.0);
-e_prev = e;
-
-steer_cmd = Kp*e + Ki*e_int + Kd*de;
-
-% ===== 조향각 한계 =====
-steer_cmd = max(min(steer_cmd, pi/6), -pi/6);
+% 최저 비용 차선 선택
+[~, idx] = min(lane_cost);
+target_lane = int32(idx);
 end
 </code></pre>
+
+<h3 class="text-lg font-semibold mb-2 mt-4"> 알고리즘 설명</h3>
+<div class="bg-green-50 p-4 rounded text-sm">
+<p><strong>1) 현재 → 단순 placeholder</strong>:</p>
+<ul class="ml-6 mt-1 list-disc">
+<li>차선 비용 = 현재 차선과의 거리 × 5</li>
+<li>선행차 (가까움+같은 차선) → 현재 차선에 +100 패널티</li>
+<li><code>[~, idx] = min(lane_cost)</code> → target_lane</li>
+</ul>
+<p class="mt-2"><strong>2) v2 권장 — 상세 Lane Cost</strong>:</p>
+<pre class="!bg-white !text-gray-800 !p-2 !text-xs">lane_cost(i) = K_BLOCK · blocked(i)<br>             + K_TTC / max(ttc(i), 0.5)<br>             + K_GAP / max(front_gap(i), 5.0)<br>             + K_LATBIAS · |i − current_lane|</pre>
+<ul class="ml-6 mt-1 list-disc">
+<li>K_BLOCK=1000 (안전 hard constraint)</li>
+<li>K_TTC=50, K_GAP=30, K_LATBIAS=5 (soft optimization)</li>
+<li>인접 차선만 고려 (current ± 1)</li>
+</ul>
+</div>
 </div>
 
 </div>
@@ -3629,10 +2854,10 @@ acc = 0.5;         %% double (default)</code></pre></li>
 <h2 class="text-xl font-semibold mb-3">Step 4: 검증 (commit 전 필수)</h2>
 <h3 class="font-semibold mt-3 mb-2">A. 단위 테스트</h3>
 <pre><code>%% Dev-A 예시
-acc1 = dev_a_basic_driving(10, 20, 50, int32(1));
+acc1 = longitudinal_controller_fcn(10, 20, 50, int32(1));
 assert(acc1 > 0 && acc1 < 3, '정상 가속 범위 위반');
 
-acc2 = dev_a_basic_driving(20, 20, 3, int32(1));
+acc2 = longitudinal_controller_fcn(20, 20, 3, int32(1));
 assert(acc2 == -5, '비상 제동 범위 위반');</code></pre>
 
 <h3 class="font-semibold mt-3 mb-2">B. 모델 컴파일</h3>
@@ -3792,11 +3017,11 @@ const DOCS = {
 
 | Dev | 담당 \`.m\` 파일 | Simulink Lib 위치 | 주기 |
 |:-:|---|---|:-:|
-| **A** | \`functions/dev_a_basic_driving.m\` | \`Lib_LongitudinalController\` | 10ms |
-| **B** | \`functions/dev_b_overtaking.m\` | \`Lib_ModeManager\` | 10ms |
-| **C** | \`functions/dev_c_tollgate.m\` | \`Lib_TrajectoryPlanning\` | 100ms |
-| **D** | \`functions/dev_d_parking.m\` | \`Lib_PathPlanning\` | 100ms |
-| **E** | \`functions/dev_e_lateral.m\` | \`Lib_LateralController\` | 10ms |
+| **A** | \`functions/longitudinal_controller_fcn.m\` | \`Lib_LongitudinalController\` | 10ms |
+| **B** | \`functions/mode_manager_fcn.m\` | \`Lib_ModeManager\` | 10ms |
+| **C** | \`functions/trajectory_planning_fcn.m\` | \`Lib_TrajectoryPlanning\` | 100ms |
+| **D** | \`functions/path_planning_fcn.m\` | \`Lib_PathPlanning\` | 100ms |
+| **E** | \`functions/lateral_controller_fcn.m\` | \`Lib_LateralController\` | 10ms |
 | **F** | 통합/검증/\`.slx\` 관리 | — | — |
 
 ---
@@ -3834,19 +3059,19 @@ Goto[Ego_Velocity, Ego_Global_X, Ego_Global_Y, Ego_Yaw, ...]
    ↓ (외부 From → Lib.Inport)
 ┌─────────────────────────────────────────────────────────────┐
 │ Lib_PathPlanning (100ms)        →  Goto[Target_Lane, Lane_Cost]   │
-│    ↳ functions/dev_d_parking.m  (Dev-D)                  │
+│    ↳ functions/path_planning_fcn.m  (Dev-D)                  │
 │                                                             │
 │ Lib_ModeManager (10ms)          →  Goto[Mission_Mode]       │
-│    ↳ functions/dev_b_overtaking.m  (Dev-B)                  │
+│    ↳ functions/mode_manager_fcn.m  (Dev-B)                  │
 │                                                             │
 │ Lib_TrajectoryPlanning (100ms)  →  Goto[Trajectory_CTE]     │
-│    ↳ functions/dev_c_tollgate.m  (Dev-C)           │
+│    ↳ functions/trajectory_planning_fcn.m  (Dev-C)           │
 │                                                             │
 │ Lib_LateralController (10ms)    →  Goto[Steer_Cmd]          │
-│    ↳ functions/dev_e_lateral.m  (Dev-E)            │
+│    ↳ functions/lateral_controller_fcn.m  (Dev-E)            │
 │                                                             │
 │ Lib_LongitudinalController (10ms) → Goto[Accel_Cmd]         │
-│    ↳ functions/dev_a_basic_driving.m  (Dev-A)       │
+│    ↳ functions/longitudinal_controller_fcn.m  (Dev-A)       │
 └─────────────────────────────────────────────────────────────┘
    │
    ↓ Saturation (안전 한계)
@@ -3905,7 +3130,7 @@ open generic_IVS.mdl
 
 ### Step 3: 자기 \`.m\` 수정 + 시뮬 테스트
 \`\`\`matlab
-%% (예: Dev-A) functions/dev_a_basic_driving.m 편집
+%% (예: Dev-A) functions/longitudinal_controller_fcn.m 편집
 %% CarMaker GUI: day7_final TestRun → Start
 \`\`\`
 
@@ -3936,7 +3161,7 @@ git push
 \`\`\`matlab
 %% 1) 단위 테스트 (각자)
 % Dev-A 예:
-acc = dev_a_basic_driving(10, 20, 50, int32(1));
+acc = longitudinal_controller_fcn(10, 20, 50, int32(1));
 assert(acc >= -5 && acc <= 3, 'acc 범위 위반');
 
 %% 2) 모델 Update Diagram
@@ -4022,12 +3247,12 @@ git status
 
 #  Dev-A — Longitudinal Controller
 
-**파일**: \`functions/dev_a_basic_driving.m\`
+**파일**: \`functions/longitudinal_controller_fcn.m\`
 **Lib**: \`Lib_LongitudinalController\` (10ms)
 
 ### 시그니처 (절대 변경 금지)
 \`\`\`matlab
-function acc_cmd = dev_a_basic_driving(v_ego, v_target, front_gap, mode)
+function acc_cmd = longitudinal_controller_fcn(v_ego, v_target, front_gap, mode)
 \`\`\`
 
 ### 현재 입력 source (Final_Project.slx에서)
@@ -4047,9 +3272,9 @@ function acc_cmd = dev_a_basic_driving(v_ego, v_target, front_gap, mode)
 
 ### 단위 테스트
 \`\`\`matlab
-acc1 = dev_a_basic_driving(10, 20, 50, int32(1));  %% 정상 가속
+acc1 = longitudinal_controller_fcn(10, 20, 50, int32(1));  %% 정상 가속
 assert(acc1 > 0 && acc1 < 3);
-acc2 = dev_a_basic_driving(20, 20, 3, int32(1));   %% 비상 제동
+acc2 = longitudinal_controller_fcn(20, 20, 3, int32(1));   %% 비상 제동
 assert(acc2 == -5);
 \`\`\`
 
@@ -4057,12 +3282,12 @@ assert(acc2 == -5);
 
 #  Dev-B — Mode Manager
 
-**파일**: \`functions/dev_b_overtaking.m\`
+**파일**: \`functions/mode_manager_fcn.m\`
 **Lib**: \`Lib_ModeManager\` (10ms)
 
 ### 시그니처
 \`\`\`matlab
-function mode = dev_b_overtaking(ego_v, ego_x, ego_y, ego_yaw, ...
+function mode = mode_manager_fcn(ego_v, ego_x, ego_y, ego_yaw, ...
                                   traffic_x, traffic_y, target_lane, current_lane)
 \`\`\`
 
@@ -4093,12 +3318,12 @@ function mode = dev_b_overtaking(ego_v, ego_x, ego_y, ego_yaw, ...
 
 #  Dev-C — Trajectory Planning
 
-**파일**: \`functions/dev_c_tollgate.m\`
+**파일**: \`functions/trajectory_planning_fcn.m\`
 **Lib**: \`Lib_TrajectoryPlanning\` (100ms)
 
 ### 시그니처
 \`\`\`matlab
-function cte_offset = dev_c_tollgate(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v)
+function cte_offset = trajectory_planning_fcn(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v)
 \`\`\`
 
 ### 현재 입력 source
@@ -4128,12 +3353,12 @@ function cte_offset = dev_c_tollgate(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v)
 
 #  Dev-D — Path Planning
 
-**파일**: \`functions/dev_d_parking.m\`
+**파일**: \`functions/path_planning_fcn.m\`
 **Lib**: \`Lib_PathPlanning\` (100ms)
 
 ### 시그니처
 \`\`\`matlab
-function [target_lane, lane_cost] = dev_d_parking(ego_x, ego_y, ego_yaw, ...
+function [target_lane, lane_cost] = path_planning_fcn(ego_x, ego_y, ego_yaw, ...
                                                        traffic_x, traffic_y, current_lane)
 \`\`\`
 
@@ -4161,12 +3386,12 @@ lane_cost(i) = K_BLOCK * blocked(i) ...
 
 #  Dev-E — Lateral Controller
 
-**파일**: \`functions/dev_e_lateral.m\`
+**파일**: \`functions/lateral_controller_fcn.m\`
 **Lib**: \`Lib_LateralController\` (10ms)
 
 ### 시그니처
 \`\`\`matlab
-function steer_cmd = dev_e_lateral(cte, mode)
+function steer_cmd = lateral_controller_fcn(cte, mode)
 \`\`\`
 
 ### 현재 입력
@@ -4250,11 +3475,11 @@ Practice_sample/
     ├── setup_paths.m     ← 새 세션 시 1회 실행
     ├── functions/        ← ★ 5명이 각자 자기 .m만 수정 ★
     │   ├── README.md     (인터페이스 명세)
-    │   ├── dev_b_overtaking.m                (Dev-B)
-    │   ├── dev_d_parking.m               (Dev-D)
-    │   ├── dev_c_tollgate.m         (Dev-C)
-    │   ├── dev_a_basic_driving.m     (Dev-A)
-    │   └── dev_e_lateral.m          (Dev-E)
+    │   ├── mode_manager_fcn.m                (Dev-B)
+    │   ├── path_planning_fcn.m               (Dev-D)
+    │   ├── trajectory_planning_fcn.m         (Dev-C)
+    │   ├── longitudinal_controller_fcn.m     (Dev-A)
+    │   └── lateral_controller_fcn.m          (Dev-E)
     └── Models/
         ├── Day3/, Day4_5/, Day6/             ← 학습용 (수정 가능)
 \`\`\`
@@ -4272,24 +3497,24 @@ generic_IVS/CarMaker/Subsystem/Final Project/Scenario 1
 │
 └── [Modify 영역]   (우측, x>2500)
     ├── Lib_ModeManager            ← Dev-B
-    │     └── Wrapper_dev_b_overtaking  (MATLAB Function block)
+    │     └── Wrapper_mode_manager_fcn  (MATLAB Function block)
     ├── Lib_PathPlanning           ← Dev-D
-    │     └── Wrapper_dev_d_parking
+    │     └── Wrapper_path_planning_fcn
     ├── Lib_TrajectoryPlanning     ← Dev-C
-    │     └── Wrapper_dev_c_tollgate
+    │     └── Wrapper_trajectory_planning_fcn
     ├── Lib_LongitudinalController ← Dev-A
-    │     └── Wrapper_dev_a_basic_driving
+    │     └── Wrapper_longitudinal_controller_fcn
     └── Lib_LateralController      ← Dev-E
-          └── Wrapper_dev_e_lateral
+          └── Wrapper_lateral_controller_fcn
 \`\`\`
 
 ### Wrapper 블록의 코드 (예: Lib_LateralController 안)
 \`\`\`matlab
 function steer_cmd = fcn(cte, mode)
 %#codegen
-% IMPORTANT: To modify algorithm, edit functions/dev_e_lateral.m
+% IMPORTANT: To modify algorithm, edit functions/lateral_controller_fcn.m
 % in the repo, NOT this block. This minimizes .slx changes.
-steer_cmd = dev_e_lateral(cte, mode);
+steer_cmd = lateral_controller_fcn(cte, mode);
 end
 \`\`\`
 
@@ -4299,11 +3524,11 @@ end
 
 | Role | 수정하는 파일 | 수정하지 말 것 |
 |---|---|---|
-| **Dev-A** | \`functions/dev_a_basic_driving.m\` | 그 외 모두 |
-| **Dev-B** | \`functions/dev_b_overtaking.m\` | 그 외 모두 |
-| **Dev-C** | \`functions/dev_c_tollgate.m\` | 그 외 모두 |
-| **Dev-D** | \`functions/dev_d_parking.m\` | 그 외 모두 |
-| **Dev-E** | \`functions/dev_e_lateral.m\` | 그 외 모두 |
+| **Dev-A** | \`functions/longitudinal_controller_fcn.m\` | 그 외 모두 |
+| **Dev-B** | \`functions/mode_manager_fcn.m\` | 그 외 모두 |
+| **Dev-C** | \`functions/trajectory_planning_fcn.m\` | 그 외 모두 |
+| **Dev-D** | \`functions/path_planning_fcn.m\` | 그 외 모두 |
+| **Dev-E** | \`functions/lateral_controller_fcn.m\` | 그 외 모두 |
 | **Dev-F** | \`generic_IVS.mdl\` (wiring 시), \`functions/README.md\`, 통합/검증 | functions/*.m 직접 수정 X |
 
 ## 5. Git 워크플로
@@ -4348,7 +3573,7 @@ git push
 
 \`\`\`matlab
 %% 새 외부 함수 작성 후 단위 테스트
-steer = dev_e_lateral(0.5, int32(1));
+steer = lateral_controller_fcn(0.5, int32(1));
 assert(abs(steer) <= pi/6, '조향각 한계 초과');
 \`\`\`
 
@@ -4392,31 +3617,31 @@ assert(abs(steer) <= pi/6, '조향각 한계 초과');
 \`\`\`
 Lib_LongitudinalController (10ms)
   From[Ego_Velocity]      ──┐
-  Constant 20             ──┤  Wrapper_dev_a_basic_driving  ──→ Goto[Accel_Cmd]
-  Constant 999            ──┤   ↳ functions/dev_a_basic_driving.m
+  Constant 20             ──┤  Wrapper_longitudinal_controller_fcn  ──→ Goto[Accel_Cmd]
+  Constant 999            ──┤   ↳ functions/longitudinal_controller_fcn.m
   From[Mission_Mode]      ──┘
 
 Lib_LateralController (10ms)
-  From[Trajectory_CTE]    ──┐  Wrapper_dev_e_lateral      ──→ Goto[Steer_Cmd]
-  From[Mission_Mode]      ──┘   ↳ functions/dev_e_lateral.m
+  From[Trajectory_CTE]    ──┐  Wrapper_lateral_controller_fcn      ──→ Goto[Steer_Cmd]
+  From[Mission_Mode]      ──┘   ↳ functions/lateral_controller_fcn.m
 
 Lib_TrajectoryPlanning (100ms)
   Constant 0              ──┐
   From[Mission_Mode]      ──┤
-  From[Ego_Global_Pos]──BusSel─→[x,y,yaw]──┤  Wrapper_dev_c_tollgate ──→ Goto[Trajectory_CTE]
-  From[Ego_Velocity]      ──┘   ↳ functions/dev_c_tollgate.m
+  From[Ego_Global_Pos]──BusSel─→[x,y,yaw]──┤  Wrapper_trajectory_planning_fcn ──→ Goto[Trajectory_CTE]
+  From[Ego_Velocity]      ──┘   ↳ functions/trajectory_planning_fcn.m
 
 Lib_PathPlanning (100ms)
   From[Ego_Global_Pos]──BusSel─→[x,y,yaw]──┐
-  Constant 0 (traffic_x)  ──┤  Wrapper_dev_d_parking  ──→ Goto[Target_Lane]
-  Constant 0 (traffic_y)  ──┤   ↳ functions/dev_d_parking.m  ──→ Goto[Lane_Cost]
+  Constant 0 (traffic_x)  ──┤  Wrapper_path_planning_fcn  ──→ Goto[Target_Lane]
+  Constant 0 (traffic_y)  ──┤   ↳ functions/path_planning_fcn.m  ──→ Goto[Lane_Cost]
   Constant int32(1)       ──┘
 
 Lib_ModeManager (10ms)
   From[Ego_Velocity]      ──┐
   From[Ego_Global_Pos]──BusSel─→[x,y,yaw]──┤
-  Constant 999 (traffic_x)──┤  Wrapper_dev_b_overtaking  ──→ Goto[Mission_Mode]
-  Constant 0 (traffic_y)  ──┤   ↳ functions/dev_b_overtaking.m
+  Constant 999 (traffic_x)──┤  Wrapper_mode_manager_fcn  ──→ Goto[Mission_Mode]
+  Constant 0 (traffic_y)  ──┤   ↳ functions/mode_manager_fcn.m
   From[Target_Lane]       ──┤
   Constant int32(1)       ──┘
 \`\`\`
@@ -4432,11 +3657,11 @@ Lib_ModeManager (10ms)
   - \`AccelCtrl.DesiredAx\` ← Accel_Cmd
 
 ###  각 Dev TODO (자기 .m만 수정)
-- **Dev-A**: \`dev_a_basic_driving.m\`에 곡률 감속 + ACC 강화
-- **Dev-B**: \`dev_b_overtaking.m\`에 톨게이트/주차 전환 로직 추가
-- **Dev-C**: \`dev_c_tollgate.m\`에 Werling Frenet 다중 후보 (DEV_C v2 patch 참고)
-- **Dev-D**: \`dev_d_parking.m\`에 lane_cost 정밀 계산 (LaneRiskBus 영감)
-- **Dev-E**: \`dev_e_lateral.m\`에 path yaw feedforward 추가 (필요시)
+- **Dev-A**: \`longitudinal_controller_fcn.m\`에 곡률 감속 + ACC 강화
+- **Dev-B**: \`mode_manager_fcn.m\`에 톨게이트/주차 전환 로직 추가
+- **Dev-C**: \`trajectory_planning_fcn.m\`에 Werling Frenet 다중 후보 (DEV_C v2 patch 참고)
+- **Dev-D**: \`path_planning_fcn.m\`에 lane_cost 정밀 계산 (LaneRiskBus 영감)
+- **Dev-E**: \`lateral_controller_fcn.m\`에 path yaw feedforward 추가 (필요시)
 
 ---
 
@@ -5038,37 +4263,37 @@ end
 
 | 파일 | 담당 Dev | 04 아키텍처 매핑 | Lib 위치 |
 |---|:-:|---|---|
-| \`dev_b_overtaking.m\` | **Dev-B** | 02_MissionSupervisor + 04_OvertakingDecision | \`Lib_ModeManager\` |
-| \`dev_d_parking.m\` | **Dev-D** | 01_WorldModel + 07_ParkingPlanner | \`Lib_PathPlanning\` |
-| \`dev_c_tollgate.m\` | **Dev-C** | 05_LaneChangeController + 06_TollgateHighPass | \`Lib_TrajectoryPlanning\` |
-| \`dev_a_basic_driving.m\` | **Dev-A** | 03_LaneKeeping_ACC (종방향) + 08_ParkingController (종) | \`Lib_LongitudinalController\` |
-| \`dev_e_lateral.m\` | **Dev-E** | 03_LaneKeeping_ACC (횡방향) + 08_ParkingController (횡) | \`Lib_LateralController\` |
+| \`mode_manager_fcn.m\` | **Dev-B** | 02_MissionSupervisor + 04_OvertakingDecision | \`Lib_ModeManager\` |
+| \`path_planning_fcn.m\` | **Dev-D** | 01_WorldModel + 07_ParkingPlanner | \`Lib_PathPlanning\` |
+| \`trajectory_planning_fcn.m\` | **Dev-C** | 05_LaneChangeController + 06_TollgateHighPass | \`Lib_TrajectoryPlanning\` |
+| \`longitudinal_controller_fcn.m\` | **Dev-A** | 03_LaneKeeping_ACC (종방향) + 08_ParkingController (종) | \`Lib_LongitudinalController\` |
+| \`lateral_controller_fcn.m\` | **Dev-E** | 03_LaneKeeping_ACC (횡방향) + 08_ParkingController (횡) | \`Lib_LateralController\` |
 
 Dev-F (Supervisor): 통합, 검증, 메인 \`.slx\` 관리. 알고리즘 함수는 직접 수정 안 함.
 
 ## 인터페이스 (시그니처 변경 시 합의 필요)
 
-### \`dev_e_lateral(cte, mode) → steer_cmd\`
+### \`lateral_controller_fcn(cte, mode) → steer_cmd\`
 - \`cte\` : Cross-Track Error [m]
 - \`mode\` : int32, mission mode
 - \`steer_cmd\` : 앞바퀴 조향각 [rad], 범위 ±π/6
 
-### \`dev_a_basic_driving(v_ego, v_target, front_gap, mode) → acc_cmd\`
+### \`longitudinal_controller_fcn(v_ego, v_target, front_gap, mode) → acc_cmd\`
 - \`v_ego\` : 자차 속도 [m/s]
 - \`v_target\` : 목표 속도 [m/s]
 - \`front_gap\` : 선행차 거리 [m] (없으면 999)
 - \`acc_cmd\` : 목표 가속도 [m/s²], 범위 [-5, +3]
 
-### \`dev_c_tollgate(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v) → cte_offset\`
+### \`trajectory_planning_fcn(cte_in, mode, ego_x, ego_y, ego_yaw, ego_v) → cte_offset\`
 - \`cte_in\` : 원본 DevDist
 - \`mode\` : LK/LC_OUT/LC_PASS/LC_BACK 등
 - \`cte_offset\` : 보정된 CTE (lateral controller 입력)
 
-### \`dev_d_parking(ego_x, ego_y, ego_yaw, traffic_x, traffic_y, current_lane) → [target_lane, lane_cost]\`
+### \`path_planning_fcn(ego_x, ego_y, ego_yaw, traffic_x, traffic_y, current_lane) → [target_lane, lane_cost]\`
 - \`lane_cost\` : double [4×1], 차선별 비용 (낮을수록 좋음)
 - \`target_lane\` : int32, 목표 차선 (argmin)
 
-### \`dev_b_overtaking(ego_v, ego_x, ego_y, ego_yaw, traffic_x, traffic_y, target_lane, current_lane) → mode\`
+### \`mode_manager_fcn(ego_v, ego_x, ego_y, ego_yaw, traffic_x, traffic_y, target_lane, current_lane) → mode\`
 - \`mode\` : int32, 1=LK, 2=OT, 3=LC_OUT, 4=LC_PASS, 5=LC_BACK, 6=TG, 7=PK, 9=EMG
 
 ## 코딩 규칙

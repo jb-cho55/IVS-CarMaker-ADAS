@@ -74,8 +74,8 @@
 <div class="nav-section"> 주차 시나리오 (1)</div>
 <div class="nav-item" data-page="scn-parking">️ 2-1. 주차 (Parking)</div>
 
-<div class="nav-section"> 팀원 (주행 3 / 주차 2 / Supervisor 1)</div>
-<div class="nav-item" data-page="dev-a"> Dev-A |  기본주행 Owner</div><div class="nav-item" data-page="dev-b">️ Dev-B |  추월 Owner</div><div class="nav-item" data-page="dev-c"> Dev-C |  톨게이트 Owner</div><div class="nav-item" data-page="dev-d">️ Dev-D | ️ 주차 Owner</div><div class="nav-item" data-page="dev-e"> Dev-E |  ️ 주차 (횡 제어)</div><div class="nav-item" data-page="dev-f">️ Dev-F | Supervisor</div>
+<div class="nav-section">팀원별 작업 (5 + 1)</div>
+<div class="nav-item" data-page="dev-a"> Dev-A |  기본주행 Owner</div><div class="nav-item" data-page="dev-b">️ Dev-B |  추월 Owner</div><div class="nav-item" data-page="dev-c"> Dev-C |  톨게이트 Owner</div><div class="nav-item" data-page="dev-d">️ Dev-D | ️ 주차 Owner</div><div class="nav-item" data-page="dev-e"> Dev-E |  횡 제어 (모든 시나리오)</div><div class="nav-item" data-page="dev-f">️ Dev-F | Supervisor</div>
 
 <div class="nav-section">참조 자료</div>
 <div class="nav-item" data-page="dictionary"> 신호 Dictionary</div>
@@ -185,12 +185,12 @@
 <div class="grid grid-cols-3 gap-3">
 <div class="dev-card dev-d cursor-pointer" onclick="navigate('scn-parking')">
 <div class="font-bold text-green-700">️ 2-1. 주차</div>
-<div class="text-xs text-green-700 font-semibold mt-1"> 👑 Owner: Dev-D + Dev-E (2명)</div>
-<div class="text-sm text-gray-700 mt-2">Start → Goal 경로 (Dev-D) + 정밀 제어 (Dev-E).</div>
+<div class="text-xs text-green-700 font-semibold mt-1"> Owner: Dev-D</div>
+<div class="text-sm text-gray-700 mt-2">Start → Goal 경로 → 정지.</div>
 <div class="text-xs mt-2"><span class="badge badge-green">mode=1→7→0</span></div>
 </div>
 <div class="p-3 bg-gray-50 rounded text-sm text-gray-600 col-span-2 flex items-center">
-<div> <strong>Dev-E</strong> = 주차 그룹 (Dev-D와 함께 주차 owner 2명)<br> <strong>Dev-F</strong> = Supervisor (인프라/통합/PR 리뷰)</div>
+<div> <strong>Dev-E</strong> = cross-cutting (4 시나리오 모두 횡 제어 contributor)<br> <strong>Dev-F</strong> = Supervisor (인프라/통합/PR 리뷰)</div>
 </div>
 </div>
 </div>
@@ -960,13 +960,8 @@ open generic_IVS.mdl
 
 <!-- ============ SCN: PARKING ============ -->
 <div class="page" id="page-scn-parking">
-<h1 class="text-3xl font-bold mb-2">️ 시나리오 2-1: 주차 (Parking)</h1>
-<div class="flex gap-2 mb-3 flex-wrap">
-<span class="badge badge-green"> Owner: Dev-D (경로)</span>
-<span class="badge badge-green"> Owner: Dev-E (제어)</span>
-<span class="badge badge-blue">Mode: LK→PARKING→IDLE</span>
-<span class="badge badge-yellow">주차 그룹 (2명)</span>
-</div><p class="text-gray-600 mb-6">본선 주행 → 주차장 진입 → Parking_Start_Point → Parking_Goal_Point 경로 → 후진 주차</p>
+<h1 class="text-3xl font-bold mb-2">️ 시나리오 3: 주차 (Parking)</h1>
+<p class="text-gray-600 mb-6">본선 주행 → 주차장 진입 → Parking_Start_Point → Parking_Goal_Point 경로 → 후진 주차</p>
 
 <div class="card">
 <h2 class="text-xl font-semibold mb-3"> 시나리오 시각화</h2>
@@ -1690,18 +1685,19 @@ open generic_IVS.mdl
 
 <!-- ============ Dev-E ============ -->
 <div class="page" id="page-dev-e">
-<h1 class="text-3xl font-bold mb-2"> Dev-E — 주차 시나리오 (횡 제어)</h1>
+<h1 class="text-3xl font-bold mb-2"> Dev-E — 횡 제어 (Cross-cutting)</h1>
 <!-- Owner 시나리오 카드 -->
-<div class="card bg-green-50 border-l-4 border-green-500 mb-4">
+<div class="card bg-blue-50 border-l-4 border-blue-500 mb-4">
 <div class="flex items-center gap-3 mb-3">
 <span class="text-2xl"></span>
 <div>
-<div class="text-xs uppercase tracking-wide text-green-700 font-semibold">OWNER 시나리오</div>
-<div class="text-xl font-bold text-blue-900">️ 2-1. 주차 (횡 제어 owner)</div></div>
+<div class="text-xs uppercase tracking-wide text-blue-700 font-semibold">OWNER 시나리오</div>
+<div class="text-xl font-bold text-blue-900"> Cross-cutting: 4 시나리오 모두</div>
 </div>
-<p class="text-sm text-green-900 mb-3"><strong>주차 시나리오 owner</strong> (Dev-D와 함께). Lateral 모듈 단일 owner로 모든 시나리오 횡 제어 제공.</p>
+</div>
+<p class="text-sm text-blue-900 mb-3"><strong>횡 제어 단일 owner.</strong> 4 시나리오 모두에서 mode별 PID 게인 분기 책임.</p>
 <div class="text-sm font-semibold text-blue-900 mb-2"> 내가 만들어야 할 핵심 작업:</div>
-<ul class="list-disc ml-6 text-sm text-green-900 space-y-1 mb-3">
+<ul class="list-disc ml-6 text-sm text-blue-900 space-y-1 mb-3">
 <li>LK: Kp=1.5, Ki=0.3, Kd=0.4 (차선 중앙 유지)</li>
 <li>LC (모드 3,4): Kp=2.0, Ki=0.5 (빠른 차선 변경)</li>
 <li>TG (모드 6): Kp=1.0, Kd=0.8 (정밀 게이트 정렬)</li>
@@ -1710,7 +1706,7 @@ open generic_IVS.mdl
 <div class="flex gap-2 flex-wrap mt-3">
 <span class="badge badge-blue"> Lib_LateralController</span>
 <span class="badge badge-yellow"> dev_e_lateral.m</span>
-<a class="badge badge-green cursor-pointer hover:opacity-80" onclick="navigate('scn-parking')">→ 주차 시나리오 상세</a>
+<a class="badge badge-blue cursor-pointer hover:opacity-80" onclick="navigate('scn-driving')">→ 시나리오 상세 보기</a>
 </div>
 </div>
 
@@ -1827,7 +1823,7 @@ open generic_IVS.mdl
 </div>
 </div>
 
-<<!-- ============ Dev-F ============ -->
+<!-- ============ Dev-F ============ -->
 <div class="page" id="page-dev-f">
 <h1 class="text-3xl font-bold mb-2">️ Dev-F — Supervisor (통합/인프라)</h1>
 <!-- Owner 시나리오 카드 (Supervisor) -->
@@ -2275,12 +2271,13 @@ end</code></pre>
 <tr>
 <td><strong class="text-blue-700"> Dev-E</strong></td>
 <td><code>dev_e_lateral.m</code><br><span class="text-xs text-gray-500">(Lib_LateralController)</span></td>
-<td class="text-center"><span class="text-xs"> LK 게인</span></td>
-<td class="text-center"><span class="text-xs"> LC 게인</span></td>
-<td class="text-center"><span class="text-xs"> TG 게인</span></td>
-<td class="text-center bg-yellow-50"><strong> OWNER</strong><br><span class="text-xs">주차 PID</span></td>
-<td class="text-xs">steer_cmd 단독 + Lateral 모듈 (모든 시나리오 게인 제공)</td>
-</tr><tr>
+<td class="text-center bg-yellow-50"><strong> 모든 횡제어</strong></td>
+<td class="text-center bg-yellow-50"><strong> 모든 횡제어</strong></td>
+<td class="text-center bg-yellow-50"><strong> 모든 횡제어</strong></td>
+<td class="text-center bg-yellow-50"><strong> 모든 횡제어</strong></td>
+<td class="text-xs">steer_cmd 명령 (조향)</td>
+</tr>
+<tr>
 <td><strong class="text-gray-700">️ Dev-F</strong></td>
 <td><code>dev_f_supervisor.m</code><br><span class="text-xs text-gray-500">(Lib_Supervisor)</span></td>
 <td colspan="4" class="text-center bg-yellow-50"><strong> 모든 시나리오 인프라</strong><br><span class="text-xs">ctrl_bus 생성 + 통합/리뷰</span></td>
@@ -3319,13 +3316,13 @@ end
 </code></pre>
 </div>
 
-<!-- ▶ Dev-E 주차 그룹 (횡 제어 모듈 owner) -->
+<!-- ▶ Dev-E 횡 제어 (Cross-cutting) -->
 <div class="card border-l-4 border-blue-500">
 <h2 class="text-2xl font-bold mb-2 text-blue-800"> 5. Lib_LateralController — dev_e_lateral.m</h2>
 <div class="flex gap-2 mb-4">
 <span class="badge badge-blue">Dev-E</span>
 <span class="badge badge-yellow">10ms</span>
-<span class="badge badge-purple">주차 그룹 (2명 중)</span>
+<span class="badge badge-purple">Cross-cutting (모든 시나리오)</span>
 </div>
 
 <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
@@ -3433,7 +3430,7 @@ end
 <pre><code>function steer_cmd = dev_e_lateral(ctrl_bus, mode, cte)
 %#codegen
 % LATERAL_CONTROLLER_FCN — 횡방향 제어 (PID + 모드별 게인)
-% Owner: Dev-E (주차 그룹 — 횡 제어 모듈 owner)
+% Owner: Dev-E (Cross-cutting, 4 시나리오 모두 횡 제어)
 %
 % Inputs:
 %   ctrl_bus : Supervisor 정리된 신호 (현재는 ego_v 정도 활용 — 향후 속도 적응 게인 등)
