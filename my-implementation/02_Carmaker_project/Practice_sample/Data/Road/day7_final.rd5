@@ -1,20 +1,22 @@
 #INFOFILE1.1 (UTF-8) - Do not remove this line!
 FileIdent = IPGRoad 14.0
-FileCreator = CarMaker Office 14.0.1
-LibVersion = 14.0.1
+FileCreator = CarMaker for Simulink 14.1.1
+LibVersion = 14.1.1
 Country = DEU DEU
 nLinks = 6
 nJunctions = 4
-nObjects = 1426
-nRoutes = 6
+nObjects = 1408
+nRoutes = 8
 RoadNetworkLength = 918.131733704011
 BBox = -227.509537933553 136.986226585872 -177.456853087483 39 -12 36.1773180807073
-Route.0.Length = 888.45694777325
+Route.0.Length = 785.152893623613
 Route.1.Length = 713.470893623613
 Route.2.Length = 713.470893623613
 Route.3.Length = 713.470893623613
 Route.4.Length = 163.386893623613
-Route.5.Length = 132.886054149637
+Route.5.Length = 71.682
+Route.6.Length = 88.3476117283654
+Route.7.Length = 46.2476117283656
 RST.Unit = kmh
 RST = 50 100 -1 30 70 50 -1 -1
 Movie = 0.2 0.2 0.001 1 1 1 1
@@ -95,11 +97,8 @@ Junction.0.Link.0.LaneSection.0.ID = 40
 Junction.0.Link.0.LaneSection.0.Start = 0
 Junction.0.Link.0.LaneSection.0.LaneL.0.ID = 61
 Junction.0.Link.0.LaneSection.0.LaneL.0 = 0 1 1 5 0 0 0
-Junction.0.Link.0.LaneSection.0.LaneR.0.ID = 46
-Junction.0.Link.0.LaneSection.0.LaneR.0 = 0 3.5 2.5 0 0 0 0
-Junction.0.Link.0.LaneSection.0.LaneR.0.ARP = 47 49 50 51 53 55
-Junction.0.Link.0.LaneSection.0.LaneR.1.ID = 60
-Junction.0.Link.0.LaneSection.0.LaneR.1 = 0 1 1 5 0 0 0
+Junction.0.Link.0.LaneSection.0.LaneR.0.ID = 60
+Junction.0.Link.0.LaneSection.0.LaneR.0 = 0 1 1 5 0 0 0
 Junction.0.Link.1.ID = 62 63
 Junction.0.Link.1 = 7 -14 16 -14
 Junction.0.Link.1.LaneSection.0.ID = 65
@@ -150,11 +149,8 @@ Junction.0.Link.5.LaneSection.0.ID = 152
 Junction.0.Link.5.LaneSection.0.Start = 0
 Junction.0.Link.5.LaneSection.0.LaneL.0.ID = 170
 Junction.0.Link.5.LaneSection.0.LaneL.0 = 0 1 1 5 0 0 0
-Junction.0.Link.5.LaneSection.0.LaneR.0.ID = 153
-Junction.0.Link.5.LaneSection.0.LaneR.0 = 0 2.5 3.5 0 0 0 0
-Junction.0.Link.5.LaneSection.0.LaneR.0.ARP = 156 159 160 161 162 163
-Junction.0.Link.5.LaneSection.0.LaneR.1.ID = 167
-Junction.0.Link.5.LaneSection.0.LaneR.1 = 0 1 1 5 0 0 0
+Junction.0.Link.5.LaneSection.0.LaneR.0.ID = 167
+Junction.0.Link.5.LaneSection.0.LaneR.0 = 0 1 1 5 0 0 0
 Junction.1.ID = 4
 Junction.1.Type = Standard
 Junction.1.Knot = 0 -14
@@ -923,28 +919,26 @@ LanePath.45 = 756 717 2 10 0.1 0.1 -1 -1
 LanePath.46 = 765 758 0.25 10 0.1 0.1 -1 -1
 LanePath.47 = 775 767 0.25 10 0.1 0.1 -1 -1
 LanePath.48 = 816 798 2 10 0.1 0.1 -1 -1
-LanePath.49 = 56 46 2 10 0.1 0.1 -1 -1
-LanePath.50 = 76 66 2 10 0.1 0.1 -1 -1
-LanePath.51 = 97 84 2 10 0.1 0.1 -1 -1
-LanePath.52 = 125 108 2 10 0.1 0.1 -1 -1
-LanePath.53 = 146 138 2 10 0.1 0.1 -1 -1
-LanePath.54 = 2300 554 2 1 0 0 -1 -1
-LanePath.55 = 5 588 2 1 0 0 -1 -1
-LanePath.56 = 342 678 2 1 0 0 -1 -1
-LanePath.57 = 3 691 2 1 0 0 -1 -1
-LanePath.58 = 2308 722 2 1 0 0 -1 -1
-LanePath.59 = 2309 740 2 1 0 0 -1 -1
-LanePath.60 = 166 153 2 10 0.1 0.1 -1 -1
-LanePath.61 = 99 48 2 10 0.1 0.1 -1 -1
-LanePath.62 = 133 103 2 10 0.1 0.1 -1 -1
-LanePath.63 = 177 136 2 10 0.1 0.1 -1 -1
-LanePath.64 = 193 182 0.25 10 0.1 0.1 -1 -1
-LanePath.65 = 317 195 0.25 10 0.1 0.1 -1 -1
-LanePath.66 = 370 353 2 10 0.1 0.1 -1 -1
-LanePath.67 = 600 541 2 10 0.1 0.1 -1 -1
-LanePath.68 = 609 602 2 10 0.1 0.1 -1 -1
-LanePath.69 = 619 611 0.25 10 0.1 0.1 -1 -1
-LanePath.70 = 629 621 0.25 10 0.1 0.1 -1 -1
+LanePath.49 = 76 66 2 10 0.1 0.1 -1 -1
+LanePath.50 = 97 84 2 10 0.1 0.1 -1 -1
+LanePath.51 = 125 108 2 10 0.1 0.1 -1 -1
+LanePath.52 = 146 138 2 10 0.1 0.1 -1 -1
+LanePath.53 = 2300 554 2 1 0 0 -1 -1
+LanePath.54 = 5 588 2 1 0 0 -1 -1
+LanePath.55 = 342 678 2 1 0 0 -1 -1
+LanePath.56 = 3 691 2 1 0 0 -1 -1
+LanePath.57 = 2308 722 2 1 0 0 -1 -1
+LanePath.58 = 2309 740 2 1 0 0 -1 -1
+LanePath.59 = 99 48 2 10 0.1 0.1 -1 -1
+LanePath.60 = 133 103 2 10 0.1 0.1 -1 -1
+LanePath.61 = 177 136 2 10 0.1 0.1 -1 -1
+LanePath.62 = 193 182 0.25 10 0.1 0.1 -1 -1
+LanePath.63 = 317 195 0.25 10 0.1 0.1 -1 -1
+LanePath.64 = 370 353 2 10 0.1 0.1 -1 -1
+LanePath.65 = 600 541 2 10 0.1 0.1 -1 -1
+LanePath.66 = 609 602 2 10 0.1 0.1 -1 -1
+LanePath.67 = 619 611 0.25 10 0.1 0.1 -1 -1
+LanePath.68 = 629 621 0.25 10 0.1 0.1 -1 -1
 ConPath.0 = 383 41 543 1 0 564 1 1 31 1 -1 -1 0 0
 ConPath.1 = 91 41 133 107.431402664357 0 177 365.292207993071 1 31 1 -1 -1 0 0
 ConPath.2 = 111 41 543 7.211 1 355 1 1 31 1 -1 -1 0 0
@@ -973,13 +967,6 @@ Route.0.DrvPath:
 	543
 	111
 	355
-	56
-	184
-	2300
-	283
-	3
-	643
-	381
 Route.1.ID = 171
 Route.1.Name = Route_1
 Route.1.DrvPath.ID = 172
@@ -1040,7 +1027,20 @@ Route.5.DrvPath:
 	383
 	564
 	355
-	56
+Route.6.ID = 47
+Route.6.Name = Route_47
+Route.6.DrvPath.ID = 49
+Route.6.DrvPath:
+	184
+	2300
+	283
+	3
+	643
+	381
+Route.7.ID = 50
+Route.7.Name = Route_50
+Route.7.DrvPath.ID = 51
+Route.7.DrvPath:
 	184
 	2300
 	283
@@ -1103,8 +1103,6 @@ RL.18.TrafficBarrier.4.PointList:
 	0 0
 	0.001 11.18
 	0.018 29.772
-RL.33.RoadMarking.0.ID = 378 46
-RL.33.RoadMarking.0 = 0 0 0 1 0 -1 0.15 0 1 0 0 2 4 1 1 0
 RL.38.RoadMarking.0.ID = 59 38
 RL.38.RoadMarking.0 = 0 0 0 1 0 100 0.12 0 1 0 0 2 4 1 1 0
 RL.42.GuidePost.0.ID = 119 42
@@ -1192,8 +1190,6 @@ RL.81.RoadMarking.0.ID = 852 84
 RL.81.RoadMarking.0 = 0 0 0 1 0 -1 0.12 0 2 0 0 2 4 1 1 0
 RL.105.RoadMarking.0.ID = 853 108
 RL.105.RoadMarking.0 = 0 0 0 1 0 -1 0.12 0 2 0 0 2 4 1 1 0
-RL.150.RoadMarking.0.ID = 847 153
-RL.150.RoadMarking.0 = 0 0 0.139 1 0 -1 0.15 0 1 0 0 2 4 1 1 0
 RL.169.RoadMarking.0.ID = 188 175
 RL.169.RoadMarking.0 = -4 0 -6 1 0 1 0.12 0 1 0 0 2 4 1 1 0
 RL.169.RoadMarking.1.ID = 226 215
