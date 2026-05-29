@@ -1,10 +1,10 @@
 function cmenv (varargin)		% -*- Mode: Fundamental -*-
 % CMENV - Add CarMaker directories to the MATLAB search path.
 %
-    addpath(genpath(pwd));    
-% CarMaker installation directory.
+
+    % CarMaker installation directory.
     if isempty(which('cmlocaldir'))
-	cminstdir = 'C:\IPG\carmaker\win64-14.1.2';
+	cminstdir = 'C:/IPG/carmaker/win64-14.1.2';
     else
 	cminstdir = cmlocaldir	% for mat: CM-14.0
     end
@@ -64,6 +64,7 @@ function cmenv (varargin)		% -*- Mode: Fundamental -*-
 
 	% Add path to the user's own compiled version of the CarMaker library.
 	try_addpath(fullfile(dirname(pwd), 'src_cm4sl'));
+	try_addpath_tree(fullfile(dirname(pwd), 'src_cm4sl', 'Models'));
 	try_addpath(fullfile(dirname(pwd), 'src_mm4sl'));
 	try_addpath(fullfile(dirname(pwd), 'src_tm4sl'));
 
@@ -131,6 +132,18 @@ function b = try_addpath (p)
     if exist(p, 'dir')
 	disp(sprintf('addpath %s', p));
 	addpath(p);
+	b = 1;
+    else
+	b = 0;
+    end
+
+
+function b = try_addpath_tree (p)
+% If p exists, add it and all subdirectories to the MATLAB search path.
+
+    if exist(p, 'dir')
+	disp(sprintf('addpath %s', p));
+	addpath(genpath(p));
 	b = 1;
     else
 	b = 0;
