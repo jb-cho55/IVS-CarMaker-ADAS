@@ -1179,7 +1179,7 @@ if requested_selector ~= active_selector
     tire_angle  = 0.0;           % straighten wheels while the gear engages
     if speed_abs < 0.12
         switch_count = switch_count + int32(1);
-        if switch_count > int32(50)
+        if switch_count > int32(15)   % 기어전환 대기 50->15틱(0.5->0.15s): cusp 정지간격 단축
             active_selector = requested_selector;
             switch_count = int32(0);
             shifting = false;
@@ -1207,87 +1207,41 @@ vc_brake    = 0.0;
 % fix is MAGNITUDE/DYNAMICS. Forward parking already works, so we ONLY soften
 % the committed-reverse leg: low creep target, low accel cap, slow rise, soft
 % P/I. This keeps the inner PI in a small, well-behaved regime (no runaway).
+% 검증 레시피(Parking_simple)와 동일한 캡/게인. 후진은 살살(낮은 속도상한).
 is_rev = active_selector < 0.0;
 if is_rev
-    % RESTORED to the forward-success baseline (the session's reverse-authority
-    % experiment, V_TGT_MAX=0.45/KP=0.55/AX_MAX=0.30/AX_RISE=0.12, did not move
-    % the car and is reverted). Gentle anti-surge reverse caps.
-    V_TGT_MAX = 0.30;           % reverse creep speed (m/s)
-    KP = 0.40; KD = 0.10;
-    AX_MAX  = 0.12;            % reverse accel cap (m/s^2) -- gentle anti-surge
-    AX_MIN  = -0.60;           % gentle reverse braking cap (m/s^2)
-    AX_RISE = 0.06;            % accel rise-rate (m/s^3)
+    V_TGT_MAX = 0.30;           % 후진 속도상한(살살)
 else
-    V_TGT_MAX = 0.60;           % forward creep/cruise cap
-    KP = 0.70; KD = 0.12;
-    AX_MAX  = 0.40;            % forward accel cap (m/s^2)
-    AX_MIN  = -1.20;          % forward braking cap (m/s^2)
-    AX_RISE = 0.20;           % forward accel rise-rate (m/s^3)
+    V_TGT_MAX = 0.70;           % 전진 속도상한
 end
-DT       = 0.01;
-ALPHA    = 0.6;                  % LPF on the measurement derivative
-AX_START = 0.03;                 % launch accel (m/s^2): gentle standstill break (restored)
+KP_LON     = 0.8;               % 속도 P 게인
+AX_MAX     = 0.6;               % 가속 캡
+AX_MIN     = -1.5;              % 브레이크 캡
+AX_SLEW_UP = 0.05;              % a_desr 상승률 제한(가스 완만 -> AccelCtrl PI surge 완화)
 
-% ---- target SPEED MAGNITUDE this cycle --------------------------------
+% ---- 종방향: 검증 레시피 (속도 P + slew-rate-limit, Parking_simple 검증본) ----
+% 속도 P(미분 없음) + a_desr 상승률 제한: 가스(상승)만 완만히 → AccelCtrl 내부 PI 가
+% 과반응(surge)하지 않게 / 브레이크(하강)는 자유 → 빨리 멈춤. (기존 PD+launch 대체)
 v_mag_tgt = target_v;
 if v_mag_tgt > V_TGT_MAX
     v_mag_tgt = V_TGT_MAX;
 end
 if shifting || target_v < 0.05
-    v_mag_tgt = 0.0;             % hold a stop during shift / at goal
+    v_mag_tgt = 0.0;             % 기어전환 중/목표 도달 -> 정지
 end
 
 e = v_mag_tgt - speed_abs;
-
-% derivative on MEASUREMENT (no derivative kick on target steps)
-d_meas = (speed_abs - spd_prev) / DT;
-spd_prev = speed_abs;
-d_lpf = ALPHA * d_lpf + (1.0 - ALPHA) * d_meas;
-
-% PD only -- NO outer integral. CarMaker's inner AccelCtrl PI (i=1.0) is itself
-% an integrator that drives ACTUAL accel to our command; commanding desired_ax=0
-% makes that inner loop hold a constant speed (it integrates out regen/rolling
-% drag for us). Adding an OUTER integral here would put two integrators in
-% series -> windup -> the reverse 급가속 surge. So we use P (track target speed)
-% + D-on-measurement (damping, no derivative kick), and let the inner PI own the
-% steady-state. e>0 (too slow) -> accelerate; e<0 (too fast) -> brake.
-ax_pid = KP * e - KD * d_lpf;   % >0 accelerate (gear travel dir), <0 brake
-
-% ---- gear-aware command: DM.SelectorCtrl sets DIRECTION ----------------
-% No gear-sign flip (see header): positive = accelerate in the engaged gear's
-% travel direction (reverse needs a POSITIVE desired_ax), negative = brake.
-ax_target = ax_pid;
-
-% very soft launch: when accelerating (ax_target>0) start at ~AX_START (0.03)
-% and ramp up rate-limited; braking (negative) is applied immediately.
-if ax_target > 0.0
-    if ax_cmd < AX_START
-        ax_cmd = AX_START;       % begin reverse/forward at ~0.03 m/s^2
-    end
-    if ax_target > ax_cmd
-        ax_cmd = ax_cmd + AX_RISE * DT;
-        if ax_cmd > ax_target; ax_cmd = ax_target; end
-    else
-        ax_cmd = ax_target;      % PID wants less -> follow down
-    end
-else
-    ax_cmd = ax_target;          % braking / hold: immediate
-end
-desired_ax = ax_cmd;
-
-% firmly settled at a stop -> command zero accel (let AccelCtrl hold)
+desired_ax = KP_LON * e;         % 속도 P (미분 없음)
+if desired_ax > AX_MAX; desired_ax = AX_MAX; end
+if desired_ax < AX_MIN; desired_ax = AX_MIN; end
 if v_mag_tgt == 0.0 && speed_abs < 0.05
-    desired_ax = 0.0;
-    ax_cmd     = 0.0;
+    desired_ax = 0.0;            % 완전 정지 유지
 end
-
-% saturate the command to the gear-dependent accel/brake caps
-if desired_ax > AX_MAX
-    desired_ax = AX_MAX;
-    if ax_cmd > AX_MAX; ax_cmd = AX_MAX; end
-elseif desired_ax < AX_MIN
-    desired_ax = AX_MIN;
+% 상승률 제한(가스만 완만). ax_cmd 를 이전 명령(prev_ax)으로 재사용.
+if desired_ax > ax_cmd + AX_SLEW_UP
+    desired_ax = ax_cmd + AX_SLEW_UP;
 end
+ax_cmd = desired_ax;
 end
 
 function desired_ax = pd_speed(v_des, v_ego)
@@ -1330,7 +1284,7 @@ function v = compute_v_des(ego_x, ego_y, path_x, path_y, path_yaw, path_dir, pat
 % (a) remaining stopping distance, (b) upcoming curvature, (c) an imminent
 % gear change.  Returns a non-negative magnitude; sign/gear handled by caller.
     V_MAX_FWD = 1.2;     % forward top speed in the parking lot              [tunable]
-    V_MAX_REV = 0.45;    % reverse top speed (slower -> tighter reverse tracking) [tunable]
+    V_MAX_REV = 0.30;    % reverse top speed (살살: windup 최소화, 검증본과 일치) [tunable]
 A_BRAKE   = 2.5;     % usable decel for stopping distance (< |AX_MIN|=3) [tunable]
 A_LAT     = 2.0;     % comfortable lateral accel -> corner speed cap     [tunable]
     V_MIN     = 0.25;    % creep floor while still en route
