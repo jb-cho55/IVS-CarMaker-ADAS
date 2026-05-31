@@ -112,7 +112,7 @@ if need_replan && d_goal_now < 2.5 && path_len >= int32(2) && ~force_goal_replan
 end
 
 if need_replan
-    [px, py, pyaw, pdir, plen] = rrt_ccrs_plan(ego_x, ego_y, ego_yaw, t00_x, t00_y, t00_yaw, uint8(occ_map));
+    [px, py, pyaw, pdir, plen] = plan_park_2phase(ego_x, ego_y, ego_yaw, t00_x, t00_y, t00_yaw, uint8(occ_map));
     if plen >= int32(2)
         for i = int32(1):MAX_PATH
             path_x(i)   = px(i);
@@ -189,6 +189,351 @@ steer_fr = tire_angle;
 path_x_dbg = path_x;
 path_y_dbg = path_y;
 path_len_dbg = path_len;
+end
+
+
+%% =====================================================================
+%% Local helpers - 2-phase parking + Hybrid A* planner (ACTIVE)
+%% =====================================================================
+
+function [px, py, pyaw, pdir, plen] = plan_park_2phase(sx, sy, syaw, gx, gy, gyaw, occ_map)
+%#codegen
+% 2단계 주차 (급발진 방지):
+%   (1) 전진으로 '슬롯 코앞 통로'의 pre-park pose P 까지 접근 (후진 거의 없음),
+%   (2) P -> 목표로 짧은 후진 1회 주차.
+% 멀리서 긴 후진/다중 cusp(= AccelCtrl windup 급발진)을 구조적으로 회피.
+% 목표가 이미 가까우면(<NEAR) 곧장 직접 주차. 내부 플래너 = hybrid_astar_plan(결정론적·깨끗).
+% 좌표 = 뒷범퍼 중심. 출력 = MAX_PATH 리샘플 경로(dir +1 전진/-1 후진).
+MAX_PATH = int32(300);
+if abs(syaw) > 2.0*pi; syaw = syaw*pi/180.0; end
+if abs(gyaw) > 2.0*pi; gyaw = gyaw*pi/180.0; end
+
+D    = 7.0;             % pre-park 거리(목표 코앞, 통로 쪽)
+NEAR = 10.0;            % 목표 이 거리(m) 안이면 곧장 직접(짧은) 주차
+Px   = gx + D*cos(gyaw);
+Py   = gy + D*sin(gyaw);
+Pyaw = gyaw + pi/2.0;   % 통로 방향(슬롯 축에 수직)
+
+if hypot(sx - gx, sy - gy) <= NEAR
+    [px, py, pyaw, pdir, plen] = hybrid_astar_plan(sx, sy, syaw, gx, gy, gyaw, occ_map);
+    return;
+end
+
+% --- 1단계: 출발 -> P (전진 접근) ---
+[p1x, p1y, p1yaw, p1dir, p1len] = hybrid_astar_plan(sx, sy, syaw, Px, Py, Pyaw, occ_map);
+% --- 2단계: P -> 목표 (짧은 후진 주차) ---
+[p2x, p2y, p2yaw, p2dir, p2len] = hybrid_astar_plan(Px, Py, Pyaw, gx, gy, gyaw, occ_map);
+
+% --- 두 단계가 각자 목표에 닿았는지 확인; 실패 시 직접 주차로 폴백 ---
+e1 = hypot(p1x(p1len) - Px, p1y(p1len) - Py);
+e2 = hypot(p2x(p2len) - gx, p2y(p2len) - gy);
+if p1len < int32(2) || p2len < int32(2) || e1 > 1.5 || e2 > 1.0
+    [px, py, pyaw, pdir, plen] = hybrid_astar_plan(sx, sy, syaw, gx, gy, gyaw, occ_map);
+    return;
+end
+
+% --- 이어붙이기 (p2 첫 점 = P = p1 끝점, 중복 제거) + MAX_PATH 리샘플 ---
+BIG = int32(700);
+bx = zeros(1, BIG); by = zeros(1, BIG); byaw = zeros(1, BIG); bdir = int8(zeros(1, BIG));
+blen = int32(0);
+for i = int32(1):p1len
+    if blen < BIG
+        blen = blen + int32(1);
+        bx(blen)=p1x(i); by(blen)=p1y(i); byaw(blen)=p1yaw(i); bdir(blen)=p1dir(i);
+    end
+end
+for i = int32(2):p2len
+    if blen < BIG
+        blen = blen + int32(1);
+        bx(blen)=p2x(i); by(blen)=p2y(i); byaw(blen)=p2yaw(i); bdir(blen)=p2dir(i);
+    end
+end
+[px, py, pyaw, pdir, plen] = resample_path(bx, by, byaw, bdir, blen, MAX_PATH);
+end
+
+function [px, py, pyaw, pdir, plen] = hybrid_astar_plan(sx, sy, syaw, gx, gy, gyaw, occ_map)
+%#codegen
+% Hybrid A* (hybrid-state A*) over SE(2): 격자 closed-set + 자전거모델 모션프리미티브
+% + Reeds-Shepp 해석적 슛(endgame). rrt_ccrs_plan 과 같은 시그니처/충돌모델/RS 재활용.
+% 비용에 후진·cusp·조향 페널티 → 전진 위주·부드러운 경로. best-effort: 목표 못 닿으면
+% 목표에서 가장 가까운(휴리스틱 최소) 노드까지.
+%   rear-bumper center, m/rad. dir +1 forward / -1 reverse.
+
+MAX_PATH = int32(300);
+if abs(syaw) > 2.0*pi; syaw = syaw*pi/180.0; end
+if abs(gyaw) > 2.0*pi; gyaw = gyaw*pi/180.0; end
+
+c    = map_const_local();
+R_RS = c.WHEELBASE / tan(0.50);     % min turning radius (~5.13 m)
+DS   = 0.30;
+WB   = c.WHEELBASE;
+MAX_STEER = 0.50;
+
+% ---- collision map (동일) ----
+inflate_r = c.EGO_W*0.5 + c.EGO_WIDTH_SAFETY_MARGIN + 0.30;
+plan_map  = build_plan_map(uint8(occ_map), inflate_r);
+plan_map  = carve_start_corridor(plan_map, sx, sy, syaw, c);
+
+% ---- grid discretization (closed-set은 주행영역만 → 메모리 작게) ----
+RES = c.RES;  X0 = 2.0;  Y0 = -48.0;           % closed-set grid origin (drivable region)
+NGX = int32(round((50.0 - X0)/RES));           % 96
+NGY = int32(round((-2.0 - Y0)/RES));           % 92
+NTH = int32(36);  DTH = 2.0*pi/double(NTH);    % 10deg heading bins
+
+% ---- motion primitives ----
+STEER5 = [-MAX_STEER, -0.4*MAX_STEER, 0.0, 0.4*MAX_STEER, MAX_STEER];
+STEP = 1.5;            % arc length per expansion (m)
+SUBN = int32(5);       % sub-samples per arc (collision + path) → 0.3m sub-step
+ANALYTIC_R = 15.0;     % 이 거리 안이면 매 pop마다 RS 해석적 슛 시도
+H_WEIGHT   = 2.5;      % weighted A*: f = g + W*h (목표로 직진, 노드 수 급감). 전진선호는 방향인지 h가 담당
+
+% ---- cost penalties ----
+REV_MULT    = 2.5;     % 후진 길이 가중 (전진 선호)
+CUSP_PEN    = 3.0;     % 방향전환 1회 비용
+STEER_PEN   = 0.4;     % |조향| 비용 (직진 선호)
+STEERCH_PEN = 0.3;     % 조향 변화 비용 (부드러움)
+
+% ---- A* storage (fixed) ----
+MAXN = int32(6000);
+nx=zeros(MAXN,1); ny=zeros(MAXN,1); nyw=zeros(MAXN,1);
+ng=zeros(MAXN,1); nf=zeros(MAXN,1);
+npar=int32(zeros(MAXN,1)); ndir=int8(zeros(MAXN,1)); nst=zeros(MAXN,1);
+hidx=int32(zeros(MAXN,1)); hf=zeros(MAXN,1); hsize=int32(0);   % binary min-heap (open set)
+closed = false(double(NGX), double(NGY), double(NTH));   % visited bins
+
+% ---- root ----
+n = int32(1);
+nx(1)=sx; ny(1)=sy; nyw(1)=syaw; ng(1)=0.0;
+npar(1)=int32(0); ndir(1)=int8(1); nst(1)=0.0;
+nf(1) = H_WEIGHT * ha_heur(sx,sy,syaw, gx,gy,gyaw, R_RS, REV_MULT);
+[hidx,hf,hsize] = heap_push(hidx,hf,hsize, int32(1), nf(1));
+
+best_near   = int32(1);
+best_near_h = 1.0e18;
+goal_node   = int32(0);
+
+MAX_ITER    = int32(60000);
+STALL_LIMIT = int32(500);     % 0.5m 이상 개선 없이 이만큼 pop되면 종료(도달불가 목표 빨리 포기)
+stall = int32(0);
+stall_ref = 1.0e18;           % stall 기준 (0.5m 이상 좋아질 때만 리셋)
+it    = int32(0);
+while hsize > int32(0) && it < MAX_ITER
+    it = it + int32(1);
+    % ---- pop min-f open node (binary heap) ----
+    [cur, hidx, hf, hsize] = heap_pop(hidx, hf, hsize);
+
+    [xb,yb,tb] = ha_bin(nx(cur),ny(cur),nyw(cur), X0,Y0,RES,NGX,NGY,DTH,NTH);
+    if closed(xb,yb,tb); continue; end    % stale heap entry (bin already expanded)
+    closed(xb,yb,tb) = true;
+
+    hh = ha_heur(nx(cur),ny(cur),nyw(cur), gx,gy,gyaw, R_RS, REV_MULT);
+    if hh < best_near_h; best_near_h = hh; best_near = cur; end   % 항상 최근접 노드 추적
+    if hh < stall_ref - 0.5
+        stall_ref = hh; stall = int32(0);     % 0.5m 이상 개선 → stall 리셋
+    else
+        stall = stall + int32(1);
+        if stall > STALL_LIMIT; break; end    % 의미있는 개선 없음 → 조기종료
+    end
+
+    % ---- analytic Reeds-Shepp shot to goal (트리거는 실제 유클리드 거리로) ----
+    if hypot(gx-nx(cur), gy-ny(cur)) < ANALYTIC_R
+        [~,~,~,~, splen, sok] = rs_shot(nx(cur),ny(cur),nyw(cur), gx,gy,gyaw, plan_map, R_RS, DS);
+        if sok && splen >= int32(2)
+            goal_node = cur; break;
+        end
+    end
+
+    if n >= MAXN; break; end
+    % ---- expand 5 steers x 2 dirs ----
+    for di = int32(1):int32(2)
+        dir = int8(1); if di == int32(2); dir = int8(-1); end
+        for si = int32(1):int32(5)
+            st = STEER5(si);
+            [ex,ey,eyaw,coll] = ha_step(nx(cur),ny(cur),nyw(cur), st, dir, STEP, SUBN, WB, plan_map);
+            if coll; continue; end
+            [xb2,yb2,tb2] = ha_bin(ex,ey,eyaw, X0,Y0,RES,NGX,NGY,DTH,NTH);
+            if closed(xb2,yb2,tb2); continue; end
+            seg = STEP; if dir < int8(0); seg = seg*REV_MULT; end
+            addc = seg + STEER_PEN*abs(st) + STEERCH_PEN*abs(st - nst(cur));
+            if dir ~= ndir(cur); addc = addc + CUSP_PEN; end
+            gnew = ng(cur) + addc;
+            n = n + int32(1);
+            nx(n)=ex; ny(n)=ey; nyw(n)=eyaw; ng(n)=gnew;
+            npar(n)=cur; ndir(n)=dir; nst(n)=st;
+            nf(n) = gnew + H_WEIGHT * ha_heur(ex,ey,eyaw, gx,gy,gyaw, R_RS, REV_MULT);
+            [hidx,hf,hsize] = heap_push(hidx,hf,hsize, n, nf(n));
+            if n >= MAXN; break; end
+        end
+        if n >= MAXN; break; end
+    end
+end
+
+% ---- reconstruct: 목표 도달 시 그 경로 + RS슛, 아니면 best-effort(가장 가까운 노드까지) ----
+if goal_node > int32(0)
+    [px,py,pyaw,pdir,plen] = ha_reconstruct(nx,ny,nyw,npar,nst,ndir, goal_node, ...
+        gx,gy,gyaw, plan_map, R_RS, DS, WB, SUBN, STEP, MAX_PATH, true);
+else
+    [px,py,pyaw,pdir,plen] = ha_reconstruct(nx,ny,nyw,npar,nst,ndir, best_near, ...
+        gx,gy,gyaw, plan_map, R_RS, DS, WB, SUBN, STEP, MAX_PATH, false);
+end
+end
+
+% ===================== Hybrid A* local helpers =====================
+function h = ha_heur(x,y,yaw, gx,gy,gyaw, R, rev_mult)
+%#codegen
+% 방향인지 non-holonomic 휴리스틱 = Reeds-Shepp 거리(장애물 무시), 단 후진 세그먼트
+% (음수 길이=timeflip)에 rev_mult 가중 → greedy 탐색이라도 전진 위주 경로 선호.
+dx = gx - x; dy = gy - y;
+c1 = cos(yaw); s1 = sin(yaw);
+xr = ( dx*c1 + dy*s1)/R;
+yr = (-dx*s1 + dy*c1)/R;
+pr = gyaw - yaw;
+while pr >  pi; pr = pr - 2.0*pi; end
+while pr < -pi; pr = pr + 2.0*pi; end
+[seg3, ~, found] = rs_best_word(xr, yr, pr);
+if found
+    h = (ha_segw(seg3(1),rev_mult) + ha_segw(seg3(2),rev_mult) + ha_segw(seg3(3),rev_mult)) * R;
+else
+    h = hypot(dx,dy) + abs(pr)*R;     % fallback
+end
+end
+
+function w = ha_segw(s, rev_mult)
+%#codegen
+w = abs(s);   % plain RS 거리 (방향인지 가중은 cusp만 늘려 역효과 → 비활성). rev_mult 미사용.
+end
+
+function [xb,yb,tb] = ha_bin(x,y,yaw, X0,Y0,RES,NGX,NGY,DTH,NTH)
+%#codegen
+xb = int32(floor((x - X0)/RES)) + int32(1);
+yb = int32(floor((y - Y0)/RES)) + int32(1);
+if xb < int32(1); xb = int32(1); end
+if xb > NGX;      xb = NGX;      end
+if yb < int32(1); yb = int32(1); end
+if yb > NGY;      yb = NGY;      end
+yw = yaw;
+while yw <  0.0;     yw = yw + 2.0*pi; end
+while yw >= 2.0*pi;  yw = yw - 2.0*pi; end
+tb = int32(floor(yw/DTH)) + int32(1);
+if tb < int32(1); tb = int32(1); end
+if tb > NTH;      tb = NTH;      end
+end
+
+function [ex,ey,eyaw,coll] = ha_step(x,y,yaw, steer, dir, STEP, SUBN, WB, plan_map)
+%#codegen
+coll = false;
+ds = (STEP/double(SUBN)) * double(dir);     % signed sub-step
+ex = x; ey = y; eyaw = yaw;
+for k = int32(1):SUBN
+    ex = ex + ds*cos(eyaw);
+    ey = ey + ds*sin(eyaw);
+    eyaw = eyaw + ds*tan(steer)/WB;
+    if is_occupied_pose(ex, ey, eyaw, plan_map)
+        coll = true; return;
+    end
+end
+while eyaw >  pi; eyaw = eyaw - 2.0*pi; end
+while eyaw < -pi; eyaw = eyaw + 2.0*pi; end
+end
+
+function [px,py,pyaw,pdir,plen] = ha_reconstruct(nx,ny,nyw,npar,nst,ndir, node, ...
+        gx,gy,gyaw, plan_map, R, DS, WB, SUBN, STEP, MAX_PATH, have_goal)
+%#codegen
+BIG = int32(4000);
+bx=zeros(1,BIG); by=zeros(1,BIG); byaw=zeros(1,BIG); bdir=int8(zeros(1,BIG)); blen=int32(0);
+px=zeros(1,MAX_PATH); py=zeros(1,MAX_PATH); pyaw=zeros(1,MAX_PATH);
+pdir=int8(zeros(1,MAX_PATH)); plen=int32(0);
+
+% chain node -> root
+chain = int32(zeros(1,MAX_PATH)); clen = int32(0); nd = node;
+while nd > int32(0) && clen < MAX_PATH
+    clen = clen + int32(1); chain(clen) = nd; nd = npar(nd);
+end
+if clen < int32(1)
+    px(1)=nx(node); py(1)=ny(node); pyaw(1)=nyw(node); pdir(1)=int8(1);
+    px(2)=nx(node); py(2)=ny(node); pyaw(2)=nyw(node); pdir(2)=int8(1);
+    plen=int32(2); return;
+end
+% reverse to root->node
+half = clen/int32(2);
+for i = int32(1):half
+    tmp = chain(i); chain(i) = chain(clen-i+int32(1)); chain(clen-i+int32(1)) = tmp;
+end
+% root point
+blen = int32(1); bx(1)=nx(chain(1)); by(1)=ny(chain(1)); byaw(1)=nyw(chain(1)); bdir(1)=int8(1);
+% re-integrate each primitive (chain(k) -> chain(k+1))
+for k = int32(1):(clen-int32(1))
+    p = chain(k); ch = chain(k+int32(1));
+    st = nst(ch); dr = ndir(ch);
+    ds = (STEP/double(SUBN)) * double(dr);
+    xx = nx(p); yy = ny(p); yw = nyw(p);
+    for q = int32(1):SUBN
+        xx = xx + ds*cos(yw); yy = yy + ds*sin(yw); yw = yw + ds*tan(st)/WB;
+        if blen < BIG
+            blen = blen + int32(1);
+            bx(blen)=xx; by(blen)=yy;
+            yw2 = yw; while yw2>pi; yw2=yw2-2*pi; end; while yw2<-pi; yw2=yw2+2*pi; end
+            byaw(blen)=yw2; bdir(blen)=dr;
+        end
+    end
+end
+% append Reeds-Shepp analytic shot to goal (if goal reached)
+if have_goal
+    [sx2,sy2,syaw2,sdir2,slen2,sok] = rs_shot(nx(node),ny(node),nyw(node), gx,gy,gyaw, plan_map, R, DS);
+    if sok && slen2 >= int32(2)
+        for k = int32(2):slen2     % skip first (shared endpoint)
+            if blen < BIG
+                blen = blen + int32(1);
+                bx(blen)=sx2(k); by(blen)=sy2(k); byaw(blen)=syaw2(k); bdir(blen)=sdir2(k);
+            end
+        end
+    end
+end
+if blen < int32(2)
+    px(1)=nx(node); py(1)=ny(node); pyaw(1)=nyw(node); pdir(1)=int8(1);
+    px(2)=nx(node); py(2)=ny(node); pyaw(2)=nyw(node); pdir(2)=int8(1);
+    plen=int32(2); return;
+end
+[px,py,pyaw,pdir,plen] = resample_path(bx,by,byaw,bdir,blen, MAX_PATH);
+% snap final point to goal if goal reached
+if have_goal && plen >= int32(1)
+    px(plen)=gx; py(plen)=gy; pyaw(plen)=gyaw;
+end
+end
+
+% ===================== binary min-heap (open set) =====================
+function [hidx, hf, hsize] = heap_push(hidx, hf, hsize, node, fval)
+%#codegen
+hsize = hsize + int32(1);
+hidx(hsize) = node; hf(hsize) = fval;
+ci = hsize;
+while ci > int32(1)
+    par = int32(floor(double(ci)/2.0));
+    if hf(ci) < hf(par)
+        ti = hidx(ci); hidx(ci) = hidx(par); hidx(par) = ti;
+        tf = hf(ci);   hf(ci)   = hf(par);   hf(par)   = tf;
+        ci = par;
+    else
+        break;
+    end
+end
+end
+
+function [node, hidx, hf, hsize] = heap_pop(hidx, hf, hsize)
+%#codegen
+node = hidx(1);
+hidx(1) = hidx(hsize); hf(1) = hf(hsize);
+hsize = hsize - int32(1);
+ci = int32(1);
+while true
+    l = int32(2)*ci; r = l + int32(1); sm = ci;
+    if l <= hsize && hf(l) < hf(sm); sm = l; end
+    if r <= hsize && hf(r) < hf(sm); sm = r; end
+    if sm == ci; break; end
+    ti = hidx(ci); hidx(ci) = hidx(sm); hidx(sm) = ti;
+    tf = hf(ci);   hf(ci)   = hf(sm);   hf(sm)   = tf;
+    ci = sm;
+end
 end
 
 %% =====================================================================
@@ -278,6 +623,8 @@ nx(1) = sx; ny(1) = sy; nyaw(1) = syaw; ncost(1) = 0.0; npar(1) = int32(0);
 best_goal = int32(0);
 best_goal_cost = 1.0e18;
 goal_found_iter = int32(0);
+best_near = int32(1);                         % best-effort: 목표 못 닿을 때 목표에서 가장 가까운 노드
+best_near_d = hypot(sx - gx, sy - gy);
 
 for it = int32(1):N_ITER
     if best_goal > int32(0) && (it - goal_found_iter) > EXTRA_AFTER_GOAL
@@ -344,6 +691,13 @@ for it = int32(1):N_ITER
     ncost(n) = bc; npar(n) = bp;
     newidx = n;
 
+    % best-effort: 새 노드가 목표에 더 가까우면 갱신 (목표 못 닿아도 여기까진 감)
+    dgn = hypot(qx - gx, qy - gy);
+    if dgn < best_near_d
+        best_near_d = dgn;
+        best_near = newidx;
+    end
+
     % ---- rewire neighbours through the new node --------------------------
     for j = int32(1):(n - int32(1))
         dj = hypot(nx(j) - qx, ny(j) - qy);
@@ -366,9 +720,16 @@ for it = int32(1):N_ITER
     end
 end
 
-% ---- reconstruct the best start->goal path -------------------------------
-[px, py, pyaw, pdir, plen] = reconstruct_path( ...
-    nx, ny, nyaw, npar, n, best_goal, gx, gy, gyaw, plan_map, R_RS, DS, MAX_PATH);
+% ---- reconstruct: 목표 도달 시 그 경로, 아니면 best-effort(가장 가까운 노드까지) ----
+if best_goal > int32(0)
+    [px, py, pyaw, pdir, plen] = reconstruct_path( ...
+        nx, ny, nyaw, npar, n, best_goal, gx, gy, gyaw, plan_map, R_RS, DS, MAX_PATH);
+else
+    % 목표에 정확히 못 닿음 -> 목표에서 가장 가까운 노드까지라도 주행(그 노드 pose가 종점)
+    [px, py, pyaw, pdir, plen] = reconstruct_path( ...
+        nx, ny, nyaw, npar, n, best_near, ...
+        nx(best_near), ny(best_near), nyaw(best_near), plan_map, R_RS, DS, MAX_PATH);
+end
 end
 
 %% =====================================================================
@@ -394,16 +755,26 @@ end
 
 function [ok, total_len] = rs_len(sx, sy, syaw, gx, gy, gyaw, occ_map, R, ds, MAX_PATH)
 %#codegen
-% Reeds-Shepp connect + collision check; returns success and path length.
-[px, py, ~, ~, plen, ok] = rs_shot(sx, sy, syaw, gx, gy, gyaw, occ_map, R, ds);
+% Reeds-Shepp connect + collision check; returns success and PENALIZED length.
+% 후진/방향전환(cusp)에 비용을 더해 전진 위주·cusp 적은 경로를 선호하게 함(Hybrid A* 식).
+[px, py, ~, pdir, plen, ok] = rs_shot(sx, sy, syaw, gx, gy, gyaw, occ_map, R, ds);
 total_len = 1.0e18;
 if ~ok || plen < int32(2)
     ok = false;
     return;
 end
+REV_MULT = 2.5;      % 후진 1 m = 전진 2.5 m 비용 (전진 선호; 후진은 꼭 필요할 때만)
+CUSP_PEN = 3.0;      % 방향전환(cusp) 1회당 +3 m 비용 (cusp 최소화)
 L = 0.0;
 for i = int32(1):(plen - int32(1))
-    L = L + hypot(px(i+1) - px(i), py(i+1) - py(i));
+    seg = hypot(px(i+1) - px(i), py(i+1) - py(i));
+    if pdir(i+1) < int8(0)
+        seg = seg * REV_MULT;            % 후진 구간 가중
+    end
+    L = L + seg;
+    if i >= int32(2) && pdir(i+1) ~= pdir(i)
+        L = L + CUSP_PEN;                % 방향전환 추가비용
+    end
 end
 total_len = L;
 end
@@ -1179,7 +1550,7 @@ if requested_selector ~= active_selector
     tire_angle  = 0.0;           % straighten wheels while the gear engages
     if speed_abs < 0.12
         switch_count = switch_count + int32(1);
-        if switch_count > int32(15)   % 기어전환 대기 50->15틱(0.5->0.15s): cusp 정지간격 단축
+        if switch_count > int32(6)    % 기어전환 대기 15->6틱(0.15->0.06s): cusp 정지간격 추가 단축
             active_selector = requested_selector;
             switch_count = int32(0);
             shifting = false;
