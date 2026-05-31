@@ -22,3 +22,9 @@ tmp/
 # OS
 Thumbs.db
 .DS_Store
+
+# ───── CarMaker 캐시/임시 (PC·실행마다 생성, git 불필요) ─────
+.road_cache/
+.tmp_*
+MovieNX/
+.IPGControl.conf
