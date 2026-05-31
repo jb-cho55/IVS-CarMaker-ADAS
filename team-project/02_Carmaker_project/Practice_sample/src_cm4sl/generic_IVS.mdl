@@ -48,8 +48,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-02-08T06:09:51Z</dcterms:created>
   <dc:creator>IPG</dc:creator>
   <cp:lastModifiedBy>User</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-05-31T08:12:55Z</dcterms:modified>
-  <cp:revision>7.274</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-05-31T13:18:36Z</dcterms:modified>
+  <cp:revision>7.295</cp:revision>
   <cp:version>R2024a</cp:version>
 </cp:coreProperties>
 
@@ -122,7 +122,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.274&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.295&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="LibraryLinkDisplay">none</P>
@@ -15062,9 +15062,9 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
           <P Name="ViewObjType" Class="char">SimulinkSubsys</P>
           <P Name="LoadSaveID" Class="char">3772:4181</P>
           <P Name="Extents" Class="double">[1843.0, 741.0]</P>
-          <P Name="ZoomFactor" Class="double">1.0</P>
-          <P Name="Offset" Class="double">[-13.793503305015065, -167.7600647510998]</P>
-          <P Name="SceneRectInView" Class="double">[-13.793503305015065, -167.7600647510998, 1474.4, 592.8]</P>
+          <P Name="ZoomFactor" Class="double">0.6</P>
+          <P Name="Offset" Class="double">[-876.31091865646022, -241.47299608794003]</P>
+          <P Name="SceneRectInView" Class="double">[-876.31091865646022, -241.47299608794003, 2457.3333333333335, 988.0]</P>
         </Object>
         <Object ObjectID="7">
           <P Name="IsActive" Class="logical">0</P>
