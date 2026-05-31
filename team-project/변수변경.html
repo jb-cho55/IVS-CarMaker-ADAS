@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>변수명 변경 이력</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        h2 {
+            font-size: 18px;
+            margin-top: 40px;
+            margin-bottom: 8px;
+            color: #444;
+            border-left: 4px solid #4a90d9;
+            padding-left: 10px;
+        }
+        p.desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #4a90d9;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 13px;
+        }
+        td {
+            padding: 9px 14px;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background-color: #f0f6ff;
+        }
+        code {
+            background-color: #eef2ff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            color: #2d2d8e;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 3px;
+            padding: 1px 7px;
+            font-size: 11px;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<h1>변수명 변경 이력</h1>
+<p class="desc">Simulink 외부 신호명 기준으로 함수 내부 변수명을 통일한 작업 기록입니다.</p>
+
+<!-- controller -->
+<h2>controller.m</h2>
+<table>
+    <tr><th>변경 전</th><th>변경 후</th><th>적용 범위</th></tr>
+    <tr><td><code>lat_err</code></td><td><code>ego_cross_track_err</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>head_err</code></td><td><code>ego_head_err</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>curve_abs</code></td><td><code>ego_max_curvature</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>front_dist</code></td><td><code>lead_dist</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>front_v</code></td><td><code>lead_speed</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>mode</code></td><td><code>drive_state</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>lchg_done</code></td><td><code>lane_settled</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>park_cmd</code></td><td><code>submission_state</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+</table>
+
+<!-- tollgate_selector -->
+<h2>tollgate_selector.m</h2>
+<table>
+    <tr><th>변경 전</th><th>변경 후</th><th>적용 범위</th></tr>
+    <tr><td><code>base_target_lane</code></td><td><code>desired_lane</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>lat_err</code></td><td><code>ego_cross_track_err</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>curve_abs</code></td><td><code>ego_max_curvature</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+</table>
+
+<!-- Decision -->
+<h2>Decision.m</h2>
+<table>
+    <tr><th>변경 전</th><th>변경 후</th><th>적용 범위</th></tr>
+    <tr><td><code>lat_err</code></td><td><code>ego_cross_track_err</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>front_dist</code></td><td><code>lead_dist</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>park_cmd</code></td><td><code>submission_state</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>ego</code></td><td><code>ego_state</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>target_lane</code></td><td><code>desired_lane</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>mode</code></td><td><code>drive_state</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>lchg_done</code></td><td><code>lane_settled</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+</table>
+
+<!-- Traffic_Detector -->
+<h2>Traffic_Detector.m</h2>
+<table>
+    <tr><th>변경 전</th><th>변경 후</th><th>적용 범위</th></tr>
+    <tr><td><code>front_dist</code></td><td><code>lead_dist</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>front_v</code></td><td><code>lead_speed</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+</table>
+
+<!-- Ego_Detector -->
+<h2>Ego_Detector.m</h2>
+<table>
+    <tr><th>변경 전</th><th>변경 후</th><th>적용 범위</th></tr>
+    <tr><td><code>lat_err</code></td><td><code>ego_cross_track_err</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>head_err</code></td><td><code>ego_head_err</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+    <tr><td><code>curve_abs</code></td><td><code>ego_max_curvature</code></td><td><span class="tag">시그니처 + 내부 전체</span></td></tr>
+</table>
+
+<div class="footer">생성일: 2026-06-01</div>
+
+</body>
+</html>
