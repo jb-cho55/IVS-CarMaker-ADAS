@@ -1,9 +1,15 @@
 function fp_define_buses()
-%FP_DEFINE_BUSES Final Project 14개 Bus 객체 base workspace 등록
+%FP_DEFINE_BUSES Final Project Bus 객체 base workspace 등록
 MAX_LANE=4; MAX_WP=200; MAX_LOCAL_WP=30; MAX_OBJ=32; MAX_TRAJ=30;
 
 % Bus 정의 목록
 busList = {
+  'EgoStateBus',      {{'Car_Fr1_tx','double',1},{'Car_Fr1_ty','double',1},{'Car_Fr1_rz','double',1},{'Ego_V','double',1}};
+  'ParsedLaneBus',    {{'x1','double',283},{'y1','double',283}, ...
+                       {'x2','double',275},{'y2','double',275}, ...
+                       {'x3','double',266},{'y3','double',266}, ...
+                       {'x4','double',34}, {'y4','double',34}, ...
+                       {'x5','double',19}, {'y5','double',19}};
   'EgoBus',          {{'time','double',1},{'x','double',1},{'y','double',1},{'yaw','double',1},{'vx','double',1},{'vy','double',1},{'ax','double',1},{'ay','double',1},{'yaw_rate','double',1},{'lane_idx','int32',1},{'s','double',1},{'d','double',1},{'mission_s','double',1},{'road_heading','double',1},{'road_curvature','double',1},{'valid','boolean',1}};
   'TrafficBus',      {{'id','int32',MAX_OBJ},{'valid','boolean',MAX_OBJ},{'x','double',MAX_OBJ},{'y','double',MAX_OBJ},{'vx','double',MAX_OBJ},{'vy','double',MAX_OBJ},{'ax','double',MAX_OBJ},{'ay','double',MAX_OBJ},{'yaw','double',MAX_OBJ},{'yaw_rate','double',MAX_OBJ},{'length','double',MAX_OBJ},{'width','double',MAX_OBJ}};
   'LaneMapBus',      {{'lane_x','double',[MAX_LANE MAX_WP]},{'lane_y','double',[MAX_LANE MAX_WP]},{'lane_yaw','double',[MAX_LANE MAX_WP]},{'lane_curvature','double',[MAX_LANE MAX_WP]},{'lane_valid','boolean',[MAX_LANE MAX_WP]},{'lane_wp_count','int32',MAX_LANE},{'tollgate_lane','int32',1},{'tollgate_pose','double',3},{'parking_pose','double',[2 3]},{'mission_zone','double',[4 2]}};
@@ -24,7 +30,55 @@ for i = 1:size(busList,1)
     assignin('base', busList{i,1}, buildBus(busList{i,2}));
     fprintf('  %-22s : %d fields\n', busList{i,1}, length(busList{i,2}));
 end
-fprintf('\n✅ %d개 Bus 객체 등록 완료\n', size(busList,1));
+nFlat = size(busList,1);
+
+% ----------------------------------------------------------------
+% TrafficObjBus : 차량 1대 (T16~T28 각각에 공통 적용)
+%   CarMaker 출력 기준 필드:
+%     x, y          - 위치 (Tr.T##.Fr1.x / Fr1.y)
+%     vx, vy        - 속도 (Tr.T##.Fr1.vx / vy)
+%     ax, ay        - 가속도
+%     yaw           - 차량 heading (Fr1.rz)
+%     yaw_rate      - 요레이트 (rzv)
+%     boundary      - [left, right] 차선 경계 거리 (2x1)
+% ----------------------------------------------------------------
+TrafficObjBus = buildBus({ ...
+    {'x',        'double', 1}, ...
+    {'y',        'double', 1}, ...
+    {'vx',       'double', 1}, ...
+    {'vy',       'double', 1}, ...
+    {'ax',       'double', 1}, ...
+    {'ay',       'double', 1}, ...
+    {'yaw',      'double', 1}, ...
+    {'boundary', 'double', 2}, ...
+    {'yaw_rate', 'double', 1}  ...
+});
+assignin('base', 'TrafficObjBus', TrafficObjBus);
+fprintf('  %-22s : 9 fields\n', 'TrafficObjBus');
+
+% ----------------------------------------------------------------
+% AllTrafficBus : T16~T28 (13대) 를 nested bus로 통합
+%   접근 예시 : traffic.t16.x, traffic.t20.vx
+% ----------------------------------------------------------------
+TRAFFIC_IDS = 16:28;   % CarMaker Traffic Object 번호
+e = Simulink.BusElement.empty;
+for k = TRAFFIC_IDS
+    el = Simulink.BusElement;
+    el.Name       = sprintf('t%02d', k);   % t16, t17, ... t28
+    el.DataType   = 'Bus: TrafficObjBus';
+    el.Dimensions = 1;
+    el.Complexity = 'real';
+    el.SampleTime = -1;
+    e(end+1) = el; %#ok<AGROW>
+end
+AllTrafficBus = Simulink.Bus;
+AllTrafficBus.Elements = e;
+assignin('base', 'AllTrafficBus', AllTrafficBus);
+fprintf('  %-22s : %d fields (nested TrafficObjBus x%d)\n', ...
+        'AllTrafficBus', length(TRAFFIC_IDS), length(TRAFFIC_IDS));
+
+fprintf('\n✅ %d개 Bus 객체 등록 완료 (flat: %d, traffic: 2)\n', ...
+        nFlat + 2, nFlat);
 end
 
 function bus = buildBus(fields)

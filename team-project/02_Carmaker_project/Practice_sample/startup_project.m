@@ -21,7 +21,14 @@ for k = 1:length(dayFolders)
 end
 fprintf('✅ Models 폴더 경로 추가 완료\n');
 
-%% 4) 메인 모델 열기
+fp_define_buses();
+
+%% 4) Bus 객체 등록
+addpath(fullfile(modelsRoot, 'FinalProject', 'lib'));
+fp_define_buses();
+fprintf('✅ Bus 객체 등록 완료\n');
+
+%% 5) 메인 모델 열기
 open_system('generic_IVS');
 fprintf('✅ generic_IVS 모델 열림\n');
 
