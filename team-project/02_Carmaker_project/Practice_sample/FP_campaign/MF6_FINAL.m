@@ -43,13 +43,19 @@ switch state
         sfx = gx + Dst*cos(gth); sfy = gy + Dst*sin(gth);            % 앞쪽 staging (후진 reverse-in)
         px = zeros(MAXP,1); py = zeros(MAXP,1); pth = zeros(MAXP,1); pdir = zeros(MAXP,1);  % codegen: 항상 정의
         okp = false; np = 0; dirv = 1;
-        if ~pp_collision(occ_plan, sbx, sby, gth, cfg.foot_ahead, cfg.foot_behind, cfg.veh_halfW, cfg.bounds, cfg.n)
-            [px, py, pth, pdir, np, okp] = pp_hybrid_astar(ex, ey, eth, sbx, sby, gth, occ_plan);
-            dirv = 1;
-        end
-        if ~okp && ~pp_collision(occ_plan, sfx, sfy, gth, cfg.foot_ahead, cfg.foot_behind, cfg.veh_halfW, cfg.bounds, cfg.n)
-            [px, py, pth, pdir, np, okp] = pp_hybrid_astar(ex, ey, eth, sfx, sfy, gth, occ_plan);
-            dirv = -1;
+        okB = ~pp_collision(occ_plan, sbx, sby, gth, cfg.foot_ahead, cfg.foot_behind, cfg.veh_halfW, cfg.bounds, cfg.n);
+        okF = ~pp_collision(occ_plan, sfx, sfy, gth, cfg.foot_ahead, cfg.foot_behind, cfg.veh_halfW, cfg.bounds, cfg.n);
+        dB = hypot(sbx-ex, sby-ey); dF = hypot(sfx-ex, sfy-ey);   % ego에 가까운 staging 우선(traverse 최소 -> 측면차 충돌 방지)
+        if okB && (~okF || dB <= dF)
+            [px, py, pth, pdir, np, okp] = pp_hybrid_astar(ex, ey, eth, sbx, sby, gth, occ_plan); dirv = 1;
+            if ~okp && okF
+                [px, py, pth, pdir, np, okp] = pp_hybrid_astar(ex, ey, eth, sfx, sfy, gth, occ_plan); dirv = -1;
+            end
+        elseif okF
+            [px, py, pth, pdir, np, okp] = pp_hybrid_astar(ex, ey, eth, sfx, sfy, gth, occ_plan); dirv = -1;
+            if ~okp && okB
+                [px, py, pth, pdir, np, okp] = pp_hybrid_astar(ex, ey, eth, sbx, sby, gth, occ_plan); dirv = 1;
+            end
         end
         if okp
             [px, py, pth, pdir, np] = pp_append_straight(px, py, pth, pdir, np, gx, gy, gth, cfg.ds, MAXP, dirv);
@@ -278,7 +284,7 @@ cfg.Ld          = 1.5;                    % (legacy) nominal lookahead [m]
 cfg.Ld_min      = 0.5;                    % [튜닝] Pure Pursuit 최소 lookahead[m]. 작게=타이트추종 but 조향진동 가능
 cfg.Ld_max      = 1.8;                    % [튜닝] 최대 lookahead[m]. 크게=부드러움 but 코너 크게 돎
 cfg.kld         = 1.2;                    % [튜닝] lookahead 속도게인 (Ld=Ld_min+kld*|v|)
-cfg.v_fwd       = 0.6;                    % forward cruise speed [m/s] (faster approach)
+cfg.v_fwd       = 0.4;                    % [튜닝] 전진 진입속도[m/s] (0.6->0.4: 더 천천히 정밀 진입)
 cfg.v_rev       = 0.2;                    % [튜닝] 후진 목표속도[m/s]. 높이면 빠름 but 주차 정밀/안정성↓
 cfg.v_creep     = 0.10;                   % min creep speed while cruising [m/s]
 cfg.v_stop      = 0.10;                   % treated as stopped [m/s]
@@ -328,7 +334,7 @@ function occ = pp_clear_goal(occ, gxf, gyf, gyaw, cfg)
 %   도달하려면 목표차 footprint를 비워야 함. (gxf,gyf,gyaw)=목표 rear-bumper pose.
 %   add_obstacle와 동일 footprint(obs_L/W+margin)로 해당 셀을 free 처리.
 b = cfg.bounds; n = cfg.n;
-ahead = cfg.obs_L + cfg.margin; behind = cfg.margin; halfw = cfg.obs_W/2 + cfg.margin;
+ahead = cfg.obs_L + cfg.margin; behind = cfg.margin; halfw = cfg.obs_W/2 + cfg.margin;   % 목표슬롯 차량 footprint 비움(reverse-in 도달성 위해 원복)
 c = pp_rect_corners(gxf, gyf, gyaw, ahead, behind, halfw);
 ixv = zeros(1,4); iyv = zeros(1,4);
 for k = 1:4

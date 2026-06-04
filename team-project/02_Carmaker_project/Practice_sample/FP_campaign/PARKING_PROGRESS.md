@@ -41,16 +41,32 @@
 | T05 | −90 (상단우측 edge) | FAIL 51.6m | **0.020m, +0.5°** ✅ |
 | T14 | −90 (우중 edge) | FAIL 3.5m/28° | **0.035m, −2.1°** ✅ |
 | T03 / T18 | −90 | −3.0° / −2.9° | −3.8° / −7.4° (PASS) |
-| **T01 / T10** | −90 (좌측열) | FAIL | **여전히 FAIL** (좌측 진입로 기동공간 부족, 거의 기하 한계) |
+| **T10** | −90 (좌중) | FAIL 20m | **0.024m, −0.1°** ✅ (closer-staging + v_fwd↓) |
+| **T01** | −90 (좌상단) | FAIL | **여전히 FAIL** (back-staging은 lot밖, fwd-staging은 북쪽 차들로 막혀 도달불가 — 거의 기하 한계) |
 
-- **+90 전진주차 정밀도 회복**(<2°)과 **가장자리 −90 진입실패 해결**(T05/T14)을 staging 전략이 동시에 달성.
+- **+90 전진주차 정밀도 회복**(<2°) + **가장자리 −90 진입실패 해결**(T05·T08·T10·T14)을 staging 전략이 달성.
 
-## 5. 남은 작업
-1. **전체 29좌표 재검증** (staging 모델로) — pass율·정밀도 확정, 전 좌표 plot 생성.
-2. **T01·T10** (좌측열 −90): staging이 좌측에서 미작동 — 진입로/접근각 추가 검토 필요(혹은 출제 시 비현실 방향이면 제외).
-3. 일부 −90(T18 −7.4°) 미세조정 여지.
+## 5. 추가 개선 (2026-06-04 오후)
+### 5a. staging 선택 = ego에 가까운 쪽 우선 (closer-staging)
+- 뒤/앞 staging 중 ego에 가까운 쪽을 먼저 시도 → traverse 최소화. **T10 FAIL→PASS**.
+### 5b. 진입속도↓ (v_fwd 0.6→0.4)
+- 전진 진입을 천천히 → 추종 정밀도↑.
+### 5c. hug-right 진입 (우측차선 hugging) — 주행 lane-following 재사용
+- **`Driving_Module/Ego_Detector`**: 주차 진입차선(4/5)의 `ego_cross_track_err`에 **+1.2m offset** 추가
+  → controller가 차선중심 대신 **우측에 붙여서** 추종 (= 진입로 우측 hugging).
+- 효과: **T16 기동 중 측면차 겹침 4800→2457 (절반↓)**, 주차트리거가 더 서쪽이동해 기동 여유↑.
+- offset 1.8↑은 진입로 이탈/주차실패 → **1.2가 최적**(당일 미세조정 여지).
+- (참고: in-slot wiggle 직접조향 + parking-planner keep-right A* 패널티는 효과 없어 폐기/롤백)
 
-## 6. 변경 파일
-- `src_cm4sl/Models/FinalProject/Final_Project.slx` — 주차 알고리즘 본체(staging+holdout+margin+ds_align 반영). ★핵심★
+## 6. 현재 모델 구성 (clean)
+`staging(closer-staging 선택) + holdout=0 + margin=0.40 + ds_align=0.15 + v_fwd=0.4 + obs-clear + hug-right 진입(1.2)`
+
+## 7. 남은 작업 (※ 시나리오 공개 후 미세조정 예정)
+1. **T01** (좌상단 −90): 진입로/접근각 추가 검토 (혹은 출제 시 비현실 방향이면 제외).
+2. **T16 잔여 겹침**(2457): 기동 중 좌측차 스침 완전제거 — 출제좌표 기준으로 offset·margin·stage_dist 튜닝.
+3. 전체 29 재검증 + 전 좌표 plot.
+
+## 8. 변경 파일
+- `src_cm4sl/Models/FinalProject/Final_Project.slx` — 주차(staging 등) + **주행 Ego_Detector(hug-right 진입)**. ★핵심★
 - `src_cm4sl/generic_IVS.mdl` — CM4SL 통합(autoload 경로).
-- `FP_campaign/` — `cl_run/cl_metrics/cl_plot/fp_coords` + `MF6_FINAL.m`(EML소스) + 결과/요약.
+- `FP_campaign/` — `cl_run/cl_metrics/cl_plot/fp_coords` + `MF6_FINAL.m`(주차 EML) + `DRV_Ego_Detector.m`(주행 EML, hug-right) + 결과.
