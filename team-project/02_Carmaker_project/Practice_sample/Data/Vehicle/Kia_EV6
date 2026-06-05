@@ -1,6 +1,6 @@
 #INFOFILE1.1 (UTF-8) - Do not remove this line!
 FileIdent = CarMaker-Car 14
-FileCreator = CarMaker Office 14.0.1
+FileCreator = CarMaker for Simulink 14.1.2
 
 
 ## Assembly ##############################################################
@@ -623,8 +623,8 @@ Sensor.3.Ref.Cluster =
 ## Vehicle Control #######################################################
 VehicleControl.0.Kind = "AccelCtrl "
 AccelCtrl.DesrAccelFunc = User
-AccelCtrl.p = 0.001
-AccelCtrl.i = 1.0
+AccelCtrl.p = 0.05
+AccelCtrl.i = 0.001
 AccelCtrl.ACC.RefObjectSensorName = Vhcl.RadarL
 AccelCtrl.ACC.BrakeThreshold = 0.2
 AccelCtrl.ACC.DesrTGap = 1.8
