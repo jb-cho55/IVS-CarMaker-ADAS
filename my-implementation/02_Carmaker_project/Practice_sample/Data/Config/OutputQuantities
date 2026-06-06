@@ -210,4 +210,6 @@ DStore.Quantities.normal:
 	Traffic.T22.RefPnt.tx
 	Traffic.T19.Fr1.tx
 	Traffic.T22.v
+	Sensor.Collision.Vhcl.Fr1.Count
+	Sensor.Collision.Vhcl.Fr1.dtFirst
 DStore.Quantities.slow:

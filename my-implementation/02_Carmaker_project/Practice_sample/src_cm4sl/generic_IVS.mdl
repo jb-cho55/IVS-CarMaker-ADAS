@@ -60,8 +60,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-02-08T06:09:51Z</dcterms:created>
   <dc:creator>IPG</dc:creator>
   <cp:lastModifiedBy>gmkk6</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-06-06T06:14:29Z</dcterms:modified>
-  <cp:revision>7.106</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-06-06T08:47:54Z</dcterms:modified>
+  <cp:revision>7.107</cp:revision>
   <cp:version>R2024a</cp:version>
 </cp:coreProperties>
 
@@ -134,7 +134,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.106&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.107&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="LibraryLinkDisplay">none</P>
@@ -8984,7 +8984,7 @@ for i=1:No
   o=(i-1)*10; if OF(o+8)&lt;0.5; continue; end
   ox=OF(o+1); oy=OF(o+2); xr=OF(o+3); yr=OF(o+4); vrel=OF(o+5); vyr=OF(o+6); dist=OF(o+7);
   if ua&gt;0.5
-    if dist&lt;0.8; emerg=true; end
+    if dist&lt;0.8 &amp;&amp; xr&gt;0; emerg=true; end
   else
     if dist&lt;1.4 &amp;&amp; ev&gt;5; emerg=true; end
     if ev&gt;5 &amp;&amp; dist&lt;5.5 &amp;&amp; abs(xr)&lt;7 &amp;&amp; abs(yr)&lt;4 &amp;&amp; yr*vyr&lt;-0.4; emerg=true; end
@@ -10523,7 +10523,7 @@ if ovtk_ok
   end
 end
 tl=committed; vset=v_cruise; stop=0; use_appr=0; pr=0;
-if toll_lock; tl=double(toll_lane); committed=double(toll_lane); end
+if toll_lock; tl=double(toll_lane); committed=double(toll_lane); vset=7; end
 if go_park &amp;&amp; ~bypass
   if on_appr || dbr&lt;20
     on_appr=true; use_appr=1; vset=v_park; tl=double(branch_lane); committed=double(branch_lane);
@@ -11291,7 +11291,7 @@ if ua&lt;0.5
     for j=1:Np; dx=Path(2*j-1)-ox; dy=Path(2*j)-oy; d=dx*dx+dy*dy; if d&lt;dmin; dmin=d; jm=j; end; end
     if sqrt(dmin)&lt;1.6 &amp;&amp; slen(jm)&gt;1 &amp;&amp; slen(jm)&lt;55 &amp;&amp; slen(jm)&lt;lead_s; lead_s=slen(jm); lead_vrel=OF(o+5); end
   end
-  if isfinite(lead_s); des=6+1.2*v; va=v+lead_vrel+0.45*(lead_s-des); if va&lt;0; va=0; end; if va&lt;ts; ts=va; end; end
+  if isfinite(lead_s); gap_b=lead_s-4.575; d_safe=4+0.12*v*v; v_lead=v+lead_vrel; if v_lead&lt;0; v_lead=0; end; va=v_lead+0.5*(gap_b-d_safe); if va&lt;0; va=0; end; if va&lt;ts; ts=va; end; end
 
   % --- predictive footprint avoidance: project ego (along path @ current speed) and
   %     each obstacle (@ its global velocity) forward; if a predicted oriented-box
@@ -34356,7 +34356,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
       <P Name="WindowUuid" Class="char">847b2ec0-ed31-448b-ae2a-74c72e03924e</P>
     </Object>
-    <P Name="BDUuid" Class="char">e8868ae7-e7c4-4bad-aaac-f20501b1f98c</P>
+    <P Name="BDUuid" Class="char">4f51e5e8-bf9a-4367-967b-76093835550e</P>
   </Object>
 </WindowsInfo>
 
