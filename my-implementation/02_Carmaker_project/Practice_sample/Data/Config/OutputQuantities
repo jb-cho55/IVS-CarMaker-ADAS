@@ -192,4 +192,22 @@ DStore.Quantities.normal:
 	Car.CFL.rz_ext
 	AccelCtrl.DesiredAx
 	DM.SelectorCtrl
+	Traffic.T16.rz
+	Traffic.T17.rz
+	Traffic.T18.rz
+	Traffic.T19.rz
+	Traffic.T20.rz
+	Traffic.T21.rz
+	Traffic.T22.rz
+	Traffic.T23.rz
+	Traffic.T24.rz
+	Traffic.T25.rz
+	Traffic.T26.rz
+	Traffic.T27.rz
+	Traffic.T28.rz
+	Traffic.T22.Fr1.tx
+	Traffic.T22.Fr1.ty
+	Traffic.T22.RefPnt.tx
+	Traffic.T19.Fr1.tx
+	Traffic.T22.v
 DStore.Quantities.slow:

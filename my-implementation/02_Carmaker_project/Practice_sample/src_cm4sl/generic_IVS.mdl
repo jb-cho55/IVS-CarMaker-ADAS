@@ -60,8 +60,8 @@ __MWOPC_PART_BEGIN__ /metadata/coreProperties.xml
   <dcterms:created xsi:type="dcterms:W3CDTF">2002-02-08T06:09:51Z</dcterms:created>
   <dc:creator>IPG</dc:creator>
   <cp:lastModifiedBy>gmkk6</cp:lastModifiedBy>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-06-05T15:05:31Z</dcterms:modified>
-  <cp:revision>7.105</cp:revision>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">2026-06-06T06:14:29Z</dcterms:modified>
+  <cp:revision>7.106</cp:revision>
   <cp:version>R2024a</cp:version>
 </cp:coreProperties>
 
@@ -134,7 +134,7 @@ __MWOPC_PART_BEGIN__ /simulink/blockdiagram.xml
     <ConfigManagerSettings>
       <P Name="ModifiedByFormat">%&lt;Auto&gt;</P>
       <P Name="ModifiedDateFormat">%&lt;Auto&gt;</P>
-      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.105&gt;</P>
+      <P Name="ModelVersionFormat">%&lt;AutoIncrement:7.106&gt;</P>
     </ConfigManagerSettings>
     <EditorSettings>
       <P Name="LibraryLinkDisplay">none</P>
@@ -8733,7 +8733,6 @@ __MWOPC_PART_BEGIN__ /simulink/ScheduleCore.xml
 <sltp_graph version="1.1" packageUris="http://schema.mathworks.com/mf0/sltp_mm/R2023a_202209151115">
   <sltp.mm.core.Context type="sltp.mm.core.Context" uuid="e481d65c-c0c1-4dcf-b029-ebf0f1dc7d83">
     <priorityDirection>HighNumberLast</priorityDirection>
-    <unusedTaskIds>2</unusedTaskIds>
     <defaultEventBehavior type="sltp.mm.core.EventBehavior" uuid="e087e761-3407-4291-957d-5e1f8000ccb1"/>
     <editorState type="sltp.mm.core.EditorState" uuid="c5106025-6185-4867-bd67-45fdb4d37166">
       <isSynchronized>true</isSynchronized>
@@ -8955,7 +8954,6 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_108.xml
   <P Name="viewLimits">[0 156.75 0 153.75]</P>
   <P Name="screen">[1 1 3600 1200 1.180555555555556]</P>
   <P Name="viewObj">108</P>
-  <subviewS/>
   <P Name="ssIdHighWaterMark">17</P>
   <P Name="decomposition">CLUSTER_CHART</P>
   <P Name="type">EML_CHART</P>
@@ -8979,11 +8977,11 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_108.xml
 %#codegen
 persistent prev_st; if isempty(prev_st); prev_st=0; end
 ev=Ego(4); tx=Ego(1); ty=Ego(2); ua=Mode(4);
-Np=numel(Path)/2; No=floor(numel(OF)/8); slen=zeros(Np,1); px=tx;py=ty;
+Np=numel(Path)/2; No=floor(numel(OF)/10); slen=zeros(Np,1); px=tx;py=ty;
 for j=1:Np; qx=Path(2*j-1);qy=Path(2*j); seg=sqrt((qx-px)^2+(qy-py)^2); if j==1; slen(j)=seg; else; slen(j)=slen(j-1)+seg; end; px=qx;py=qy; end
 emerg=false;
 for i=1:No
-  o=(i-1)*8; if OF(o+8)&lt;0.5; continue; end
+  o=(i-1)*10; if OF(o+8)&lt;0.5; continue; end
   ox=OF(o+1); oy=OF(o+2); xr=OF(o+3); yr=OF(o+4); vrel=OF(o+5); vyr=OF(o+6); dist=OF(o+7);
   if ua&gt;0.5
     if dist&lt;0.8; emerg=true; end
@@ -8993,6 +8991,16 @@ for i=1:No
     dmin=inf; jm=1; for j=1:Np; dx=Path(2*j-1)-ox; dy=Path(2*j)-oy; d=dx*dx+dy*dy; if d&lt;dmin; dmin=d; jm=j; end; end
     dcross=sqrt(dmin); s=slen(jm);
     if dcross&lt;1.8 &amp;&amp; s&gt;0.3 &amp;&amp; s&lt;25; ttc=inf; if vrel&lt;-0.2; ttc=s/(-vrel); end; if ttc&lt;1.0 || s&lt;3.5; emerg=true; end; end
+    % --- ACDA sudden-brake emergency: closing-rate kinematic guard on in-path lead.
+    %     Fires full -4 authority EARLY (before the s&lt;3.5 AEB gate) when the decel
+    %     required to null the approach speed within the remaining footprint gap
+    %     exceeds actuator limit a_e=4. Gated on vrel&lt;-0.3 (closing) so it NEVER
+    %     fires in matched-speed following -&gt; no false brake in cruise/toll.
+    if dcross&lt;1.8 &amp;&amp; s&gt;0.3 &amp;&amp; s&lt;55 &amp;&amp; ev&gt;3 &amp;&amp; vrel&lt;-0.3
+      eff=(s-4.575)-ev*0.4-1.0; if eff&lt;0.2; eff=0.2; end
+      a_req=(vrel*vrel)/(2*eff);
+      if a_req&gt;=4.0; emerg=true; end
+    end
   end
 end
 ax=Accel; if emerg; ax=-4.0; end; if ax&gt;3; ax=3; elseif ax&lt;-4; ax=-4; end
@@ -9002,7 +9010,8 @@ if Mode(5)&gt;0.5
 else
   CFL=st; CFR=st; Ax=ax; Gear=1.0;
 end
-end</P>
+end
+</P>
         <P Name="editorLayout" Class="double">Matrix(4,1)
 [10.0, 5.0, 700.0, 500.0]</P>
       </eml>
@@ -9340,14 +9349,14 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_127.xml
         <P Name="script">function ObsFeat = objmgr(Obs, Ego)
 %#codegen
 ex=Ego(1); ey=Ego(2); erz=Ego(3); ev=Ego(4); c=cos(erz); s=sin(erz);
-ObsFeat=zeros(232,1);
+ObsFeat=zeros(290,1);
 for i=1:29
   if i&lt;=16; b=(i-1)*5; gx=Obs(b+1); gy=Obs(b+2); vgx=0; vgy=0;
   else; b=80+(i-17)*10; gx=Obs(b+1); gy=Obs(b+2); vgx=Obs(b+4); vgy=Obs(b+5); end
   dx=gx-ex; dy=gy-ey; xr=c*dx+s*dy; yr=-s*dx+c*dy;
   vxr=c*vgx+s*vgy-ev; vyr=-s*vgx+c*vgy; dist=sqrt(dx*dx+dy*dy);
   vv=0; if (abs(gx)&gt;0.1||abs(gy)&gt;0.1) &amp;&amp; dist&lt;200; vv=1; end
-  o=(i-1)*8; ObsFeat(o+1)=gx; ObsFeat(o+2)=gy; ObsFeat(o+3)=xr; ObsFeat(o+4)=yr; ObsFeat(o+5)=vxr; ObsFeat(o+6)=vyr; ObsFeat(o+7)=dist; ObsFeat(o+8)=vv;
+  o=(i-1)*10; ObsFeat(o+1)=gx; ObsFeat(o+2)=gy; ObsFeat(o+3)=xr; ObsFeat(o+4)=yr; ObsFeat(o+5)=vxr; ObsFeat(o+6)=vyr; ObsFeat(o+7)=dist; ObsFeat(o+8)=vv; ObsFeat(o+9)=vgx; ObsFeat(o+10)=vgy;
 end
 end</P>
         <P Name="editorLayout" Class="double">Matrix(4,1)
@@ -9445,7 +9454,6 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_135.xml
   <P Name="viewLimits">[0 156.75 0 153.75]</P>
   <P Name="screen">[1 1 3600 1200 1.180555555555556]</P>
   <P Name="viewObj">135</P>
-  <subviewS/>
   <P Name="ssIdHighWaterMark">11</P>
   <P Name="decomposition">CLUSTER_CHART</P>
   <P Name="type">EML_CHART</P>
@@ -10454,7 +10462,6 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_39.xml
   <P Name="viewLimits">[0 156.75 0 153.75]</P>
   <P Name="screen">[1 1 3600 1200 1.180555555555556]</P>
   <P Name="viewObj">39</P>
-  <subviewS/>
   <P Name="ssIdHighWaterMark">20</P>
   <P Name="decomposition">CLUSTER_CHART</P>
   <P Name="type">EML_CHART</P>
@@ -10478,12 +10485,12 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_39.xml
 %#codegen
 persistent committed toll_reached toll_done go_park on_appr lc_cool ph bypass astk
 if isempty(committed); committed=double(cruise_lane); toll_reached=false; toll_done=false; go_park=false; on_appr=false; lc_cool=0; ph=Ego(3); bypass=false; astk=0; end
-tx=Ego(1); ty=Ego(2); ev=Ego(4); nL=size(LANE_XY,3); No=floor(numel(OF)/8);
+tx=Ego(1); ty=Ego(2); ev=Ego(4); nL=size(LANE_XY,3); No=floor(numel(OF)/10);
 if lc_cool&gt;0; lc_cool=lc_cool-1; end
 dh=Ego(3)-ph; if dh&gt;pi; dh=dh-2*pi; elseif dh&lt;-pi; dh=dh+2*pi; end; ph=Ego(3); yawing=abs(dh)&gt;0.004;
 fwd=inf(nL,1); blocked=false(nL,1);
 for i=1:No
-  o=(i-1)*8; if OF(o+8)&lt;0.5; continue; end
+  o=(i-1)*10; if OF(o+8)&lt;0.5; continue; end
   ox=OF(o+1); oy=OF(o+2); xr=OF(o+3);
   bl=1; bd=inf;
   for li=1:nL
@@ -11243,8 +11250,6 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_81.xml
   <P Name="viewLimits">[0 156.75 0 153.75]</P>
   <P Name="screen">[1 1 3600 1200 1.180555555555556]</P>
   <P Name="viewObj">81</P>
-  <P Name="toolbarMode">LIBRARY_TOOLBAR</P>
-  <subviewS/>
   <P Name="ssIdHighWaterMark">8</P>
   <P Name="decomposition">CLUSTER_CHART</P>
   <P Name="type">EML_CHART</P>
@@ -11266,7 +11271,7 @@ __MWOPC_PART_BEGIN__ /simulink/stateflow/chart_81.xml
         <P Name="isEML">1</P>
         <P Name="script">function Traj = trajplan(Path, Ego, Mode, OF)
 %#codegen
-Np=numel(Path)/2; v=Ego(4); tx=Ego(1); ty=Ego(2);
+Np=numel(Path)/2; v=Ego(4); tx=Ego(1); ty=Ego(2); erz=Ego(3);
 Ld=6+0.6*v; if Ld&lt;11; Ld=11; elseif Ld&gt;18; Ld=18; end
 px=tx;py=ty;accL=0;lax=Path(1);lay=Path(2); slen=zeros(Np,1);
 for j=1:Np; qx=Path(2*j-1);qy=Path(2*j); seg=sqrt((qx-px)^2+(qy-py)^2); if j==1; slen(j)=seg; else; slen(j)=slen(j-1)+seg; end; accL=accL+seg; if accL&lt;=Ld; lax=qx; lay=qy; end; px=qx;py=qy; end
@@ -11279,17 +11284,85 @@ if ua&lt;0.5
     if l1&gt;0.1 &amp;&amp; l2&gt;0.1; dth=atan2(a2y,a2x)-atan2(a1y,a1x); if dth&gt;pi; dth=dth-2*pi; elseif dth&lt;-pi; dth=dth+2*pi; end; kk=abs(dth)/((l1+l2)*0.5); if kk&gt;kmax; kmax=kk; end; end
   end
   if kmax&gt;0.002; vc=sqrt(3.0/kmax); if vc&lt;ts; ts=vc; end; end
-  No=floor(numel(OF)/8); lead_s=inf; lead_vrel=0;
+  No=floor(numel(OF)/10); lead_s=inf; lead_vrel=0;
   for i=1:No
-    o=(i-1)*8; if OF(o+8)&lt;0.5; continue; end
+    o=(i-1)*10; if OF(o+8)&lt;0.5; continue; end
     ox=OF(o+1); oy=OF(o+2); dmin=inf; jm=1;
     for j=1:Np; dx=Path(2*j-1)-ox; dy=Path(2*j)-oy; d=dx*dx+dy*dy; if d&lt;dmin; dmin=d; jm=j; end; end
     if sqrt(dmin)&lt;1.6 &amp;&amp; slen(jm)&gt;1 &amp;&amp; slen(jm)&lt;55 &amp;&amp; slen(jm)&lt;lead_s; lead_s=slen(jm); lead_vrel=OF(o+5); end
   end
   if isfinite(lead_s); des=6+1.2*v; va=v+lead_vrel+0.45*(lead_s-des); if va&lt;0; va=0; end; if va&lt;ts; ts=va; end; end
+
+  % --- predictive footprint avoidance: project ego (along path @ current speed) and
+  %     each obstacle (@ its global velocity) forward; if a predicted oriented-box
+  %     contact is found, slow JUST enough (proportional, creep-floored) to avoid it by
+  %     timing. Covers crossing / overtake / abeam; gentle -&gt; no hard-brake deadlock. ---
+  egoL=4.68; egoW=1.88; obsL=4.47; obsW=1.97; Th=1.6; ns=6;
+  epx=zeros(ns,1); epy=zeros(ns,1); eth=zeros(ns,1);
+  for st=1:ns
+    starg=v*(Th*st/ns); ej=1;
+    for jj=1:Np; if slen(jj)&lt;=starg; ej=jj; end; end
+    if ej&lt;1; ej=1; elseif ej&gt;Np; ej=Np; end
+    e0=ej-1; if e0&lt;1; e0=1; end; e1=ej+1; if e1&gt;Np; e1=Np; end
+    eth(st)=atan2(Path(2*e1)-Path(2*e0), Path(2*e1-1)-Path(2*e0-1));
+    epx(st)=Path(2*ej-1)+egoL/2*cos(eth(st)); epy(st)=Path(2*ej)+egoL/2*sin(eth(st));
+  end
+  gpred=inf;
+  for i=1:No
+    o=(i-1)*10; if OF(o+8)&lt;0.5; continue; end
+    ox=OF(o+1); oy=OF(o+2); dist=OF(o+7); vgx=OF(o+9); vgy=OF(o+10);
+    if dist&gt;20.0; continue; end
+    osp=sqrt(vgx*vgx+vgy*vgy); oth=erz; if osp&gt;0.5; oth=atan2(vgy,vgx); end
+    for st=1:ns
+      tau=Th*st/ns; opx=ox+vgx*tau; opy=oy+vgy*tau;
+      dx=opx-epx(st); dy=opy-epy(st); ct=cos(eth(st)); stt=sin(eth(st));
+      rx=ct*dx+stt*dy; ry=-stt*dx+ct*dy; thR=oth-eth(st);
+      gp=tp_obb(rx,ry,thR, egoL/2,egoW/2, obsL/2,obsW/2);
+      if gp&lt;gpred; gpred=gp; end
+    end
+  end
+  gsafe=1.2;
+  if gpred&lt;gsafe
+    fr=gpred/gsafe; if fr&lt;0; fr=0; end
+    tsv=ts*(0.25+0.75*fr); if tsv&lt;0.8; tsv=0.8; end
+    if tsv&lt;ts; ts=tsv; end
+  end
 end
 Traj=[lax; lay; ts; sf];
-end</P>
+end
+
+function gp = tp_obb(cx,cy,th, eh,ew, oh,ow)
+%#codegen
+EC=[eh ew; eh -ew; -eh -ew; -eh ew];
+ct=cos(th); st=sin(th); OC=zeros(4,2); OL=[oh ow; oh -ow; -oh -ow; -oh ow];
+for i=1:4; OC(i,1)=cx+ct*OL(i,1)-st*OL(i,2); OC(i,2)=cy+st*OL(i,1)+ct*OL(i,2); end
+ax4=[1 0; 0 1; ct st; -st ct]; ov=true; pen=inf;
+for a=1:4
+  axx=ax4(a,1); axy=ax4(a,2);
+  e1=EC(:,1)*axx+EC(:,2)*axy; o1=OC(:,1)*axx+OC(:,2)*axy;
+  lo=max(min(e1),min(o1)); hi=min(max(e1),max(o1)); ovl=hi-lo;
+  if ovl&lt;=0; ov=false; break; end
+  if ovl&lt;pen; pen=ovl; end
+end
+if ov; gp=-pen; else
+  gp=inf;
+  for ii=1:4
+    for jj=1:4
+      kk=mod(jj,4)+1;
+      gp=min(gp, tp_ps(EC(ii,1),EC(ii,2),OC(jj,1),OC(jj,2),OC(kk,1),OC(kk,2)));
+      gp=min(gp, tp_ps(OC(ii,1),OC(ii,2),EC(jj,1),EC(jj,2),EC(kk,1),EC(kk,2)));
+    end
+  end
+end
+end
+
+function d = tp_ps(px,py, ax,ay, bx,by)
+%#codegen
+abx=bx-ax; aby=by-ay; den=abx*abx+aby*aby; tt=0.0;
+if den&gt;0; tt=((px-ax)*abx+(py-ay)*aby)/den; if tt&lt;0; tt=0; elseif tt&gt;1; tt=1; end; end
+qx=ax+tt*abx; qy=ay+tt*aby; d=hypot(px-qx,py-qy);
+end
+</P>
         <P Name="editorLayout" Class="double">Matrix(4,1)
 [10.0, 5.0, 700.0, 500.0]</P>
       </eml>
@@ -33408,7 +33481,6 @@ __MWOPC_PART_BEGIN__ /simulink/systems/system_root.xml
 <?xml version="1.0" encoding="utf-8"?>
 <System>
   <P Name="Location">[9, 9, 1475, 833]</P>
-  <P Name="Open">on</P>
   <P Name="ZoomFactor">252</P>
   <P Name="ReportName">simulink-default.rpt</P>
   <P Name="SIDHighWatermark">5055</P>
@@ -34284,7 +34356,7 @@ __MWOPC_PART_BEGIN__ /simulink/windowsInfo.xml
       <Array PropName="PersistedApps" Type="Cell" Dimension="0*1"/>
       <P Name="WindowUuid" Class="char">847b2ec0-ed31-448b-ae2a-74c72e03924e</P>
     </Object>
-    <P Name="BDUuid" Class="char">d5b1b454-f7ec-40ab-bf79-2408533302ac</P>
+    <P Name="BDUuid" Class="char">e8868ae7-e7c4-4bad-aaac-f20501b1f98c</P>
   </Object>
 </WindowsInfo>
 
