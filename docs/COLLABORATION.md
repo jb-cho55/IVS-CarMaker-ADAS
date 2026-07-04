@@ -4,16 +4,16 @@
 
 ## 팀 구성 및 역할 (6인 + 멘토)
 
-| GitHub | 역할 | 담당 모듈 |
+| GitHub | 역할 | 담당 |
 |---|---|---|
-| [@ChungRyeung](https://github.com/ChungRyeung) | 팀원 | Supervisor · Mission Manager FSM · 모델 통합 및 형상관리 |
-| [@POOH0119](https://github.com/POOH0119) | 팀원 | 주행 알고리즘 (`Lib_Driving`) — 차선 유지 · 전방 추월 판단 |
-| [@ParkJinSui](https://github.com/ParkJinSui) | 팀원 | 주행 컨트롤러 (`VC_Driving`) — 모드별 PID · 속도 적응 |
-| [@preference-park98](https://github.com/preference-park98) | 팀원 | 톨게이트 알고리즘 (`Lib_Tollgate`) — 하이패스 진입 · 단계 감속 |
-| **[@jb-cho55](https://github.com/jb-cho55)** | **팀장** | **주차 알고리즘 (`Lib_Parking`) — Hybrid A* + Staging 전략** |
-| [@hackisha](https://github.com/hackisha) | 팀원 | 주차 컨트롤러 (`VC_Parking`) — 저속 정밀 추종 제어 |
+| [@ChungRyeung](https://github.com/ChungRyeung) | 팀원 | 신호 정리(Supervisor) · 미션 전환 FSM · 모델 통합 및 형상관리 |
+| [@POOH0119](https://github.com/POOH0119) | 팀원 | 주행 알고리즘 — 차선 유지 · 전방 추월 판단 |
+| [@ParkJinSui](https://github.com/ParkJinSui) | 팀원 | 주행 제어기 — 모드별 PID · 속도 적응 |
+| [@preference-park98](https://github.com/preference-park98) | 팀원 | 톨게이트 알고리즘 — 하이패스 진입 · 단계 감속 |
+| **[@jb-cho55](https://github.com/jb-cho55)** | **팀장** | **주차 알고리즘 — Hybrid A* + Staging 전략** |
+| [@hackisha](https://github.com/hackisha) | 팀원 | 주차 제어기 — 저속 정밀 추종 제어 |
 
-- 주차 파트(Lib_Parking + VC_Parking)는 @jb-cho55 · @hackisha **페어 프로그래밍**으로 진행 — 팀 저장소의 주차 커밋은 페어 세션 환경에서 @hackisha 계정으로 푸시됨.
+- 주차 파트(주차 알고리즘 + 주차 제어기)는 @jb-cho55 · @hackisha **페어 프로그래밍**으로 진행 — 팀 저장소의 주차 커밋은 페어 세션 환경에서 @hackisha 계정으로 푸시됨.
 - 멘토(송승목): 계획 검토 및 프로젝트 멘토링.
 
 ## 개발 프로세스 (2주)
