@@ -20,6 +20,30 @@ CarMaker가 차량 동역학·도로·트래픽(13대)을 시뮬레이션하고,
 - 결정론적 시나리오 전환 → 재현·디버깅 용이
 - 알고리즘을 `.m` 함수로 분리해 **1인 1모듈 · Git 충돌 없는 병렬 개발** (아키텍처 상세: [`Final_Project_Architecture.md`](team-project/index/Final_Project_Architecture.md))
 
+### 실제 Simulink 모델 (`Final_Project.slx`)
+
+통합 모델 전체 배선 — 왼쪽 분홍 영역이 CarMaker 입력(Read CM Dict, 수정 금지 구역), 초록 영역이 팀 구현부입니다. Supervisor(파랑) → 멀티레이트 스케줄러 → 주행/주차 모듈 → Switch → Saturation → CarMaker 출력(Write CM Dict) 순으로 흐릅니다:
+
+![Simulink 통합 모델 전체](docs/media/sl_top.png)
+
+| Supervisor — 입력 13신호 → 4개 Bus 그룹(18개 신호) | 멀티레이트 스케줄러 — 10/50/100 ms function-call 분배 |
+|:---:|:---:|
+| ![Supervisor](docs/media/sl_supervisor.png) | ![스케줄러](docs/media/sl_scheduler.png) |
+
+## 👥 팀 구성 및 역할 (6인)
+
+| GitHub | 역할 | 담당 |
+|---|---|---|
+| **[@jb-cho55](https://github.com/jb-cho55)** | **팀장** | **주차 알고리즘 — Hybrid A* 경로계획 · Staging 전략 · Reeds-Shepp 정밀정렬** |
+| [@hackisha](https://github.com/hackisha) | 팀원 | 주차 제어기 — 저속 정밀 추종 제어 (주차 파트 페어) |
+| [@ChungRyeung](https://github.com/ChungRyeung) | 팀원 | 신호 정리(Supervisor) · 미션 전환 FSM · 모델 통합 및 형상관리 |
+| [@POOH0119](https://github.com/POOH0119) | 팀원 | 주행 알고리즘 — 차선 유지 · 전방 추월 판단 |
+| [@ParkJinSui](https://github.com/ParkJinSui) | 팀원 | 주행 제어기 — 모드별 PID · 속도 적응 |
+| [@preference-park98](https://github.com/preference-park98) | 팀원 | 톨게이트 알고리즘 — 하이패스 진입 · 단계 감속 |
+
+- 개발 초기에 **입력 13신호 · Bus 18개 인터페이스를 먼저 합의**하고 알고리즘을 `.m` 함수로 분리 → 6인이 하나의 Simulink 모델을 충돌 없이 병렬 개발
+- 팀장으로서 모듈 분담 조율과 주차 파트를 맡았고, 주차는 [@hackisha](https://github.com/hackisha)와 페어 프로그래밍으로 진행 (상세: [docs/COLLABORATION.md](docs/COLLABORATION.md))
+
 ## 🛣️ 미션 1 — 다차로 주행 (차선 유지 · ACC · 추월)
 
 ![다차로 주행 시뮬레이션](docs/media/driving_sim.png)
@@ -31,6 +55,10 @@ CarMaker가 차량 동역학·도로·트래픽(13대)을 시뮬레이션하고,
 | 횡방향 — 모드별 PID (속도적응 게인) | 종방향 — ACC + 안전거리 모델 |
 |:---:|:---:|
 | ![횡방향 제어](docs/media/driving_lateral_pid.png) | ![종방향 제어](docs/media/driving_acc.png) |
+
+주행 모듈 Simulink 구현 — EgoState Bus 분해 → Mission Controller(미션 상태 판정) → 10 ms 트리거 주행 서브시스템(조향·가속·기어 명령):
+
+![주행 모듈 Simulink](docs/media/sl_driving.png)
 
 ## 🚧 미션 2 — 하이패스 톨게이트
 
@@ -56,6 +84,10 @@ CarMaker가 차량 동역학·도로·트래픽(13대)을 시뮬레이션하고,
 | **Hybrid A* 경로계획** | 전·후진 모두 고려한 격자 탐색으로 충돌 회피 경로 생성 |
 | **Staging 주차 전략** | 목표 5 m 전 staging pose에서 헤딩 정렬 후 직진 진입 — 진입 방향 자동 선택(통로 뒤=전진/앞=후진), hug-right로 기동 여유 확보 |
 | **Reeds-Shepp 정밀 정렬** | committed RS 곡선 반복 + 기어 FSM(정지 시에만 D↔R 전환)으로 채터링 제거 |
+
+주차 모듈 Simulink 구현 — 트래픽 정보로 점유 격자맵 생성(`generate_map_`) → 장애물 반영(`add_obstacle_`) → 주차 MATLAB Function이 ego 자세·시작/목표점을 받아 조향·가속·기어·selector 명령 출력:
+
+![주차 모듈 Simulink](docs/media/sl_parking.png)
 
 **결과** — CarMaker 실제 주행 궤적 6케이스 전부 PASS:
 
